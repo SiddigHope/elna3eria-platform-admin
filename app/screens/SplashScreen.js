@@ -19,7 +19,7 @@ export default class SplashScreen extends Component {
       // this.props.navigation.navigate("Tabs", {
       //   navigation: this.props.navigation,
       // });
-      goToScreen("Signin", this.props.navigation)
+      goToScreen("ProductManagement", this.props.navigation)
     }, 3000);
   };
 
