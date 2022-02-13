@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
-import { colors } from '../../config/vars';
+import { colors } from '../../../config/vars';
 
 export default class OrderButton extends Component {
   constructor(props) {
@@ -11,7 +11,7 @@ export default class OrderButton extends Component {
   render() {
     return (
       <View style={styles.container} >
-        <Text style={styles.btnText}> {"اطلب الأن"} </Text>
+        <Text style={styles.btnText}> {"إضافة"} </Text>
       </View>
     );
   }

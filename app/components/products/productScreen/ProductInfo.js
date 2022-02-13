@@ -7,62 +7,36 @@ import {
   TextInput,
   ScrollView,
 } from "react-native";
-import { colors } from "../../config/vars";
+import { colors } from "../../../config/vars";
 import OrderButton from "./OrderButton";
 import Icon from "react-native-vector-icons/MaterialIcons";
+import ProductForms from "./ProductForms";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import ImageComponent from './ImageComponent';
 
 const { width, height } = Dimensions.get("window");
 
 export default class ProductInfo extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8cHJvZHVjdHxlbnwwfHwwfHw%3D&w=1000&q=80",
+    };
   }
 
   render() {
     return (
       <View style={styles.container}>
         <View style={styles.infoContainer}>
-          <View style={styles.headerInfo}>
-            <View style={styles.miniRow}>
-              <Icon name="star" color={colors.ratingYellow} size={35} />
-              <Text style={styles.ratingText}>
-                {"("}
-                {this.props.product.rating}
-                {")"}
-              </Text>
-            </View>
-            <Text style={styles.name}> {this.props.product.name} </Text>
-          </View>
-          <ScrollView>
-            <Text style={styles.price}>
-              {" "}
-              {"SR"} {this.props.product.price}{" "}
-            </Text>
-            <View style={[styles.miniRow, { justifyContent: "flex-end" }]}>
-              <Text style={styles.ratingCount}>
-                {" "}
-                {"6 people ratted this item"}{" "}
-              </Text>
-              <View style={styles.ratingStars}>
-                <Icon name="star" color={colors.ratingYellow} size={25} />
-                <Icon name="star" color={colors.ratingYellow} size={25} />
-                <Icon name="star" color={colors.ratingYellow} size={25} />
-                <Icon name="star" color={colors.ratingYellow} size={25} />
-                <Icon name="star" color={colors.ratingYellow} size={25} />
-              </View>
-            </View>
-            <Text style={styles.desc}> {this.props.product.description} </Text>
-            <View style={styles.textInputContainer}>
-              <TextInput
-                style={styles.textInput}
-                placeholder={"اضف تفاصيل طلبك هنا..."}
-                placeholderTextColor="#515C6F"
-                onChangeText={(text) => props.onChangeText(text)}
-              />
-            </View>
-            <OrderButton />
-          </ScrollView>
+          <ProductForms
+            item={this.props.item}
+            navigation={this.props.navigation}
+            categories={this.props.categories}
+            screen={this.props.screen}
+            makeEditable={this.props.makeEditable}
+            editable={this.props.editable}
+            submitForm={(data) => this.props.submitForm(data)}
+          />
         </View>
       </View>
     );
@@ -71,19 +45,17 @@ export default class ProductInfo extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    position: "absolute",
+    // position: "absolute",
     width,
-    borderTopLeftRadius: 80,
     height: (height * 60) / 100,
     backgroundColor: colors.white,
-    bottom: 0,
     elevation: 10,
     padding: 20,
-    paddingTop: 50,
+    paddingTop: 20,
   },
   infoContainer: {
     // backgroundColor: "#e3e3e3",
-    flex: 1,
+    // flex: 1,
   },
   headerInfo: {
     // backgroundColor: "red",
