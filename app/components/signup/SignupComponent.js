@@ -5,6 +5,7 @@ import {
   StyleSheet,
   Dimensions,
   ImageBackground,
+  ScrollView
 } from "react-native";
 import { colors, fonts } from "../../config/vars";
 import SignupForms from "./SignupForms";
@@ -14,7 +15,17 @@ const { width, height } = Dimensions.get("window");
 export default class SignupComponent extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      departments: this.props.departments
+    };
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (this.state.departments.length != nextProps.departments.length) {
+      this.setState({
+        departments: nextProps.departments
+      })
+    }
   }
 
   render() {
@@ -34,10 +45,12 @@ export default class SignupComponent extends Component {
           </View>
         </ImageBackground>
         {/* <View style={styles.formContainer}> */}
-        <SignupForms
-          departments={this.props.departments}
-          navigation={this.props.navigation}
-        />
+        <ScrollView showsVerticalScrollIndicator={false}>
+          <SignupForms
+            departments={this.state.departments}
+            navigation={this.props.navigation}
+          />
+        </ScrollView>
         {/* </View> */}
       </View>
     );
@@ -68,10 +81,12 @@ const styles = StyleSheet.create({
     fontFamily: fonts.tajawalB,
     fontSize: 20,
     marginBottom: 5,
+    textAlign: "right"
   },
   subtitle: {
     color: "#FFF",
     fontFamily: fonts.tajawalR,
     fontSize: 16,
+    textAlign: "right"
   },
 });

@@ -8,8 +8,12 @@ export const colors = {
   ratingYellow: "#F4C430",
   danger: "#e57373",
   success: "#a5d6a7",
-  darkBlue:"#0d47a1",
+  darkBlue: "#0d47a1",
+  grey: "grey",
+  whiteF7: "#F7F7F7",
   blackTransparent: "rgba(0,0,0,0.1)",
+  blueLight: '#42a5f5',
+  softBlue:"#8ECaE6"
 };
 
 export const fonts = {

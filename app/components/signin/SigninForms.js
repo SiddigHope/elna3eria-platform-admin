@@ -55,7 +55,7 @@ export default class SigninForms extends Component {
           goToScreen("Verification", this.props.navigation, { email });
           return;
         }
-        goToScreen("Home", this.props.navigation);
+        goToScreen("Tabs", this.props.navigation);
       } else {
         this.setState({
           loading: false,

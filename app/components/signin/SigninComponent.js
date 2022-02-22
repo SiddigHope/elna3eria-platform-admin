@@ -95,16 +95,19 @@ const styles = StyleSheet.create({
     fontFamily: fonts.tajawalB,
     fontSize: 20,
     marginBottom: 10,
+    textAlign: "right"
   },
   subtitle: {
     color: "#FFF",
     fontFamily: fonts.tajawalR,
     fontSize: 16,
+    textAlign: "right"
   },
   subSubtitle: {
     color: colors.softBlack,
     fontFamily: fonts.tajawalR,
     fontSize: 14,
+    textAlign: "right"
   },
   platformText: {
     flex: 1,

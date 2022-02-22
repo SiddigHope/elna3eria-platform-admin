@@ -34,7 +34,10 @@ export default class SignupForms extends Component {
       departmentPlaceholder: "قسم المتجر",
       passwordToggler: true,
       loading: false,
-      departments: [],
+      departments: this.props.departments.map((item) => ({
+        value: item.id,
+        label: item.name,
+      })),
       showSnackbar: false,
       snackbarText: "",
       snackbarBackgroundColor: "",
@@ -44,6 +47,26 @@ export default class SignupForms extends Component {
   componentDidMount() {
     this.getData();
   }
+
+  componentWillReceiveProps(nextProps) {
+    if (this.state.departments.length != nextProps.departments.length) {
+      this.setState({
+        departments: nextProps.departments.map((item) => ({
+          value: item.id,
+          label: item.name,
+        })),
+      })
+    }
+  }
+
+  getData = async () => {
+    this.setState({
+      departments: await this.props.departments.map((item) => ({
+        value: item.id,
+        label: item.name,
+      })),
+    });
+  };
 
   storeData = async () => {
     const { storeName, department, owner, email, password } = this.state;
@@ -84,14 +107,6 @@ export default class SignupForms extends Component {
     }
   };
 
-  getData = async () => {
-    this.setState({
-      departments: await this.props.departments.map((item) => ({
-        value: item.id,
-        label: item.name,
-      })),
-    });
-  };
 
   render() {
     return (
@@ -162,7 +177,7 @@ export default class SignupForms extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    height: (height * 65) / 100,
+    minHeight: (height * 65) / 100,
     width: (width * 95) / 100,
     paddingHorizontal: 10,
     // backgroundColor: "#e3e3e3",

@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import Products from "../components/products/products/Products";
 import { getProducts } from '../config/apis/products/gets';
+import { colors } from '../config/vars';
+import Header from '../config/header/Header';
 
 export default class ProductManagement extends Component {
   constructor(props) {
@@ -33,6 +35,13 @@ export default class ProductManagement extends Component {
   render() {
     return (
       <View style={styles.container}>
+        <Header
+          screen="orders"
+          title="منتجاتي"
+          closeSearching={() => console.log("closing")}
+          searching={false}
+          onChangeText={(text) => console.log(text)}
+        />
         <Products getData={this.getData} products={this.state.products} navigation={this.props.navigation} />
       </View>
     );
@@ -42,7 +51,8 @@ export default class ProductManagement extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "center",
-    backgroundColor: "#e3e3e3",
+    // alignItems: "center",
+    width : "100%",
+    backgroundColor: colors.whiteF7,
   },
 });

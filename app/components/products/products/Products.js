@@ -36,7 +36,7 @@ export default class Products extends Component {
         return (
             <View style={styles.container}>
                 <FlatList
-                    data={this.props.products}
+                    data={this.props.products.reverse()}
                     keyExtractor={(item, index) => index.toString()}
                     showsVerticalScrollIndicator={false}
                     renderItem={this._renderItems}
@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         alignItems: 'center',
-        backgroundColor: '#e3e3e3'
+        // backgroundColor: colors.danger,
     },
     btnContainer: {
         backgroundColor: colors.white,

@@ -9,6 +9,8 @@ import Icon3 from "react-native-vector-icons/SimpleLineIcons";
 import { StatusBar } from "expo-status-bar";
 import * as Animatable from "react-native-animatable";
 import { colors } from "./vars";
+import ProductManagement from '../screens/ProductManagement';
+import Orders from '../screens/Orders';
 
 const { width, height } = Dimensions.get("window");
 
@@ -67,11 +69,11 @@ function TabButton(props) {
 function Tabs({ navigation }) {
   return (
     <>
-      <StatusBar
+      {/* <StatusBar
         translucent={false}
         backgroundColor={colors.white}
         style="dark"
-      />
+      /> */}
       <Tab.Navigator
         initialRouteName="Home"
         screenOptions={{
@@ -115,8 +117,8 @@ function Tabs({ navigation }) {
         />
 
         <Tab.Screen
-          name="Search"
-          component={Signin}
+          name="ProductManagement"
+          component={ProductManagement}
           options={{
             headerShown: false,
             tabBarIcon: ({ focused, color }) => (
@@ -124,21 +126,21 @@ function Tabs({ navigation }) {
                 focused={focused}
                 color={color}
                 icon={
-                  <Icon
+                  <Icon1
                     style={styles.tabIcon}
-                    name="tag-heart-outline"
+                    name="ios-grid-outline"
                     size={20}
                     color={color}
                   />
                 }
-                title={"تخفيضات"}
+                title={"المنتجات"}
               />
             ),
           }}
         />
         <Tab.Screen
-          name="UserProfil"
-          component={Signin}
+          name="Orders"
+          component={Orders}
           options={{
             headerShown: false,
             tabBarIcon: ({ focused, color }) => (

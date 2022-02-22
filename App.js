@@ -3,25 +3,23 @@ import React, { useEffect, useState, useRef } from "react";
 import { StyleSheet, Text, View, LogBox } from "react-native";
 import Tabs from "./app/config/Tabs";
 import { NavigationContainer } from "@react-navigation/native";
-import { createStackNavigator } from "@react-navigation/stack";
-// import UserProfile from "./app/screens/UserProfile";
-// import Home from "./app/screens/Home";
+import { createStackNavigator, CardStyleInterpolators } from "@react-navigation/stack";
 import SplashScreen from "./app/screens/SplashScreen";
 import AppLoading from "expo-app-loading";
 import * as Font from "expo-font";
-// import Categories from "./app/screens/Categories";
-// import StoreProducts from "./app/screens/StoreProducts";
-// import ProductDetails from "./app/screens/ProductDetails";
 import Signin from "./app/screens/Signin";
 import Signup from "./app/screens/Signup";
 import Verification from "./app/screens/Verification";
 import ProductManagement from './app/screens/ProductManagement';
 import Products from './app/components/products/products/Products';
 import ProductScreen from './app/components/products/productScreen/ProductScreen';
+import OrderDetails from './app/screens/OrderDetails';
 
 LogBox.ignoreLogs([
   "Non-serializable values were found in the navigation state",
 ]);
+
+console.disableYellowBox = true
 
 const loadFonts = () => {
   return Font.loadAsync({
@@ -35,14 +33,26 @@ const Stack = createStackNavigator();
 
 function Stacks() {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator
+      initialRouteName="Tabs"
+      screenOptions={{
+        cardStyleInterpolator: CardStyleInterpolators.forRevealFromBottomAndroid,
+      }}
+    >
       <Stack.Screen
-        name="SplashScreen"
-        component={SplashScreen}
+        name="Signin"
+        component={Signin}
         options={{
           headerShown: false,
         }}
       />
+      {/* <Stack.Screen
+          name="SplashScreen"
+          component={SplashScreen}
+          options={{
+            headerShown: false,
+          }}
+        /> */}
       <Stack.Screen
         name="Tabs"
         component={Tabs}
@@ -50,51 +60,9 @@ function Stacks() {
           headerShown: false,
         }}
       />
-      {/* <Stack.Screen
-        name="Home"
-        component={Home}
-        options={{
-          headerShown: false,
-        }}
-      />
-      <Stack.Screen
-        name="Categories"
-        component={Categories}
-        options={{
-          headerShown: false,
-        }}
-      />
-      <Stack.Screen
-        name="UserProfile"
-        component={UserProfile}
-        options={{
-          headerShown: false,
-        }}
-      /> */}
-      {/* <Stack.Screen
-        name="StoreProducts"
-        component={StoreProducts}
-        options={{
-          headerShown: false,
-        }}
-      />
-      <Stack.Screen
-        name="ProductDetails"
-        component={ProductDetails}
-        options={{
-          headerShown: false,
-        }}
-      /> */}
       <Stack.Screen
         name="Signup"
         component={Signup}
-        options={{
-          headerShown: false,
-        }}
-      />
-      <Stack.Screen
-        name="Signin"
-        component={Signin}
         options={{
           headerShown: false,
         }}
@@ -123,6 +91,13 @@ function Stacks() {
       <Stack.Screen
         name="ProductScreen"
         component={ProductScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="OrderDetails"
+        component={OrderDetails}
         options={{
           headerShown: false,
         }}

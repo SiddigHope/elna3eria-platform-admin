@@ -8,7 +8,9 @@ import { colors } from "../config/vars";
 export default class Signup extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      departments:[]
+    };
   }
 
   componentDidMount() {
