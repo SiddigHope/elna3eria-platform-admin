@@ -95,14 +95,14 @@ export default class ProductComponent extends Component {
 
 const styles = StyleSheet.create({
     container: {
-        width: (width - 40) / 2,
+        width: ((width * 85) / 100) / 2,
         height: 220,
         backgroundColor: colors.white,
         borderRadius: 20,
         elevation: 5,
     },
     image: {
-        width: (width - 40) / 2,
+        width: ((width * 85) / 100) / 2,
         height: 180,
         borderRadius: 20,
     },

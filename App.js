@@ -36,7 +36,7 @@ const Stack = createStackNavigator();
 function Stacks() {
   return (
     <Stack.Navigator
-      initialRouteName="Tabs"
+      initialRouteName="Delivery"
       screenOptions={{
         cardStyleInterpolator: CardStyleInterpolators.forRevealFromBottomAndroid,
       }}

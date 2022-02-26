@@ -32,6 +32,7 @@ export default class Delivery extends Component {
             boys: await getDeliveryBoys()
         })
     }
+    
     render() {
         return (
             <View style={styles.container}>

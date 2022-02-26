@@ -46,6 +46,7 @@ export default class DeliveryBoy extends Component {
     formData.append("email", data.email)
     formData.append("phone", data.phone)
     formData.append("whatsapp", data.whatsapp)
+    formData.append("address", data.address)
     if (this.state.image.uri) {
       formData.append("image", this.state.image)
     }
@@ -88,7 +89,7 @@ export default class DeliveryBoy extends Component {
     );
   }
 }
-
+  
 const styles = StyleSheet.create({
   container: {
     flex: 1,

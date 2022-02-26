@@ -78,7 +78,7 @@ export default class DeliveryBoysComponent extends Component {
         if (phone.includes("+")) {
             let phone = phone.replace("+", "")
         }
-        console.log(phone)
+        // console.log(phone)
         const link = "tel:" + phone
         Linking.openURL(link)
     }

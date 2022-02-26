@@ -35,6 +35,8 @@ export default class ProductForms extends Component {
       snackbarText: "",
       snackbarBackgroundColor: "",
       item: [],
+      address: "",
+      addressPlaceholder:"عنوان الموظف"
     };
   }
 
@@ -51,6 +53,7 @@ export default class ProductForms extends Component {
       phone: this.props.item.phone,
       whatsapp: this.props.item.whatsapp,
       email: this.props.item.email,
+      address: this.props.item.address,
     });
   }
 
@@ -66,6 +69,7 @@ export default class ProductForms extends Component {
         national_id,
         email,
         whatsapp,
+        address
       }
       this.props.submitForm(data)
     } else {
@@ -94,6 +98,13 @@ export default class ProductForms extends Component {
           placeholder={this.state.nationalIdPlaceholder}
           value={this.state.national_id}
           onChangeText={(national_id) => this.setState({ national_id })}
+        />
+        <TextInputRender
+          type="address"
+          editable={this.props.editable}
+          placeholder={this.state.addressPlaceholder}
+          value={this.state.address}
+          onChangeText={(address) => this.setState({ address })}
         />
         <TextInputRender
           type="email"
