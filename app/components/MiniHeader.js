@@ -18,7 +18,7 @@ export default class MiniHeader extends Component {
                 <Text style={styles.emptyText}> {""} </Text>
             </View>
         );
-    }
+    }   
 }
 
 const styles = StyleSheet.create({

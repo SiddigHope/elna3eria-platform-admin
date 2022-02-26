@@ -1,16 +1,32 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Linking, Image, TouchableOpacity, Alert } from 'react-native';
+import { View, Text, StyleSheet, Linking, Image, TouchableOpacity, Alert, Modal } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Icon2 from 'react-native-vector-icons/Ionicons';
 import { colors, fonts } from '../../config/vars';
+import { getDeliveryBoys } from '../../config/apis/delivery/gets';
+import DeliveryBoys from './deliveryBoys/DeliveryBoys';
+import { assignDeliveryBoy } from '../../config/apis/orders/posts';
 
 
 export default class OrderFollowUp extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            statusCode: this.props.order.status.code
+            statusCode: this.props.order.status.code,
+            showModal: false,
+            boys: [],
+            deliverySelected: 0,
         };
+    }
+
+    componentDidMount() {
+        this.getData()
+    }
+
+    getData = async () => {
+        this.setState({
+            boys: await getDeliveryBoys()
+        })
     }
 
     changeStatusCode = async (code) => {
@@ -20,8 +36,8 @@ export default class OrderFollowUp extends Component {
         this.props.changeStatus(code)
     }
 
-    whatsapp = () => {
-        const link = "https://wa.me/24912 473 8344"
+    whatsapp = (phone) => {
+        const link = "https://wa.me/" + phone
         Linking.canOpenURL(link)
             .then(supported => {
                 if (!supported) {
@@ -37,8 +53,8 @@ export default class OrderFollowUp extends Component {
     }
 
 
-    phoneCall = () => {
-        const link = "tel:012 473 8344"
+    phoneCall = (phone) => {
+        const link = "tel:" + phone
         Linking.openURL(link)
     }
 
@@ -106,24 +122,74 @@ export default class OrderFollowUp extends Component {
         return color
     }
 
+    selectDelivery = async (id, index) => {
+        console.log("inside function")
+        const data = {
+            delivery_boy_id: id
+        }
+        const assigned = await assignDeliveryBoy(this.props.order.id, data)
+        if (assigned) {
+            this.setState({
+                deliverySelected: index,
+                showModal: false
+            })
+            this.props.refresh()
+        }
+    }
+
+
     render() {
         let color = this.setColors(this.state.statusCode)
+        // console.log(this.props.order)
+        const delivery = this.props.order.delivery_boy
+
         return (
             <View style={styles.container}>
+                <Modal
+                    transparent={true}
+                    onBackdropPress={() => this.setState({ showModal: false })}
+                    onSwipeComplete={() => this.setState({ showModal: false })}
+                    onRequestClose={() => this.setState({ showModal: false })}
+                    visible={this.state.showModal}
+                    animationType="slide">
+                    <View style={styles.modalContainer}>
+                        <View style={styles.modal}>
+                            {/* <Text>sdfdsfsd</Text> */}
+                            <DeliveryBoys onPress={this.selectDelivery} selected={this.state.deliverySelected} boys={this.state.boys} />
+                        </View>
+                    </View>
+                </Modal>
                 <View style={styles.captainContainer}>
-                    <View style={[styles.iconContainer, { marginLeft: 10 }]}>
-                        <Image style={{ width: 30, height: 30 }} source={require("../../../assets/icons/headset.png")} />
-                    </View>
-                    <View style={styles.textContainer}>
-                        <Text style={styles.name}> {"محمد صديق"} </Text>
-                        <Text style={styles.phone}> {"رقم"} {"012 473 8344"} </Text>
-                    </View>
-                    <TouchableOpacity onPress={this.whatsapp} style={[styles.iconContainer, { marginLeft: 10, marginRight: 5 }]}>
-                        <Icon2 name="chatbox-ellipses" size={20} color={colors.softGreen} />
+                    <TouchableOpacity onPress={() => this.setState({ showModal: true })} style={[styles.iconContainer, { marginLeft: 10 }]}>
+                        {
+                            delivery ? (
+                                <Image style={{ width: 30, height: 30 }} source={require("../../../assets/icons/headset.png")} />
+                            ) : (
+                                <Icon name='account-plus-outline' size={25} color={colors.ebony} />
+                            )
+                        }
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={this.phoneCall} style={styles.iconContainer}>
-                        <Icon name="phone-in-talk" size={20} color={colors.softGreen} />
-                    </TouchableOpacity>
+                    {delivery ? (
+                        <>
+                            <View style={styles.textContainer}>
+                                <Text style={styles.name}> {delivery.name} </Text>
+                                <Text style={styles.phone}> {"رقم"} {delivery.phone} </Text>
+                            </View>
+                            <TouchableOpacity onPress={() => this.whatsapp(delivery.whatsapp)} style={[styles.iconContainer, { marginLeft: 10, marginRight: 5 }]}>
+                                <Icon name="whatsapp" size={20} color={colors.softGreen} />
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress={() => this.phoneCall(delivery.phone)} style={styles.iconContainer}>
+                                <Icon name="phone-in-talk" size={20} color={colors.softGreen} />
+                            </TouchableOpacity>
+                        </>
+                    ) : (
+                        <>
+                            <View style={styles.textContainer}>
+                                {/* <Text style={styles.name}> {"محمد صديق"} </Text> */}
+                                <Text style={styles.phone}> {"اضافة دلفري بوي"} </Text>
+                            </View>
+                        </>
+                    )}
                 </View>
 
                 <View style={styles.followLines}>
@@ -173,7 +239,6 @@ export default class OrderFollowUp extends Component {
                         <Text style={[styles.name, { fontSize: 12, marginRight: 50, color: color.rejected == colors.softWhite ? colors.softWhite : colors.softBlack }]}> {"ملغي"} </Text>
                     </View>
                 </View>
-
             </View>
         );
     }
@@ -244,5 +309,22 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         flexWrap: 'wrap',
         alignItems: 'center'
-    }
+    },
+    modalContainer: {
+        height: '100%',
+        width: '100%',
+        backgroundColor: colors.blackTransparent,
+        alignItems: "center",
+        justifyContent: "flex-end"
+    },
+    modal: {
+        backgroundColor: colors.white,
+        // height: '50%',
+        width: '100%',
+        borderTopRightRadius: 30,
+        borderTopLeftRadius: 30,
+        paddingTop: 20,
+        elevation: 10,
+        maxHeight: "70%",
+    },
 })

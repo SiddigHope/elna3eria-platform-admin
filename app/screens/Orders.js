@@ -11,7 +11,9 @@ export default class Orders extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            orders: []
+            orders: [],
+            ordersCopy: [],
+            status: 0
         };
     }
 
@@ -19,7 +21,11 @@ export default class Orders extends Component {
         this.getData()
         const navigation = this.props.navigation
         navigation.addListener("focus", () => {
-            this.getData()
+            if (this.state.status) {
+                this.filterOrders(this.state.status)
+            } else {
+                this.getData()
+            }
         })
     }
 
@@ -29,13 +35,22 @@ export default class Orders extends Component {
     }
 
     getData = async () => {
+        const orders = await getOrders()
         this.setState({
-            orders: await getOrders()
+            orders,
+            ordersCopy: orders
+        })
+    }
+
+    filterOrders = async (status) => {
+        this.setState({
+            orders: this.state.ordersCopy.filter((order) => order.status.code == status),
+            status,
         })
     }
 
     onOrderPressed = (order) => {
-        console.log()
+        // console.log()
         goToScreen("OrderDetails", this.props.navigation, { order })
     }
 

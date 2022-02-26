@@ -71,7 +71,7 @@ export default class OrderDetailsComponent extends Component {
 
                     <Hr props={{ marginTop: 5, marginBottom: 30 }} />
 
-                    <OrderFollowUp changeStatus={this.props.changeStatus} order={this.props.order} />
+                    <OrderFollowUp refresh={this.props.refresh} changeStatus={this.props.changeStatus} order={this.props.order} />
                 </View>
             </View>
         );

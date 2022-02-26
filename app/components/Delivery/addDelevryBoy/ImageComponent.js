@@ -3,7 +3,6 @@ import { View, Text, StyleSheet, Dimensions, ImageBackground, TouchableOpacity }
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { colors } from '../../../config/vars';
 import * as ImagePicker from 'expo-image-picker';
-import MiniHeader from "../../MiniHeader";
 
 const { width, height } = Dimensions.get('window')
 
@@ -22,6 +21,7 @@ export default class ImageComponent extends Component {
   }
 
   getData = () => {
+    // console.log(this.props.item.image)
     this.setState({
       image: { uri: this.props.item.image }
     })
@@ -64,7 +64,7 @@ export default class ImageComponent extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <ImageBackground source={{ uri: this.state.image.uri }} style={styles.image}>
+        <ImageBackground borderRadius={100} source={{ uri: this.state.image.uri }} style={styles.image}>
           {this.props.editable && (
             <TouchableOpacity onPress={this._imagePicker} style={styles.iconContainer}>
               <Icon name="image-plus" size={40} color={colors.mainColor} />
@@ -78,13 +78,17 @@ export default class ImageComponent extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    width,
-    height: (height * 50) / 100,
-    backgroundColor: 'red'
+    // marginTop: 30,
+    width: 200,
+    height: 200,
+    borderRadius: 100,
+    backgroundColor: colors.mainColor,
   },
   image: {
     width: '100%',
     height: '100%',
+    borderRadius: 100,
+    elevation: 10,
     justifyContent: "center", alignItems: "center",
   },
   iconContainer: {

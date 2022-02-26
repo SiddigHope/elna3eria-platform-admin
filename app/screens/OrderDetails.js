@@ -53,7 +53,7 @@ export default class OrderDetails extends Component {
                         />
                     }
                     showsVerticalScrollIndicator={false}>
-                    <OrderDetailsComponent changeStatus={this.changeStatus} order={this.state.order} />
+                    <OrderDetailsComponent refresh={this._onRefresh} changeStatus={this.changeStatus} order={this.state.order} />
                 </ScrollView>
             </View>
         );
