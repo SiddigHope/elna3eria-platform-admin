@@ -7,6 +7,7 @@ import {
     ImageBackground,
     Pressable,
 } from "react-native";
+import elevations from "../../config/elevations";
 import { colors, font } from "./../../config/vars";
 
 export default class CatComponent extends Component {
@@ -55,6 +56,7 @@ export default class CatComponent extends Component {
                 <View
                     style={[
                         styles.item,
+                        elevations[5],
                         this.state.itemSelected
                             ? { backgroundColor: colors.mainColor }
                             : {},
@@ -64,7 +66,7 @@ export default class CatComponent extends Component {
                         {" "}
                         {item.name}{" "}
                     </Text>
-                    <View style={[styles.image, { elevation: 3, marginLeft: 10, justifyContent: "center", alignItems: "center" }]} >
+                    <View style={[styles.imageContainer, elevations[3]]} >
                         {item.icon ? item.icon : (
                             <Image
                                 borderRadius={10}
@@ -103,12 +105,20 @@ const styles = StyleSheet.create({
         textAlign: "center",
         marginBottom: 2,
     },
+    imageContainer: {
+        marginLeft: 10,
+        justifyContent: "center",
+        alignItems: "center",
+        width: 25,
+        height: 25,
+        borderRadius: 15,
+        backgroundColor: colors.white
+    },
     image: {
         width: 25,
         height: 25,
         alignItems: "center",
         borderRadius: 15,
         justifyContent: "flex-end",
-        backgroundColor: colors.white
     },
 });

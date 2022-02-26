@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
   container: {
     // position: "absolute",
     width,
-    height: (height * 60) / 100,
+    // height: (height * 60) / 100,
     // backgroundColor: colors.whiteF7,
     // elevation: 10,
     padding: 20,

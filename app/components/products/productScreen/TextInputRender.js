@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { colors, fonts } from "../../../config/vars";
+import { elevations } from '../../../config/elevations';
 
 export default class TextInputRender extends Component {
   constructor(props) {
@@ -39,7 +40,7 @@ export default class TextInputRender extends Component {
 
   render() {
     return (
-      <View style={this.props.type == "desc" ? styles.descInput : styles.textInputContainer}>
+      <View style={[this.props.type == "desc" ? styles.descInput : styles.textInputContainer, elevations[5]]}>
         <TextInput
           style={this.props.type == "desc" ? styles.descTextInput : styles.textInput}
           keyboardType={this.props.type == "price" ? "phone-pad" : "default"}

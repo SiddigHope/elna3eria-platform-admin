@@ -3,9 +3,10 @@ import { View, Text, StyleSheet, Image, ScrollView } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { colors, fonts } from '../../config/vars';
 import OrderFollowUp from './OrderFollowUp';
+import { elevations } from '../../config/elevations';
 
 export const Hr = ({ props }) => (
-    <View style={[styles.hr, props]} />
+    <View style={[styles.hr, props, elevations[1]]} />
 )
 
 export default class OrderDetailsComponent extends Component {
@@ -62,7 +63,7 @@ export default class OrderDetailsComponent extends Component {
                                     <Text style={[styles.orderId, { flex: 1, fontSize: 14, textAlignVertical: 'center' }]}> {"الكمية :"} {product.quantity} </Text>
                                     <Text style={[styles.orderId, { flex: 1, fontSize: 14, textAlignVertical: 'center', color: colors.ebony }]}> {"تعليق على طلب المنتج"} </Text>
                                 </View>
-                                <View style={styles.productImageContainer} >
+                                <View style={[styles.productImageContainer, elevations[5]]} >
                                     <Image source={{ uri: product.product.image }} style={styles.productImage} />
                                 </View>
                             </View>

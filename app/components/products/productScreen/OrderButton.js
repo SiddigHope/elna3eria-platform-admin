@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { colors } from '../../../config/vars';
+import { elevations } from '../../../config/elevations';
 
 export default class OrderButton extends Component {
   constructor(props) {
@@ -10,7 +11,7 @@ export default class OrderButton extends Component {
 
   render() {
     return (
-      <View style={styles.container} >
+      <View style={[styles.container, elevations[10]]} >
         <Text style={styles.btnText}> {"إضافة"} </Text>
       </View>
     );

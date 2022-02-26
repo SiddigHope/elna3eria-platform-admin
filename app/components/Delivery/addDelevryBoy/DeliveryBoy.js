@@ -17,7 +17,8 @@ export default class DeliveryBoy extends Component {
       image: {},
       item: this.props.route.params.screen == "edit" ? this.props.route.params.item : [],
       screen: this.props.route.params.screen,
-      editable: this.props.route.params.screen == "edit" ? false : true
+      editable: this.props.route.params.screen == "edit" ? false : true,
+      title: this.props.route.params.screen == "edit" ? "بيانات الموظف" : "اضافة موظف توصيل"
     };
   }
 
@@ -65,31 +66,33 @@ export default class DeliveryBoy extends Component {
 
   render() {
     return (
-      <ScrollView contentContainerStyle={{ justifyContent: "center", alignItems: "center" }} style={styles.container}>
+      <View contentContainerStyle={{ justifyContent: "center", alignItems: "center" }} style={styles.container}>
         {/* <StatusBar translucent={false} style="dark" /> */}
-        <MiniHeader title={""} navigation={this.props.navigation} />
-        <ImageComponent
-          screen={this.state.screen}
-          editable={this.state.editable}
-          item={this.state.item}
-          onChange={(image) => this.setState({ image })}
-        />
-        <DeliveryInfo
-          categories={this.state.categories.map((item) => ({
-            value: item.id,
-            label: item.name,
-          }))}
-          makeEditable={() => this.setState({ editable: true })}
-          editable={this.state.editable}
-          item={this.state.item}
-          screen={this.state.screen}
-          submitForm={(data) => this.submitForm(data)}
-        />
-      </ScrollView>
+        <MiniHeader title={this.state.title} navigation={this.props.navigation} />
+        <ScrollView contentContainerStyle={{ justifyContent: "center", alignItems: "center" }}>
+          <ImageComponent
+            screen={this.state.screen}
+            editable={this.state.editable}
+            item={this.state.item}
+            onChange={(image) => this.setState({ image })}
+          />
+          <DeliveryInfo
+            categories={this.state.categories.map((item) => ({
+              value: item.id,
+              label: item.name,
+            }))}
+            makeEditable={() => this.setState({ editable: true })}
+            editable={this.state.editable}
+            item={this.state.item}
+            screen={this.state.screen}
+            submitForm={(data) => this.submitForm(data)}
+          />
+        </ScrollView>
+      </View>
     );
   }
 }
-  
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,

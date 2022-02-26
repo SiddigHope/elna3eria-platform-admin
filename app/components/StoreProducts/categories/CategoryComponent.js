@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { colors, itemSelected, setItemSelected } from "../../../config/vars";
+import { elevations } from '../../../config/elevations';
 
 export default class CategoryComponent extends Component {
   constructor(props) {
@@ -55,6 +56,7 @@ export default class CategoryComponent extends Component {
         <View
           style={[
             styles.item,
+            elevations[5],
             this.state.itemSelected
               ? { backgroundColor: colors.mainColor }
               : {},
@@ -64,7 +66,7 @@ export default class CategoryComponent extends Component {
             {" "}
             {item.name}{" "}
           </Text>
-          <View style={[styles.image, {elevation: 3, marginLeft: 10}]} >
+          <View style={[styles.image, elevations[3], {elevation: 3, marginLeft: 10}]} >
             <Image
               borderRadius={10}
               source={{ uri: item.image }}

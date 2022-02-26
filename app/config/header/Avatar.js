@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { View, Text, StyleSheet, Image } from "react-native";
+import { elevations } from '../elevations';
 
 export default class Avatar extends Component {
   constructor(props) {
@@ -9,7 +10,7 @@ export default class Avatar extends Component {
 
   render() {
     return (
-      <View style={styles.container}>
+      <View style={[styles.container, elevations[5]]}>
         <Image style={styles.image} source={require('../../../assets/images/avatar.png')} />
       </View>
     );

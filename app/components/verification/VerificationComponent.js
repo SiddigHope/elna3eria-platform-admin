@@ -11,6 +11,7 @@ import { goToScreen } from "../../config/functions";
 import { colors, fonts } from "../../config/vars";
 import VerificationForms from "./VerificationForms";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import { elevations } from '../../config/elevations';
 
 const { width, height } = Dimensions.get("window");
 
@@ -30,7 +31,7 @@ export default class VerificationComponent extends Component {
         <View style={styles.container}>
           <ImageBackground
             source={require("./../../../assets/images/5015452.jpg")}
-            style={styles.header}
+            style={[styles.header, elevations[10]]}
           ></ImageBackground>
           {/* <View style={styles.formContainer}> */}
           <VerificationForms

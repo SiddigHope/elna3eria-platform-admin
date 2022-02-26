@@ -14,7 +14,7 @@ import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { colors, fonts } from '../../config/vars';
 import { goToScreen } from '../../config/functions';
 import { deleteDeliveryBoy } from "../../config/apis/delivery/posts";
-
+import { elevations } from '../../config/elevations';
 
 const { width, height } = Dimensions.get("window");
 
@@ -89,7 +89,7 @@ export default class DeliveryBoysComponent extends Component {
         const iconsSize = 20
         return (
             <View
-                style={[styles.container]}
+                style={[styles.container, elevations[5]]}
             >
                 {/* <TouchableOpacity onPress={() => this.deleteItem(item)} style={styles.deleteIcon} >
                     <Icon name="trash-can-outline" size={20} color={colors.danger} />
@@ -98,16 +98,16 @@ export default class DeliveryBoysComponent extends Component {
                     <Text style={styles.title}> {item.name} </Text>
                     <Text style={styles.desc}> {"امدرمان  امبدة المنصورة"} </Text>
                     <View style={styles.btnsContainer}>
-                        <TouchableOpacity onPress={() => this.deleteItem(item)} style={styles.icon}>
+                        <TouchableOpacity onPress={() => this.deleteItem(item)} style={[styles.icon, elevations[6]]}>
                             <Icon name="trash-can-outline" size={iconsSize} color={colors.danger} />
                         </TouchableOpacity>
-                        <TouchableOpacity onPress={() => this.whatsapp(item.whatsapp)} style={styles.icon}>
+                        <TouchableOpacity onPress={() => this.whatsapp(item.whatsapp)} style={[styles.icon, elevations[6]]}>
                             <Icon name="whatsapp" size={iconsSize} color={colors.success} />
                         </TouchableOpacity>
-                        <TouchableOpacity onPress={() => this.phoneCall(item.phone)} style={styles.icon}>
+                        <TouchableOpacity onPress={() => this.phoneCall(item.phone)} style={[styles.icon, elevations[6]]}>
                             <Icon name="phone-in-talk" size={iconsSize} color={colors.blueLight} />
                         </TouchableOpacity>
-                        <TouchableOpacity onPress={() => this.props._boysScreen("edit", { item: item })} style={styles.icon}>
+                        <TouchableOpacity onPress={() => this.props._boysScreen("edit", { item: item })} style={[styles.icon, elevations[6]]}>
                             <Icon name="account-edit-outline" size={iconsSize} color={colors.ratingYellow} />
                         </TouchableOpacity>
                     </View>
@@ -158,19 +158,6 @@ const styles = StyleSheet.create({
         color: colors.grey,
         textAlign: 'right',
     },
-    deleteIcon: {
-        position: "absolute",
-        backgroundColor: colors.white,
-        height: 30,
-        width: 30,
-        elevation: 6,
-        borderRadius: 15,
-        left: 10,
-        top: 10,
-        justifyContent: "center",
-        alignItems: "center",
-        zIndex: 11
-    },
     icon: {
         // position: "absolute",
         backgroundColor: colors.white,
@@ -182,7 +169,7 @@ const styles = StyleSheet.create({
         // top: 10,
         justifyContent: "center",
         alignItems: "center",
-        zIndex: 11
+        zIndex: 11,
     },
     btnsContainer: {
         flexDirection: "row",

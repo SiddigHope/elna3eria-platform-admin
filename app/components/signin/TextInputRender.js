@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { View, Text, StyleSheet, TextInput } from "react-native";
+import elevations from "../../config/elevations";
 import { colors, fonts } from "../../config/vars";
 
 export default class TextInputRender extends Component {
@@ -10,7 +11,7 @@ export default class TextInputRender extends Component {
 
   render() {
     return (
-      <View style={styles.textInputContainer}>
+      <View style={[styles.textInputContainer, elevations[5]]}>
         <TextInput
           style={styles.textInput}
           secureTextEntry={

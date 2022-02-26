@@ -6,6 +6,7 @@ import { colors, fonts } from '../../config/vars';
 import { getDeliveryBoys } from '../../config/apis/delivery/gets';
 import DeliveryBoys from './deliveryBoys/DeliveryBoys';
 import { assignDeliveryBoy } from '../../config/apis/orders/posts';
+import elevations from '../../config/elevations';
 
 
 export default class OrderFollowUp extends Component {
@@ -153,14 +154,14 @@ export default class OrderFollowUp extends Component {
                     visible={this.state.showModal}
                     animationType="slide">
                     <View style={styles.modalContainer}>
-                        <View style={styles.modal}>
+                        <View style={[styles.modal, elevations[10]]}>
                             {/* <Text>sdfdsfsd</Text> */}
                             <DeliveryBoys onPress={this.selectDelivery} selected={this.state.deliverySelected} boys={this.state.boys} />
                         </View>
                     </View>
                 </Modal>
                 <View style={styles.captainContainer}>
-                    <TouchableOpacity onPress={() => this.setState({ showModal: true })} style={[styles.iconContainer, { marginLeft: 10 }]}>
+                    <TouchableOpacity onPress={() => this.setState({ showModal: true })} style={[styles.iconContainer, elevations[5], { marginLeft: 10 }]}>
                         {
                             delivery ? (
                                 <Image style={{ width: 30, height: 30 }} source={require("../../../assets/icons/headset.png")} />
@@ -175,10 +176,10 @@ export default class OrderFollowUp extends Component {
                                 <Text style={styles.name}> {delivery.name} </Text>
                                 <Text style={styles.phone}> {"رقم"} {delivery.phone} </Text>
                             </View>
-                            <TouchableOpacity onPress={() => this.whatsapp(delivery.whatsapp)} style={[styles.iconContainer, { marginLeft: 10, marginRight: 5 }]}>
+                            <TouchableOpacity onPress={() => this.whatsapp(delivery.whatsapp)} style={[styles.iconContainer, elevations[5], { marginLeft: 10, marginRight: 5 }]}>
                                 <Icon name="whatsapp" size={20} color={colors.softGreen} />
                             </TouchableOpacity>
-                            <TouchableOpacity onPress={() => this.phoneCall(delivery.phone)} style={styles.iconContainer}>
+                            <TouchableOpacity onPress={() => this.phoneCall(delivery.phone)} style={[styles.iconContainer, elevations[5]]}>
                                 <Icon name="phone-in-talk" size={20} color={colors.softGreen} />
                             </TouchableOpacity>
                         </>
@@ -195,7 +196,7 @@ export default class OrderFollowUp extends Component {
                 <View style={styles.followLines}>
                     <View style={[styles.line, { backgroundColor: color.received }]} />
                     <View style={styles.rowContainer}>
-                        <TouchableOpacity onPress={() => this.changeStatusCode(1)} style={[styles.followIconContainer, { backgroundColor: color.received }]}>
+                        <TouchableOpacity onPress={() => this.changeStatusCode(1)} style={[styles.followIconContainer, elevations[5], { backgroundColor: color.received }]}>
                             {color.received == colors.softBlue && (
                                 <Icon name="check-circle" size={20} color={colors.ebony} />
                             )}
@@ -204,7 +205,7 @@ export default class OrderFollowUp extends Component {
                     </View>
                     <View style={[styles.line, { backgroundColor: color.prepare }]} />
                     <View style={styles.rowContainer}>
-                        <TouchableOpacity onPress={() => this.changeStatusCode(2)} style={[styles.followIconContainer, { backgroundColor: color.prepare }]}>
+                        <TouchableOpacity onPress={() => this.changeStatusCode(2)} style={[styles.followIconContainer, elevations[5], { backgroundColor: color.prepare }]}>
                             {color.prepare == colors.softBlue && (
                                 <Icon name="check-circle" size={20} color={colors.ebony} />
                             )}
@@ -213,7 +214,7 @@ export default class OrderFollowUp extends Component {
                     </View>
                     <View style={[styles.line, { backgroundColor: color.delivery }]} />
                     <View style={styles.rowContainer}>
-                        <TouchableOpacity onPress={() => this.changeStatusCode(3)} style={[styles.followIconContainer, { backgroundColor: color.delivery }]}>
+                        <TouchableOpacity onPress={() => this.changeStatusCode(3)} style={[styles.followIconContainer, elevations[5], { backgroundColor: color.delivery }]}>
                             {color.delivery == colors.softBlue && (
                                 <Icon name="check-circle" size={20} color={colors.ebony} />
                             )}
@@ -222,7 +223,7 @@ export default class OrderFollowUp extends Component {
                     </View>
                     <View style={[styles.line, { backgroundColor: color.done }]} />
                     <View style={styles.rowContainer}>
-                        <TouchableOpacity onPress={() => this.changeStatusCode(4)} style={[styles.followIconContainer, { backgroundColor: color.done }]}>
+                        <TouchableOpacity onPress={() => this.changeStatusCode(4)} style={[styles.followIconContainer, elevations[5], { backgroundColor: color.done }]}>
                             {color.done == colors.softBlue && (
                                 <Icon name="check-circle" size={20} color={colors.ebony} />
                             )}
@@ -231,7 +232,7 @@ export default class OrderFollowUp extends Component {
                     </View>
                     <View style={[styles.line, { backgroundColor: color.rejected }]} />
                     <View style={styles.rowContainer}>
-                        <TouchableOpacity onPress={() => this.changeStatusCode(5)} style={[styles.followIconContainer, { backgroundColor: color.rejected }]}>
+                        <TouchableOpacity onPress={() => this.changeStatusCode(5)} style={[styles.followIconContainer, elevations[5], { backgroundColor: color.rejected }]}>
                             {color.rejected == colors.softBlue && (
                                 <Icon name="check-circle" size={20} color={colors.ebony} />
                             )}

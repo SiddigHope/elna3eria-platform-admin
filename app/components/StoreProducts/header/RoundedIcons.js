@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, Image } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 import Icon1 from "react-native-vector-icons/MaterialCommunityIcons";
 import { colors } from "../../../config/vars";
+import { elevations } from '../../../config/elevations';
 
 export default class RoundedIcons extends Component {
   constructor(props) {
@@ -12,7 +13,7 @@ export default class RoundedIcons extends Component {
 
   render() {
     return (
-      <View style={styles.container}>
+      <View style={[styles.container, elevations[5]]}>
         {this.props.type == "cart" ? (
           <>
             {/* <View>

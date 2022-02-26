@@ -15,6 +15,7 @@ import RNPickerSelect from "react-native-picker-select";
 import { Snackbar } from "react-native-paper";
 import { goToScreen, ShowSnackbar } from "../../config/functions";
 import { newStore } from "../../config/apis/authentication";
+import elevations from "../../config/elevations";
 
 const { width, height } = Dimensions.get("window");
 
@@ -118,7 +119,7 @@ export default class SignupForms extends Component {
             placeholder={this.state.ownerPlaceholder}
             onChangeText={(owner) => this.setState({ owner })}
           />
-          <View style={styles.textInputContainer}>
+          <View style={[styles.textInputContainer, elevations[5]]}>
             <RNPickerSelect
               useNativeAndroidPickerStyle={false}
               textInputProps={{ placeholderTextColor: colors.mainColor }}
@@ -154,7 +155,7 @@ export default class SignupForms extends Component {
           <Pressable onPress={this.storeData}>
             <LinearGradient
               colors={[colors.mainColor, "#FF1D3D"]}
-              style={styles.btn}
+              style={[styles.btn, elevations[5]]}
             >
               {this.state.loading ? (
                 <ActivityIndicator color={colors.white} size="large" />

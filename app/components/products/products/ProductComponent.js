@@ -13,6 +13,7 @@ import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { colors, fonts } from '../../../config/vars';
 import { goToScreen } from '../../../config/functions';
 import { deleteProduct } from "../../../config/apis/products/posts";
+import { elevations } from '../../../config/elevations';
 
 
 const { width, height } = Dimensions.get("window");
@@ -58,9 +59,9 @@ export default class ProductComponent extends Component {
         const item = this.props.item.item;
         return (
             <View
-                style={[styles.container, { marginRight: margin }]}
+                style={[styles.container, elevations[5], { marginRight: margin }]}
             >
-                <TouchableOpacity onPress={() => this.deleteItem(item)} style={styles.deleteIcon} >
+                <TouchableOpacity onPress={() => this.deleteItem(item)} style={[styles.deleteIcon, elevations[6]]} >
                     <View>
                         <Icon name="trash-can-outline" size={20} color={colors.danger} />
                     </View>

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { View, Text, Dimensions, StyleSheet, Image, Pressable, TouchableOpacity, Alert } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { colors, fonts } from '../../config/vars';
+import { elevations } from '../../config/elevations';
 
 
 const { width, height } = Dimensions.get("window")
@@ -65,8 +66,8 @@ export default class OrderComponent extends Component {
         let color = this.renderTextColor(item.status.code)
 
         return (
-            <Pressable onPress={() => this.props.onPress(item)} style={styles.container}>
-                <View style={styles.imageContainer}>
+            <Pressable onPress={() => this.props.onPress(item)} style={[styles.container, elevations[10]]}>
+                <View style={[styles.imageContainer, elevations[5]]}>
                     <Image style={styles.image} source={{ uri: item.details[0].product.image }} />
                 </View>
                 <View style={styles.infoContainer}>

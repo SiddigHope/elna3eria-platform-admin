@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { View, Text, StyleSheet, FlatList, Dimensions } from "react-native";
 import ProductComponent from "./ProductComponent";
 import { colors } from "../../../config/vars";
+import { elevations } from '../../../config/elevations';
 
 const { width, height } = Dimensions.get("window");
 
@@ -32,7 +33,7 @@ export default class ProductsList extends Component {
             {this.props.stores.length} {"منتج"}{" "}
           </Text>
         </View>
-        <View style={styles.titleUnderline} />
+        <View style={[styles.titleUnderline, elevations[3]]} />
       </View>
     </View>
   );

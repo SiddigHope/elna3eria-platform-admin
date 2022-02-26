@@ -13,6 +13,7 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 import TextInputRender from "./TextInputRender";
 import { goToScreen, ShowSnackbar } from "../../../config/functions";
 import RNPickerSelect from "react-native-picker-select";
+import { elevations } from '../../../config/elevations';
 
 const { width, height } = Dimensions.get("window");
 
@@ -85,7 +86,7 @@ export default class ProductForms extends Component {
         />
         <View style={styles.rowInputs}>
           <View style={styles.categoryContainer}>
-            <View style={styles.textInputContainer}>
+            <View style={[styles.textInputContainer, elevations[5]]}>
               <RNPickerSelect
                 useNativeAndroidPickerStyle={false}
                 textInputProps={{ placeholderTextColor: colors.softBlack }}
@@ -122,7 +123,7 @@ export default class ProductForms extends Component {
         <Pressable onPress={this.props.editable ? this.submitForm : this.props.makeEditable}>
           <LinearGradient
             colors={[colors.mainColor, colors.mainColor, "#F4C343"]}
-            style={styles.btn}
+            style={[styles.btn, elevations[5]]}
           >
             {this.state.loading ? (
               <ActivityIndicator color={colors.white} size="large" />

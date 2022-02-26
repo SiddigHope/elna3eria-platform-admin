@@ -13,6 +13,7 @@ import Icon from "react-native-vector-icons/MaterialIcons";
 import ProductForms from "./ProductForms";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import ImageComponent from './ImageComponent';
+import { elevations } from '../../../config/elevations';
 
 const { width, height } = Dimensions.get("window");
 
@@ -26,7 +27,7 @@ export default class ProductInfo extends Component {
 
   render() {
     return (
-      <View style={styles.container}>
+      <View style={[styles.container, elevations[10]]}>
         <View style={styles.infoContainer}>
           <ProductForms
             item={this.props.item}

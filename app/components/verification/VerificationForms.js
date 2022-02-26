@@ -14,6 +14,7 @@ import TextInputRender from "./TextInputRender";
 import { goToScreen, ShowSnackbar } from "../../config/functions";
 import { resendCode, verify } from "../../config/apis/authentication";
 import UserClass from "../../config/authHandler";
+import { elevations } from '../../config/elevations';
 
 const { width, height } = Dimensions.get("window");
 
@@ -122,7 +123,7 @@ export default class VerificationForms extends Component {
         <Pressable onPress={this.verify}>
           <LinearGradient
             colors={["#F4C343", colors.mainColor]}
-            style={styles.btn}
+            style={[styles.btn, elevations[5]]}
           >
             {this.state.loading ? (
               <ActivityIndicator color={colors.white} size="large" />

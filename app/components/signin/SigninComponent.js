@@ -6,11 +6,13 @@ import {
   Dimensions,
   ImageBackground,
   Pressable,
+  ScrollView
 } from "react-native";
 import { goToScreen } from "../../config/functions";
 import { colors, fonts } from "../../config/vars";
 import SigninForms from "./SigninForms";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import { elevations } from '../../config/elevations';
 
 const { width, height } = Dimensions.get("window");
 
@@ -30,7 +32,7 @@ export default class SigninComponent extends Component {
         <View style={styles.container}>
           <ImageBackground
             source={require("./../../../assets/images/woman-holding-various-shopping-bags-copy-space.jpg")}
-            style={styles.header}
+            style={[styles.header, elevations[10]]}
           >
             <View style={styles.titleContainer}>
               <View style={styles.platformText}>
@@ -59,9 +61,9 @@ export default class SigninComponent extends Component {
               </View>
             </View>
           </ImageBackground>
-          {/* <View style={styles.formContainer}> */}
-          <SigninForms navigation={this.props.navigation} />
-          {/* </View> */}
+          <ScrollView showsVerticalScrollIndicator={false}>
+            <SigninForms navigation={this.props.navigation} />
+          </ScrollView>
         </View>
       </KeyboardAwareScrollView>
     );

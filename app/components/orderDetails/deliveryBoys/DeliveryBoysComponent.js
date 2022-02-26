@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { View, Text, StyleSheet, Image, Pressable } from 'react-native';
 import { colors, fonts } from '../../../config/vars';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { elevations } from '../../../config/elevations';
 
 export default class DeliveryBoysComponent extends Component {
     constructor(props) {
@@ -14,15 +15,15 @@ export default class DeliveryBoysComponent extends Component {
         const item = this.props.item.item
         const index = this.props.item.index
         return (
-            <Pressable onPress={() => this.props.onPress(item.id, index)} style={[styles.container, this.props.selected == index ? { backgroundColor: colors.softBlue } : {}]}>
-                <View style={styles.imageContainer}>
+            <Pressable onPress={() => this.props.onPress(item.id, index)} style={[styles.container, elevations[5], this.props.selected == index ? { backgroundColor: colors.softBlue } : {}]}>
+                <View style={[styles.imageContainer, elevations[5]]}>
                     <Image source={{ uri: item.image }} style={styles.image} />
                 </View>
                 <View style={styles.rowContainer}>
                     <Text style={styles.name}> {item.name} </Text>
-                    <Text style={styles.address}> {"امدرمان امبدة المنصورة"} </Text>
+                    <Text style={styles.address}> {item.address} </Text>
                 </View>
-                <View style={styles.iconContainer}>
+                <View style={[styles.iconContainer, elevations[6]]}>
                     <Icon name="phone-in-talk" size={20} color={colors.blueLight} />
                 </View>
             </Pressable>

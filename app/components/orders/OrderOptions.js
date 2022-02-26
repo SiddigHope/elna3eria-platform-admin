@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity, Dimensions, TextInput, Pressable } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import elevations from '../../config/elevations';
 import { colors, fonts } from '../../config/vars';
 import RadioButtonComponent from './RadioButtonComponent';
 
@@ -26,11 +27,11 @@ export default class OrderOptions extends Component {
 
     render() {
         return (
-            <View style={styles.container}>
+            <View style={[styles.container, elevations[10]]}>
                 <Pressable onPress={this.props.closeModal} style={styles.closeModal}>
                     <Icon name="close-circle" size={25} color={colors.mainColor} />
                 </Pressable>
-                <View style={styles.textContainer}>
+                <View style={[styles.textContainer, elevations[5]]}>
                     {/* <View style={styles.iconContainer} > */}
                     <Icon name="map-marker-radius" color={colors.blueLight} size={20} />
                     {/* </View> */}
@@ -46,7 +47,7 @@ export default class OrderOptions extends Component {
                     <RadioButtonComponent item={item} selected={this.state.payment} setSelected={(value) => this.setState({ payment: value })} />
                 ))}
 
-                <Pressable style={styles.btn}>
+                <Pressable style={[styles.btn, elevations[10]]}>
                     <Text style={styles.btnText}> {"دفع"} </Text>
                 </Pressable>
 

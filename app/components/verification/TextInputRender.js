@@ -10,6 +10,7 @@ import {
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { resendCode } from "../../config/apis/authentication";
 import { colors, fonts } from "../../config/vars";
+import { elevations } from '../../config/elevations';
 
 export default class TextInputRender extends Component {
   constructor(props) {
@@ -40,7 +41,7 @@ export default class TextInputRender extends Component {
 
   render() {
     return (
-      <View style={styles.textInputContainer}>
+      <View style={[styles.textInputContainer, elevations[5]]}>
         <TextInput
           style={styles.textInput}
           secureTextEntry={true}

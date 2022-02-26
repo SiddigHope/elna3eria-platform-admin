@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, Dimensions, ImageBackground, TouchableOpacity }
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { colors } from '../../../config/vars';
 import * as ImagePicker from 'expo-image-picker';
+import elevations from "../../../config/elevations";
 
 const { width, height } = Dimensions.get('window')
 
@@ -64,7 +65,7 @@ export default class ImageComponent extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <ImageBackground borderRadius={100} source={{ uri: this.state.image.uri }} style={styles.image}>
+        <ImageBackground borderRadius={100} source={{ uri: this.state.image.uri }} style={[styles.image, elevations[10]]}>
           {this.props.editable && (
             <TouchableOpacity onPress={this._imagePicker} style={styles.iconContainer}>
               <Icon name="image-plus" size={40} color={colors.mainColor} />

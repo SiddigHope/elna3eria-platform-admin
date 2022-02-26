@@ -10,6 +10,7 @@ import {
 import Icon from "react-native-vector-icons/MaterialIcons";
 import Icon1 from "react-native-vector-icons/FontAwesome";
 import { colors } from "../../../config/vars";
+import { elevations } from '../../../config/elevations';
 
 const { width, height } = Dimensions.get("window");
 
@@ -29,7 +30,7 @@ export default class ProductComponent extends Component {
     return (
       <Pressable
         onPress={() => this.props.goToScreen(this.props.store, item)}
-        style={[styles.container, { marginRight: margin }]}
+        style={[styles.container, elevations[2], { marginRight: margin }]}
       >
         <Image source={{ uri: item.image }} style={styles.image} />
         <View style={styles.contentContainer}>

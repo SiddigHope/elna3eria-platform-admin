@@ -2,6 +2,7 @@ import { View, Text, StyleSheet, Image, Pressable } from 'react-native'
 import React, { useState, useEffect } from 'react'
 import Icon from "react-native-vector-icons/MaterialCommunityIcons"
 import { colors, fonts } from '../../config/vars';
+import { elevations } from '../../config/elevations';
 
 
 const RadioButtonComponent = ({ selected, setSelected, item }) => {
@@ -25,7 +26,7 @@ const RadioButtonComponent = ({ selected, setSelected, item }) => {
     }
 
     return (
-        <Pressable onPress={changeOption} style={[styles.container, checked ? styles.borderedContainer : {}]}>
+        <Pressable onPress={changeOption} style={[styles.container, elevations[5], checked ? styles.borderedContainer : {}]}>
             <Image source={require("../../../assets/icons/cash-payment.png")} style={styles.image} />
             <Text style={styles.text}> {"دفع عند الاستلام"} </Text>
             <Icon name='check-circle' size={20} color={checked ? colors.blueLight : colors.softWhite} />
