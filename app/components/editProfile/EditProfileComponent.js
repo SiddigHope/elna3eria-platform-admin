@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { View, Text, StyleSheet, ActivityIndicator } from 'react-native';
 import { colors } from '../../config/vars';
 import ProfileForms from './ProfileForms';
-import ProfileImage from './ProfileImage';
 import { ScrollView, RefreshControl } from 'react-native';
 import { updateUserProfile, getUserProfile } from '../../config/apis/authentication';
 import UserClass from '../../config/authHandler';
@@ -75,7 +74,6 @@ export default class EditProfileComponent extends Component {
                 style={styles.container}>
                 {this.state.updated ? (
                     <>
-                        <ProfileImage onChange={(image) => this.setState({ image })} image={this.state.user.employee.store.image} />
                         <ProfileForms submitForm={this.submitForm} user={this.state.user.employee} />
                     </>
                 ) : (
@@ -92,8 +90,8 @@ export default class EditProfileComponent extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        width: "90%",
-        // alignItems: 'center',
+        width: "100%",
+        
         // justifyContent: 'center'
     }
 })

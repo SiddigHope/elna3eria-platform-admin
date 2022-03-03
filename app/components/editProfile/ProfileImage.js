@@ -80,8 +80,8 @@ export default class ProfileImage extends Component {
 const styles = StyleSheet.create({
     container: {
         marginVertical: 20,
-        height: 150,
-        width: 150,
+        height: 90,
+        width: 90,
         borderRadius: 100,
         backgroundColor: colors.white,
         elevation: 5,

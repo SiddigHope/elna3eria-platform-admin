@@ -28,14 +28,14 @@ export default class TextInputRender extends Component {
 
 const styles = StyleSheet.create({
     container: {
-        width: "100%",
+        width: "95%",
         height: 60,
         // backgroundColor: colors.white,
         // elevation: 5,
         // borderRadius: 15,
         marginBottom: 10,
         borderBottomWidth: 1,
-        borderBottomColor: colors.borderColor
+        borderBottomColor: colors.borderColor,
     },
     textInput: {
         width: "100%",
