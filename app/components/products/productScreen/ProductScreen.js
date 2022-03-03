@@ -1,12 +1,16 @@
 import { StatusBar } from "expo-status-bar";
 import React, { Component } from "react";
-import { View, Text, StyleSheet, ScrollView } from "react-native";
+import { View, Text, StyleSheet, ScrollView, Modal, Dimensions, TouchableOpacity, KeyboardAvoidingView } from "react-native";
 import { getCategories } from "../../../config/apis/products/gets";
-import { storeProduct, updateProduct } from "../../../config/apis/products/posts";
-import { colors } from "../../../config/vars";
+import { addDiscount, storeProduct, updateProduct } from "../../../config/apis/products/posts";
+import { colors, fonts } from "../../../config/vars";
 import ImageComponent from "./ImageComponent";
 import ProductInfo from "./ProductInfo";
 import { goToScreen } from '../../../config/functions';
+import TextInputRender from "./TextInputRender";
+
+
+const { width, height } = Dimensions.get("window")
 
 export default class ProductScreen extends Component {
   constructor(props) {
@@ -16,7 +20,10 @@ export default class ProductScreen extends Component {
       image: {},
       item: this.props.route.params.screen == "edit" ? this.props.route.params.item : [],
       screen: this.props.route.params.screen,
-      editable: this.props.route.params.screen == "edit" ? false : true
+      editable: this.props.route.params.screen == "edit" ? false : true,
+      discountModal: false,
+      discount: 0,
+      discountPlaceholder: "ادخل نسبة التخفيض",
     };
   }
 
@@ -60,14 +67,58 @@ export default class ProductScreen extends Component {
     }
   }
 
+  discount = async () => {
+    const data = {
+      product_id: this.state.item.id,
+      discount: this.state.discount,
+    }
+
+    console.log(data)
+
+    const add = await addDiscount(data)
+
+    this.setState({
+      discountModal: false
+    })
+    if(add){
+      console.log("discount added")
+    }else{
+      console.log("discount not added")
+    }
+  }
+
   render() {
     return (
       <ScrollView style={styles.container}>
+        <Modal
+          transparent={true}
+          onBackdropPress={() => this.setState({ discountModal: false })}
+          onSwipeComplete={() => this.setState({ discountModal: false })}
+          onRequestClose={() => this.setState({ discountModal: false })}
+          visible={this.state.discountModal}
+          animationType="fade">
+          <View style={styles.modalContainer}>
+            <View style={styles.modal}>
+              <TextInputRender
+                type="discount"
+                value={String(this.state.discount)}
+                placeholder={this.state.discountPlaceholder}
+                editable={this.props.editable}
+                onChangeText={(discount) => this.setState({ discount })}
+              />
+              <TouchableOpacity onPress={this.discount} style={styles.discountBtn} >
+                <Text style={styles.discountText}> {"اضافة"} </Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </Modal>
         <StatusBar translucent style="dark" />
         <ImageComponent
           screen={this.state.screen}
           editable={this.state.editable}
           item={this.state.item}
+          navigation={this.props.navigation}
+          addDiscount={() => this.setState({ discountModal: true })}
           onChange={(image) => this.setState({ image })}
         />
         <ProductInfo
@@ -91,4 +142,36 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: colors.white,
   },
+  modalContainer: {
+    height,
+    width,
+    justifyContent: "center",
+    backgroundColor: colors.blackTransparent
+  },
+  modal: {
+    height: "20%",
+    backgroundColor: colors.whiteF7,
+    elevation: 10,
+    margin: 20,
+    flexDirection: "row-reverse",
+    alignItems: "center",
+    justifyContent: "space-between",
+    borderRadius: 20,
+    padding: 20
+  },
+  discountBtn: {
+    backgroundColor: colors.softGreen,
+    justifyContent: "center",
+    alignItems: "center",
+    flex: 0.4,
+    marginRight: 10,
+    height: 50,
+    elevation: 5,
+    borderRadius: 10,
+  },
+  discountText: {
+    fontFamily: fonts.tajawalB,
+    fontSize: 12,
+    color: colors.white
+  }
 });

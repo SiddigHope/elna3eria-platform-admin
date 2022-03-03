@@ -41,9 +41,14 @@ export default class TextInputRender extends Component {
   render() {
     return (
       <View style={[this.props.type == "desc" ? styles.descInput : styles.textInputContainer, elevations[5]]}>
+        {this.props.type == "discount" && (
+          <View style={styles.discountContainer}>
+            <Text style={styles.discount}> {"%"} </Text>
+          </View>
+        )}
         <TextInput
           style={this.props.type == "desc" ? styles.descTextInput : styles.textInput}
-          keyboardType={this.props.type == "price" ? "phone-pad" : "default"}
+          keyboardType={this.props.type == "price" || "discount" ? "phone-pad" : "default"}
           placeholder={this.props.placeholder}
           multiline={this.props.type == "desc" ? true : false}
           // onSubmitEditing={() => this.props.reFunction.focus()}
@@ -60,6 +65,7 @@ export default class TextInputRender extends Component {
 const styles = StyleSheet.create({
   textInputContainer: {
     height: 50,
+    flex: 1,
     borderRadius: 10,
     flexDirection: "row",
     backgroundColor: "#FFF",
@@ -96,4 +102,13 @@ const styles = StyleSheet.create({
     // letterSpacing: 10,
     textAlign: "right",
   },
+  discountContainer:{
+    // backgroundColor: "red",
+    // flex: 0.2,
+    alignItems: "center",
+  },
+  discount:{
+    fontFamily: fonts.tajawalB,
+    fontSize: 18
+  }
 });
