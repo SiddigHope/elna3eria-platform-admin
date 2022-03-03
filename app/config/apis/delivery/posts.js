@@ -23,7 +23,7 @@ export const addDeliveryBoy = async (data) => {
         const request = await axios(options)
             .then((response) => response.data)
             .catch((error) => console.log(error));
-        console.log(request)
+        // console.log(request)
         // return
         return request.data ? request.data : [];
     } catch (error) {
@@ -54,7 +54,7 @@ export const updateDeliveryBoy = async (data, id) => {
         const request = await axios(options)
             .then((response) => response.data)
             .catch((error) => console.log(error));
-        console.log(request)
+        // console.log(request)
         // return
         return request.success ? true : false;
     } catch (error) {

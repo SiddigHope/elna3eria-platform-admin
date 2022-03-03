@@ -11,6 +11,8 @@ import * as Animatable from "react-native-animatable";
 import { colors } from "./vars";
 import ProductManagement from '../screens/ProductManagement';
 import Orders from '../screens/Orders';
+import Profile from '../screens/Profile';
+import Delivery from '../screens/Delivery';
 
 const { width, height } = Dimensions.get("window");
 
@@ -94,8 +96,8 @@ function Tabs({ navigation }) {
         }}
       >
         <Tab.Screen
-          name="UserPofil"
-          component={Signin}
+          name="Profile"
+          component={Profile}
           options={{
             headerShown: false,
             tabBarIcon: ({ focused, color, }) => (
@@ -162,7 +164,7 @@ function Tabs({ navigation }) {
         />
         <Tab.Screen
           name="Home"
-          component={Signin}
+          component={Delivery}
           options={{
             headerShown: false,
             tabBarIcon: ({ focused, color }) => (

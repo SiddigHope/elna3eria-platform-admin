@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import { colors, fonts } from "../../config/vars";
 import SignupForms from "./SignupForms";
+import { elevations } from '../../config/elevations';
 
 const { width, height } = Dimensions.get("window");
 
@@ -33,7 +34,7 @@ export default class SignupComponent extends Component {
       <View style={styles.container}>
         <ImageBackground
           source={require("./../../../assets/images/publicity.jpg")}
-          style={styles.header}
+          style={[styles.header, elevations[10]]}
         >
           <View style={styles.titleContainer}>
             <Text style={styles.title}>{"متجر جديد"}</Text>

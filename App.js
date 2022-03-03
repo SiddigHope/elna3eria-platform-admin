@@ -16,6 +16,7 @@ import ProductScreen from './app/components/products/productScreen/ProductScreen
 import OrderDetails from './app/screens/OrderDetails';
 import Delivery from './app/screens/Delivery';
 import DeliveryBoy from './app/components/Delivery/addDelevryBoy/DeliveryBoy';
+import EditProfile from './app/screens/EditProfile';
 
 LogBox.ignoreLogs([
   "Non-serializable values were found in the navigation state",
@@ -36,7 +37,7 @@ const Stack = createStackNavigator();
 function Stacks() {
   return (
     <Stack.Navigator
-      initialRouteName="Tabs"
+      // initialRouteName="Tabs"
       screenOptions={{
         cardStyleInterpolator: CardStyleInterpolators.forRevealFromBottomAndroid,
       }}
@@ -118,6 +119,14 @@ function Stacks() {
           headerShown: false,
         }}
       />
+      <Stack.Screen
+        name="EditProfile"
+        component={EditProfile}
+        options={{
+          headerShown: false,
+        }}
+      />
+
     </Stack.Navigator>
   );
 }
