@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { colors, fonts } from '../../config/vars';
 import TextInputRender from './TextInputRender';
 import ProfileImage from './ProfileImage';
@@ -12,15 +12,18 @@ export default class ProfileForms extends Component {
             storeName: "",
             address: "",
             phone: "",
+            storePhone: "",
             desc: "",
-            deliveryFee: 0,
+            deliveryFee: 0.0,
             storeNamePlaceholder: "ادخل الاسم الخاص بالمتجر",
             namePlaceholder: "ادخل اسمك الموظف كاملا",
             deliveryFeePlaceholder: "قيمة التوصيل داخل المنظقة",
             descPlaceholder: "وصف مختصر للمتحر",
             addressPlaceholder: "عنوان المتجر",
             phonePlaceholder: "رقم الهاتف الخاص بالموظف ",
+            storePhonePlaceholder: "رقم واتساب الخاص بالمتحر ",
             image: {},
+            userImage: "",
         };
     }
 
@@ -32,12 +35,13 @@ export default class ProfileForms extends Component {
         if (nextProps.user.name != this.state.name) {
             this.setState({
                 name: nextProps.user.name,
-                email: nextProps.user.email,
-                block: nextProps.user.location ? nextProps.user.location[0].block : "",
-                address: nextProps.user.location ? nextProps.user.location[0].address : "",
-                street: nextProps.user.location ? nextProps.user.location[0].street : "",
+                desc: nextProps.user.store.description,
+                storePhone: nextProps.user.store.phone,
+                deliveryFee: nextProps.user.store.delivery_fees,
+                address: nextProps.user.store.address,
                 phone: nextProps.user.phone,
                 image: nextProps.user.store.image,
+                userImage: nextProps.user.image,
                 storeName: nextProps.user.store.name,
             })
         }
@@ -51,25 +55,48 @@ export default class ProfileForms extends Component {
             storeName: user.store.name,
             email: user.email,
             phone: user.phone,
-            image: user.store.image
+            userImage: user.image,
+            image: user.store.image,
+            desc: user.store.description,
+            storePhone: user.store.phone,
+            deliveryFee: user.store.delivery_fees,
+            address: user.store.address,
         })
     }
 
-    submitForm = () => {
-        const { name, email, phone, address, block, street } = this.state
+    submitStoreForm = () => {
+        const { storeName, desc, address, deliveryFee, image, storePhone } = this.state
 
-        if (name, email) {
+        if (storeName) {
+            const data = {
+                name: storeName,
+                address,
+                image,
+                desc,
+                deliveryFee,
+                phone: storePhone
+            }
+            this.props.submitStoreForm(data)
+        } else {
+            this.setState({
+                loading: false,
+                snackbarBackgroundColor: colors.danger,
+                snackbarText: "لابد من ادخال حقل اسم المتجر",
+                showSnackbar: true,
+            });
+        }
+    }
+
+    submitEmpForm = () => {
+        const { name, phone, userImage } = this.state
+
+        if (name) {
             const data = {
                 name,
                 phone,
-                email,
-                location: [{
-                    address,
-                    block,
-                    street
-                }]
+                image: userImage,
             }
-            this.props.submitForm(data)
+            this.props.submitEmpForm(data)
         } else {
             this.setState({
                 loading: false,
@@ -81,13 +108,14 @@ export default class ProfileForms extends Component {
     }
 
     render() {
+        // console.log(this.state.deliveryFee)
         return (
             <View style={styles.container}>
 
                 <View style={styles.paddingView}>
                     <Text style={styles.title} > {"بيانات موظف المتجر"} </Text>
                     <View style={styles.rowContainer}>
-                        <ProfileImage onChange={(image) => this.setState({ image })} image={this.state.image} />
+                        <ProfileImage onChange={(image) => this.setState({ userImage: image })} image={this.state.userImage} />
                         <View style={styles.nameContainer}>
                             <Text style={styles.label} > {"الإسم"} </Text>
                             <TextInputRender
@@ -99,7 +127,6 @@ export default class ProfileForms extends Component {
                         </View>
                     </View>
 
-
                     <Text style={styles.label} > {"رقم الهاتف"} </Text>
                     <TextInputRender
                         type={"phone"}
@@ -108,14 +135,20 @@ export default class ProfileForms extends Component {
                         onChange={(phone) => this.setState({ phone })}
                     />
 
-                    <TouchableOpacity onPress={this.submitForm} style={styles.btn}>
-                        <Text style={styles.btnText}> {"حفط البيانات"} </Text>
+                    <TouchableOpacity onPress={this.submitEmpForm} style={styles.btn}>
+                        {this.props.empLoading ? (
+                            <ActivityIndicator color={colors.white} size="small" />
+                        ) : (
+                            <Text style={styles.btnText}> {"حفط البيانات"} </Text>
+                        )}
                     </TouchableOpacity>
+
                 </View>
 
                 <View style={styles.paddingView}>
 
                     <Text style={styles.title} > {"بيانات المتجر"} </Text>
+
                     <View style={styles.rowContainer}>
                         <ProfileImage onChange={(image) => this.setState({ image })} image={this.state.image} />
                         <View style={styles.nameContainer}>
@@ -129,8 +162,8 @@ export default class ProfileForms extends Component {
                         </View>
                     </View>
 
-
                     <Text style={styles.label} > {"الوصف"} </Text>
+
                     <TextInputRender
                         type={"desc"}
                         placeholder={this.state.descPlaceholder}
@@ -138,7 +171,17 @@ export default class ProfileForms extends Component {
                         onChange={(desc) => this.setState({ desc })}
                     />
 
+                    <Text style={styles.label} > {"رقم واتساب"} </Text>
+
+                    <TextInputRender
+                        type={"storePhone"}
+                        placeholder={this.state.storePhonePlaceholder}
+                        value={this.state.storePhone}
+                        onChange={(storePhone) => this.setState({ storePhone })}
+                    />
+
                     <Text style={styles.label} > {"العنوان"} </Text>
+
                     <TextInputRender
                         type={"address"}
                         placeholder={this.state.addressPlaceholder}
@@ -147,15 +190,20 @@ export default class ProfileForms extends Component {
                     />
 
                     <Text style={styles.label} > {"سعر التوصيل"} </Text>
+
                     <TextInputRender
                         type={"deliveryFee"}
                         placeholder={this.state.deliveryFeePlaceholder}
-                        value={this.state.deliveryFee}
+                        value={String(this.state.deliveryFee)}
                         onChange={(deliveryFee) => this.setState({ deliveryFee })}
                     />
 
-                    <TouchableOpacity onPress={this.submitForm} style={styles.btn}>
-                        <Text style={styles.btnText}> {"حفط البيانات"} </Text>
+                    <TouchableOpacity onPress={this.submitStoreForm} style={styles.btn}>
+                        {this.props.storeLoading ? (
+                            <ActivityIndicator color={colors.white} size="small" />
+                        ) : (
+                            <Text style={styles.btnText}> {"حفط البيانات"} </Text>
+                        )}
                     </TouchableOpacity>
                 </View>
 

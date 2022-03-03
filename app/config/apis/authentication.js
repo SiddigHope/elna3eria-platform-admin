@@ -135,7 +135,7 @@ export const updateUserProfile = async (data) => {
   try {
     const options = {
       method: "POST",
-      url: mainDomain + "client/profile",
+      url: mainDomain + "store/employees/profile",
       headers: {
         "Content-Type": "application/json",
         Accept: "*/*",
@@ -147,8 +147,39 @@ export const updateUserProfile = async (data) => {
     const request = await axios(options)
       .then((response) => response.data)
       .catch((error) => console.log(error));
+
     if (request.success) {
-      user.client = request.data
+      user.employee = request.data
+      // console.log(request)
+      UserClass.setUser(user)
+    }
+    return request.success ? true : false;
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
+};
+
+export const updateStoreProfile = async (data) => {
+  const user = await getUser();
+  try {
+    const options = {
+      method: "POST",
+      url: mainDomain + "store/setting",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "*/*",
+        Authorization: "Bearer " + user.token,
+      },
+      data,
+    };
+
+    const request = await axios(options)
+      .then((response) => response.data)
+      .catch((error) => console.log(error));
+
+    if (request.success) {
+      user.employee = request.data
       // console.log(request)
       UserClass.setUser(user)
     }

@@ -4,18 +4,31 @@ import { colors, fonts } from "../vars";
 import Avatar from "./Avatar";
 import Input from "./Input";
 import { elevations } from '../elevations';
+import UserClass from '../authHandler';
 
 export default class Header extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      user: []
+    };
+  }
+
+  componentDidMount() {
+    this.getUser()
+  }
+
+  getUser = async () => {
+    this.setState({
+      user: await UserClass.getUser()
+    })
   }
 
   render() {
     return (
       <View style={[styles.container, this.props.searching ? { height: 50 } : {}]}>
         <View style={styles.headerContainer}>
-          <Avatar />
+          <Avatar user={this.state.user.employee} />
           {this.props.screen == "home" ? (
             <Input closeSearching={this.props.closeSearching} onChangeText={this.props.onChangeText} searching={this.props.searching} />
           ) : (
@@ -81,9 +94,9 @@ const styles = StyleSheet.create({
     height: "100%",
     borderRadius: 20,
   },
-  title:{
+  title: {
     fontFamily: fonts.tajawalB,
     fontSize: 22,
-    color:colors.ebony,
+    color: colors.ebony,
   }
 });

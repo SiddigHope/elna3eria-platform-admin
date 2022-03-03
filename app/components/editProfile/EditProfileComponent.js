@@ -3,17 +3,18 @@ import { View, Text, StyleSheet, ActivityIndicator } from 'react-native';
 import { colors } from '../../config/vars';
 import ProfileForms from './ProfileForms';
 import { ScrollView, RefreshControl } from 'react-native';
-import { updateUserProfile, getUserProfile } from '../../config/apis/authentication';
+import { updateUserProfile, getUserProfile, updateStoreProfile } from '../../config/apis/authentication';
 import UserClass from '../../config/authHandler';
 
 export default class EditProfileComponent extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            image: {},
             refreshing: false,
             user: [],
-            updated: false
+            updated: false,
+            storeLoading: false,
+            empLoading: false,
         };
     }
 
@@ -33,19 +34,74 @@ export default class EditProfileComponent extends Component {
         }, 2000)
     }
 
-    submitForm = async (data) => {
+    submitStoreForm = async (data) => {
+        /* STORE Function */
+        /* STORE Function */
+        /* STORE Function */
+        /* STORE Function */
         const { user } = this.state
+        this.setState({
+            storeLoading: true
+        })
         const formData = new FormData()
 
-        if (!this.state.image) {
-            // show error note
-            return
+        formData.append("name", data.name)
+        formData.append("description", data.desc)
+        formData.append("address", data.address)
+        formData.append("phone", data.phone)
+        formData.append("delivery_fees", data.deliveryFee)
+
+        if (data.image.uri) {
+            formData.append("image", data.image)
         }
 
-        const stored = await updateUserProfile(data)
+        const stored = await updateStoreProfile(formData)
 
         if (stored) {
+            this.setState({
+                storeLoading: false
+            })
             this.props.navigation.goBack()
+        } else {
+            this.setState({
+                storeLoading: false
+            })
+        }
+    }
+
+    submitEmpForm = async (data) => {
+        /* EMPLOYEE Function */
+        /* EMPLOYEE Function */
+        /* EMPLOYEE Function */
+        /* EMPLOYEE Function */
+        this.setState({
+            empLoading: true
+        })
+        const { user } = this.state
+
+        // console.log(data)
+        // return
+
+        const formData = new FormData()
+
+        formData.append("name", data.name)
+        formData.append("phone", data.phone)
+
+        if (data.image.uri) {
+            formData.append("image", data.image)
+        }
+
+        const stored = await updateUserProfile(formData)
+
+        if (stored) {
+            this.setState({
+                empLoading: false
+            })
+            this.props.navigation.goBack()
+        } else {
+            this.setState({
+                empLoading: false
+            })
         }
     }
 
@@ -74,7 +130,13 @@ export default class EditProfileComponent extends Component {
                 style={styles.container}>
                 {this.state.updated ? (
                     <>
-                        <ProfileForms submitForm={this.submitForm} user={this.state.user.employee} />
+                        <ProfileForms
+                            empLoading={this.state.empLoading}
+                            storeLoading={this.state.storeLoading}
+                            submitStoreForm={this.submitStoreForm}
+                            submitEmpForm={this.submitEmpForm}
+                            user={this.state.user.employee}
+                        />
                     </>
                 ) : (
                     <View style={[{ flex: 1, justifyContent: 'center' }]}>
@@ -91,7 +153,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         width: "100%",
-        
+
         // justifyContent: 'center'
     }
 })

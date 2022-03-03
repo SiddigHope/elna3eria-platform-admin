@@ -80,8 +80,8 @@ export default class ProfileComponent extends Component {
     )
 
     render() {
-        console.log("this.state.user")
-        console.log(this.state.user)
+        // console.log("this.state.user")
+        // console.log(this.state.user)
         return (
             <View style={styles.container}>
                 {this.state.updated ? (

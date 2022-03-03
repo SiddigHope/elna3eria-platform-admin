@@ -14,6 +14,9 @@ export default class TextInputRender extends Component {
         const type = this.props.type
         return (
             <View style={[styles.container]}>
+                {type == "deliveryFee" && (
+                    <Text style={styles.deliveryFee} > {"SR"} </Text>
+                )}
                 <TextInput
                     placeholder={this.props.placeholder}
                     keyboardType={type == "phone" ? "phone-pad" : "default"}
@@ -21,6 +24,7 @@ export default class TextInputRender extends Component {
                     style={styles.textInput}
                     onChangeText={(text) => this.props.onChange(text)}
                 />
+
             </View>
         );
     }
@@ -33,11 +37,13 @@ const styles = StyleSheet.create({
         // backgroundColor: colors.white,
         // elevation: 5,
         // borderRadius: 15,
+        flexDirection: 'row',
         marginBottom: 10,
         borderBottomWidth: 1,
         borderBottomColor: colors.borderColor,
     },
     textInput: {
+        flex: 1,
         width: "100%",
         height: "100%",
         fontFamily: fonts.tajawalR,
@@ -45,5 +51,14 @@ const styles = StyleSheet.create({
         // paddingHorizontal: 20,
         color: colors.softBlack,
         textAlign: 'right',
+    },
+    deliveryFee: {
+        // backgroundColor: "red",
+        flex: 0.3,
+        textAlign: 'center',
+        textAlignVertical: 'center',
+        fontFamily: fonts.tajawalB,
+        fontSize: 16,
+        color: colors.success
     }
 })
