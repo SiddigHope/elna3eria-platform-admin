@@ -37,7 +37,7 @@ export default class Products extends Component {
         return (
             <View style={styles.container}>
                 <FlatList
-                    data={this.props.products.reverse()}
+                    data={this.props.products}
                     keyExtractor={(item, index) => index.toString()}
                     showsVerticalScrollIndicator={false}
                     renderItem={this._renderItems}

@@ -43,6 +43,8 @@ export default class CatComponent extends Component {
     };
 
     _setSelected = () => {
+        console.log("this.props.item")
+        console.log(this.props.item)
         this.props.changeSelected(this.props.item.index);
         this.setState({
             itemSelected: true,

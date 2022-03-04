@@ -23,25 +23,25 @@ export default class ProfileComponent extends Component {
         this.list = [
             {
                 id: 1,
-                title: "المفضلة",
+                title: "اعلانات",
                 onPress: "",
-                icon: <Icon1 name="heart-outline" size={25} color={colors.mainColor} />,
+                icon: <Icon name="image-filter-center-focus-weak" size={25} color={colors.mainColor} />,
             },
             {
                 id: 2,
-                title: "طلباتي",
+                title: "الموظفين",
                 onPress: "",
-                icon: <Icon3 name="handbag" size={25} color={colors.mainColor} />,
+                icon: <Icon name="account-group-outline" size={25} color={colors.mainColor} />,
             },
             {
                 id: 3,
-                title: "تقيماتي",
+                title: "التقيمات",
                 onPress: "",
                 icon: <Icon name="star-face" size={25} color={colors.mainColor} />,
             },
             {
                 id: 4,
-                title: "تعليقاتي",
+                title: "التعليقات",
                 onPress: "",
                 icon: <Icon2 name="comment" size={25} color={colors.mainColor} />,
             },

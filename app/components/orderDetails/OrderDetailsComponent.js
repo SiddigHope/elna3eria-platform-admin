@@ -9,6 +9,19 @@ export const Hr = ({ props }) => (
     <View style={[styles.hr, props, elevations[1]]} />
 )
 
+const PAYMENT = {
+    CASH: {
+        label: "الدفع كاش عند الاستلام",
+        value: "CASH",
+        image: require("../../../assets/icons/cash-payment.png"),
+    },
+    ONLINE: {
+        label: "**** **** **** 1234",
+        value: "ONLINE",
+        image: require("../../../assets/icons/pngegg.png"),
+    },
+};
+
 export default class OrderDetailsComponent extends Component {
     constructor(props) {
         super(props);
@@ -17,6 +30,8 @@ export default class OrderDetailsComponent extends Component {
     }
 
     render() {
+        const payment = PAYMENT[this.props.order.payment_method]
+        // console.log(payment)
         return (
             <View style={styles.container}>
                 <View style={styles.storeInfo}>
@@ -49,11 +64,17 @@ export default class OrderDetailsComponent extends Component {
 
                     <Text style={styles.label}> {"طريقة الدفع"} </Text>
                     <View style={styles.rowContainer}>
-                        <Text style={[styles.orderId, { fontSize: 14, textAlign: 'center', textAlignVertical: 'center' }]}> {"***** **** ****"} {"9232"} </Text>
+                        {/* <Text style={[styles.orderId, { fontSize: 14, textAlign: 'center', textAlignVertical: 'center' }]}> {"***** **** ****"} {"9232"} </Text>
                         <View style={styles.iconContainer} >
                             <Image source={require("../../../assets/icons/paypal.png")} style={{ width: 20, height: 20 }} />
+                        </View> */}
+                        <View style={[styles.paymentContainer, elevations[5]]}>
+                            <Image source={payment.image} style={styles.paymentImage} />
+                            <Text style={styles.paymentText}> {payment.label} </Text>
                         </View>
                     </View>
+
+                    <Hr props={{ marginTop: 5, marginBottom: 10 }} />
 
                     {this.props.order.details.map(product => (
                         <>
@@ -61,7 +82,7 @@ export default class OrderDetailsComponent extends Component {
                             <View style={[styles.rowContainer, { justifyContent: "flex-start" }]}>
                                 <View style={styles.productContainer}>
                                     <Text style={[styles.orderId, { flex: 1, fontSize: 14, textAlignVertical: 'center' }]}> {"الكمية :"} {product.quantity} </Text>
-                                    <Text style={[styles.orderId, { flex: 1, fontSize: 14, textAlignVertical: 'center', color: colors.ebony }]}> {"تعليق على طلب المنتج"} </Text>
+                                    <Text style={[styles.orderId, { flex: 1, fontSize: 14, textAlignVertical: 'center', color: colors.ebony }]}> {product.comment} </Text>
                                 </View>
                                 <View style={[styles.productImageContainer, elevations[5]]} >
                                     <Image source={{ uri: product.product.image }} style={styles.productImage} />
@@ -113,6 +134,17 @@ const styles = StyleSheet.create({
         width: '100%',
         borderRadius: 60
     },
+    paymentText: {
+        flex: 1,
+        marginHorizontal: 10,
+        textAlign: 'right',
+        fontFamily: fonts.tajawalB,
+        fontSize: 14,
+    },
+    paymentImage: {
+        height: 40,
+        width: 40
+    },
     storeName: {
         fontFamily: fonts.tajawalB,
         fontSize: 16,
@@ -137,7 +169,8 @@ const styles = StyleSheet.create({
         fontFamily: fonts.tajawalR,
         fontSize: 12,
         color: colors.grey,
-        marginBottom: 5
+        marginBottom: 5,
+        textAlign: "right"
     },
     address: {
         fontFamily: fonts.tajawalB,
@@ -169,6 +202,18 @@ const styles = StyleSheet.create({
         flex: 1,
         // backgroundColor: "#e3e3e3",
         marginLeft: 10
-    }
+    },
+    paymentContainer: {
+        width: "100%",
+        // height: 70,
+        // backgroundColor: colors.white,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        // paddingHorizontal: 20,
+        // borderRadius: 10,
+        // elevation: 5,
+        // marginVertical: 10
+    },
 })
 

@@ -74,12 +74,14 @@ export default class ImageComponent extends Component {
               <Icon name="image-plus" size={40} color={colors.mainColor} />
             </TouchableOpacity>
           )}
-          <View style={styles.discountBtnContainer}>
-            <TouchableOpacity onPress={this.props.addDiscount} style={styles.discountBtn} >
-              <Text style={styles.discountBtnText}> {"اضافة تخفيض"} </Text>
-              <Icon2 name="local-offer" size={20} color={colors.white} />
-            </TouchableOpacity>
-          </View>
+          {this.props.screen == "edit" && (
+            <View style={styles.discountBtnContainer}>
+              <TouchableOpacity onPress={this.props.addDiscount} style={styles.discountBtn} >
+                <Text style={styles.discountBtnText}> {"اضافة تخفيض"} </Text>
+                <Icon2 name="local-offer" size={20} color={colors.white} />
+              </TouchableOpacity>
+            </View>
+          )}
         </ImageBackground>
       </View>
     );

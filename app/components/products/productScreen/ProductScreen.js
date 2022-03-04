@@ -22,7 +22,7 @@ export default class ProductScreen extends Component {
       screen: this.props.route.params.screen,
       editable: this.props.route.params.screen == "edit" ? false : true,
       discountModal: false,
-      discount: 0,
+      discount: this.props.route.params.screen == "edit" ? this.props.route.params.item.discount : 0,
       discountPlaceholder: "ادخل نسبة التخفيض",
     };
   }
@@ -73,21 +73,23 @@ export default class ProductScreen extends Component {
       discount: this.state.discount,
     }
 
-    console.log(data)
+    // console.log(data)
 
     const add = await addDiscount(data)
 
     this.setState({
       discountModal: false
     })
-    if(add){
+    if (add) {
       console.log("discount added")
-    }else{
+    } else {
       console.log("discount not added")
     }
   }
 
   render() {
+    // console.log("this.state.item")
+    // console.log(this.state.item)
     return (
       <ScrollView style={styles.container}>
         <Modal
