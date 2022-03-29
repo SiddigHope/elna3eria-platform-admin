@@ -48,7 +48,7 @@ export default class TextInputRender extends Component {
         )}
         <TextInput
           style={this.props.type == "desc" ? styles.descTextInput : styles.textInput}
-          keyboardType={this.props.type == "price" || "discount" ? "phone-pad" : "default"}
+          keyboardType={this.props.type == "price" || this.props.type == "discount" ? "phone-pad" : "default"}
           placeholder={this.props.placeholder}
           multiline={this.props.type == "desc" ? true : false}
           // onSubmitEditing={() => this.props.reFunction.focus()}

@@ -52,6 +52,9 @@ export default class ProductForms extends Component {
   }
 
   submitForm = async () => {
+    this.setState({
+      loading: true
+    })
     const { name, price, desc, category } = this.state;
     if (name && price && desc && category) {
       // this.setState({
@@ -77,13 +80,15 @@ export default class ProductForms extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <TextInputRender
-          type="name"
-          value={this.state.name}
-          placeholder={this.state.namePlaceholder}
-          editable={this.props.editable}
-          onChangeText={(name) => this.setState({ name })}
-        />
+        <View style={styles.rowInputs} >
+          <TextInputRender
+            type="name"
+            value={this.state.name}
+            placeholder={this.state.namePlaceholder}
+            editable={this.props.editable}
+            onChangeText={(name) => this.setState({ name })}
+          />
+        </View>
         <View style={styles.rowInputs}>
           <View style={styles.categoryContainer}>
             <View style={[styles.textInputContainer, elevations[5]]}>
