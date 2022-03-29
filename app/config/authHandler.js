@@ -5,6 +5,7 @@ var UserClass = (() => {
   var getUser = async () => {
     const data = await AsyncStorage.getItem("user");
     if (data != null) {
+      console.log(JSON.parse(data))
       return JSON.parse(data);
     }
     return user;

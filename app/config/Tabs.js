@@ -13,6 +13,7 @@ import ProductManagement from '../screens/ProductManagement';
 import Orders from '../screens/Orders';
 import Profile from '../screens/Profile';
 import Delivery from '../screens/Delivery';
+import Home from "../screens/Home";
 
 const { width, height } = Dimensions.get("window");
 
@@ -164,7 +165,7 @@ function Tabs({ navigation }) {
         />
         <Tab.Screen
           name="Home"
-          component={Delivery}
+          component={Home}
           options={{
             headerShown: false,
             tabBarIcon: ({ focused, color }) => (

@@ -6,18 +6,17 @@ export const getUser = async () => {
     return UserClass.getUser();
 };
 
-export const updateOrder = async (id, data) => {
+export const getStatisticsTotals = async () => {
     const user = await getUser()
     try {
         const options = {
-            method: "PUT",
-            url: mainDomain + "store/orders/" + id,
+            method: "GET",
+            url: mainDomain + "store/statistic/totals",
             headers: {
                 "Content-Type": "application/json",
                 Accept: "application/json",
                 Authorization: "Bearer " + user.token,
             },
-            data,
         };
 
         const request = await axios(options)
@@ -25,35 +24,36 @@ export const updateOrder = async (id, data) => {
             .catch((error) => console.log(error));
         // console.log(request)
         // return
-        return request.success ? true : false;
+        return request.data ? request.data : [];
     } catch (error) {
         console.log(error);
-        return false;
+        return [];
     }
 }
 
-export const assignDeliveryBoy = async (id, data) => {
+// TODO added pages only, need to apply the api then design for returned data
+
+export const getStatisticsLatest = async () => {
     const user = await getUser()
     try {
         const options = {
-            method: "POST",
-            url: mainDomain + "store/orders/assign/" + id,
+            method: "GET",
+            url: mainDomain + "store/statistic/latest",
             headers: {
                 "Content-Type": "application/json",
                 Accept: "application/json",
                 Authorization: "Bearer " + user.token,
             },
-            data,
         };
 
         const request = await axios(options)
             .then((response) => response.data)
             .catch((error) => console.log(error));
-        console.log(request)
+        // console.log(request)
         // return
-        return request.success ? true : false;
+        return request.data ? request.data : [];
     } catch (error) {
         console.log(error);
-        return false;
+        return [];
     }
 }

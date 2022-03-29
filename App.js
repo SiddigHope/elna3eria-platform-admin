@@ -17,6 +17,7 @@ import OrderDetails from './app/screens/OrderDetails';
 import Delivery from './app/screens/Delivery';
 import DeliveryBoy from './app/components/Delivery/addDelevryBoy/DeliveryBoy';
 import EditProfile from './app/screens/EditProfile';
+import Home from "./app/screens/Home";
 
 LogBox.ignoreLogs([
   "Non-serializable values were found in the navigation state",
@@ -49,13 +50,13 @@ function Stacks() {
           headerShown: false,
         }}
       />
-      {/* <Stack.Screen
-          name="SplashScreen"
-          component={SplashScreen}
+      <Stack.Screen
+          name="Home"
+          component={Home}
           options={{
             headerShown: false,
           }}
-        /> */}
+        />
       <Stack.Screen
         name="Tabs"
         component={Tabs}

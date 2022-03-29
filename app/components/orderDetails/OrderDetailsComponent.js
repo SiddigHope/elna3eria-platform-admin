@@ -31,7 +31,7 @@ export default class OrderDetailsComponent extends Component {
 
     render() {
         const payment = PAYMENT[this.props.order.payment_method]
-        // console.log(payment)
+        console.log(this.props.order)
         return (
             <View style={styles.container}>
                 <View style={styles.storeInfo}>
