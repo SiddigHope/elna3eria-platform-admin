@@ -8,6 +8,7 @@ export default class ProfileForms extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            user: [],
             name: "",
             storeName: "",
             address: "",
@@ -43,24 +44,28 @@ export default class ProfileForms extends Component {
                 image: nextProps.user.store.image,
                 userImage: nextProps.user.image,
                 storeName: nextProps.user.store.name,
+                user: nextProps.user,
             })
         }
     }
 
     getUser = () => {
         const { user } = this.props
+        console.log("user*************")
         console.log(user)
+        console.log("user*************")
         this.setState({
             name: user.name,
-            storeName: user.store.name,
+            storeName: user.store && user.store.name,
             email: user.email,
             phone: user.phone,
-            userImage: user.image,
-            image: user.store.image,
-            desc: user.store.description,
-            storePhone: user.store.phone,
-            deliveryFee: user.store.delivery_fees,
-            address: user.store.address,
+            userImage: user.store && user.image,
+            image: user.store && user.store.image,
+            desc: user.store && user.store.description,
+            storePhone: user.store && user.store.phone,
+            deliveryFee: user.store && user.store.delivery_fees,
+            address: user.store && user.store.address,
+            user,
         })
     }
 
@@ -109,6 +114,11 @@ export default class ProfileForms extends Component {
 
     render() {
         // console.log(this.state.deliveryFee)
+        if(!this.state.user){
+            return(
+                <ActivityIndicator size={50} color={colors.mainColor} />
+            )
+        }
         return (
             <View style={styles.container}>
 

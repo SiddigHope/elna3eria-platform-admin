@@ -61,7 +61,7 @@ export default class EditProfileComponent extends Component {
             this.setState({
                 storeLoading: false
             })
-            this.props.navigation.goBack()
+            this.props.navigation.navigate("Tabs")
         } else {
             this.setState({
                 storeLoading: false
@@ -97,7 +97,7 @@ export default class EditProfileComponent extends Component {
             this.setState({
                 empLoading: false
             })
-            this.props.navigation.goBack()
+            this.props.navigation.navigate("Tabs")
         } else {
             this.setState({
                 empLoading: false

@@ -150,7 +150,8 @@ export const updateUserProfile = async (data) => {
 
     if (request.success) {
       user.employee = request.data
-      // console.log(request)
+      // console.log("request.data")
+      // console.log(request.data)
       UserClass.setUser(user)
     }
     return request.success ? true : false;
@@ -179,8 +180,9 @@ export const updateStoreProfile = async (data) => {
       .catch((error) => console.log(error));
 
     if (request.success) {
-      user.employee = request.data
-      // console.log(request)
+      user.employee.store = request.data
+      // console.log("request")
+      // console.log(request.data)
       UserClass.setUser(user)
     }
     return request.success ? true : false;

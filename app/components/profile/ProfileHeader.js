@@ -21,13 +21,13 @@ export default class ProfileHeader extends Component {
 
     render() {
         const user = this.state.user.employee
-        // console.log("user")
-        // console.log(user.store)
-        // if (user) {
-        //     return (
-        //         <ActivityIndicator size={72} color={colors.mainColor} />
-        //     )
-        // }
+        console.log("user")
+        console.log(user.store)
+        if (!user) {
+            return (
+                <ActivityIndicator size={72} color={colors.mainColor} />
+            )
+        }
         return (
             <View style={[styles.container, elevations[5]]}>
                 <View style={[styles.imageContainer, elevations[5]]}>

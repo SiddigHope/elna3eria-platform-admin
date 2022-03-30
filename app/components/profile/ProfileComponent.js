@@ -46,10 +46,18 @@ export default class ProfileComponent extends Component {
                 icon: <Icon2 name="comment" size={25} color={colors.mainColor} />,
             },
         ]
+        this.navigation = this.props.navigation
     }
 
     componentDidMount() {
         this.getUser()
+        this.navigation.addListener("focus", () => {
+            this.getUser()
+        })
+    }
+
+    componentWillUnmount() {
+        this.navigation.removeListener("focus")
     }
 
     getUser = async () => {
@@ -88,9 +96,6 @@ export default class ProfileComponent extends Component {
                     <>
                         <ProfileHeader user={this.state.user} navigation={this.props.navigation} />
                         <View style={[styles.listContainer, elevations[10]]} >
-                            {/* {this.list.map(item => (
-                        <ListComponent item={item} key={item.id} />
-                    ))} */}
                             <FlatList
                                 data={this.list}
                                 keyExtractor={(item, index) => index.toString()}
