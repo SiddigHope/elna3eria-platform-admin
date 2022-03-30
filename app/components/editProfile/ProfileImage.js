@@ -65,9 +65,11 @@ export default class ProfileImage extends Component {
     }
 
     render() {
+        console.log("this.state.image")
+        console.log(this.state.image)
         return (
             <View style={[styles.container, elevations[5]]}>
-                <Image source={this.state.image} style={styles.image} />
+                <Image source={{uri : this.state.image.uri}} style={styles.image} />
                 <TouchableOpacity onPress={this._imagePicker} style={[styles.btn, elevations[5]]} >
                     <Icon name='image-plus' size={25} color={colors.mainColor} />
                 </TouchableOpacity>
