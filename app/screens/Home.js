@@ -11,18 +11,18 @@ export default class Home extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            user:[]
+            user: []
         };
     }
 
-    componentDidMount(){
+    componentDidMount() {
         this.getUser()
     }
 
-    getUser = async() =>{
+    getUser = async () => {
         const user = await UserClass.getUser()
         this.setState({
-            user: user.employee.store, 
+            user: user.employee.store,
         })
     }
 
@@ -35,7 +35,7 @@ export default class Home extends Component {
         return (
             <View style={styles.container}>
                 <StatusBar translucent={false} backgroundColor={colors.whiteF7} />
-                <Header title={this.state.user.name}  />
+                <Header navigation={this.props.navigation} title={this.state.user.name} />
                 <HomeComponent onPress={this.onOrderPressed} navigation={this.props.navigation} />
             </View>
         );

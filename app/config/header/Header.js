@@ -1,10 +1,11 @@
 import React, { Component } from "react";
-import { View, Text, StyleSheet, Image } from "react-native";
+import { View, Text, StyleSheet, Image, Pressable } from "react-native";
 import { colors, fonts } from "../vars";
 import Avatar from "./Avatar";
 import Input from "./Input";
 import { elevations } from '../elevations';
 import UserClass from '../authHandler';
+import { goToScreen } from '../functions';
 
 export default class Header extends Component {
   constructor(props) {
@@ -24,6 +25,10 @@ export default class Header extends Component {
     })
   }
 
+  goToChats = () => {
+    goToScreen("Chats", this.props.navigation)
+  }
+
   render() {
     return (
       <View style={[styles.container, this.props.searching ? { height: 50 } : {}]}>
@@ -34,11 +39,11 @@ export default class Header extends Component {
           ) : (
             <Text style={styles.title}> {this.props.title} </Text>
           )}
-          <View style={styles.barsContainer}>
+          <Pressable onPress={this.goToChats} style={styles.barsContainer}>
             <View style={[styles.bars, elevations[5]]}></View>
             <View style={[styles.bars, elevations[5], { width: "70%" }]}></View>
             <View style={[styles.bars, elevations[5]]}></View>
-          </View>
+          </Pressable>
         </View>
         {this.props.searching || this.props.screen != "home" ? null : (
           <View style={[styles.imageBanner, elevations[10]]}>

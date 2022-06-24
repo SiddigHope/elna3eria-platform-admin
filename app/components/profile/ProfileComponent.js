@@ -30,7 +30,7 @@ export default class ProfileComponent extends Component {
             {
                 id: 2,
                 title: "الموظفين",
-                onPress: "",
+                onPress: "Delivery",
                 icon: <Icon name="account-group-outline" size={25} color={colors.mainColor} />,
             },
             {

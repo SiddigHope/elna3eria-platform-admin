@@ -17,6 +17,10 @@ export const colors = {
   borderColor: "#DFEAED"
 };
 
+export const mainColorWithOpacity = (opacity) => {
+  return "rgba(255, 130, 66," + opacity + ")"
+}
+
 export const fonts = {
   tajawalR: "Tajawal-Regular",
   tajawalB: "Tajawal-Bold",
