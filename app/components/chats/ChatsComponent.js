@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
     },
     textContainer: {
         justifyContent: 'center',
-        paddingHorizontal: 10,
+        paddingHorizontal: 5,
         alignItems: "flex-end",
         height: "100%",
         flex: 1,
@@ -85,6 +85,7 @@ const styles = StyleSheet.create({
         fontFamily: fonts.tajawalR,
         fontSize: 10,
         color: colors.grey,
+        // backgroundColor: "red",
         textAlign: "center",
     },
 })

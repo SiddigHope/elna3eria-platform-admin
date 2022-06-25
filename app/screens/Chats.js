@@ -22,7 +22,7 @@ export default class Chats extends Component {
     getChats = async () => {
         const chats = await getConversations()
         this.setState({
-            chats: [chats[0], chats[0],chats[0]],
+            chats,
             chatsBackup: chats
         })
     }
