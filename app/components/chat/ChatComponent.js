@@ -73,6 +73,7 @@ export default class ChatComponent extends Component {
     writeMessage = (message) => {
         this.setState({
             message,
+            typing: true
         })
     }
 

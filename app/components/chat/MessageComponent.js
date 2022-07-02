@@ -16,7 +16,7 @@ export default class MessageComponent extends Component {
     render() {
         const message = this.props.item.item
         let sender = message.sender_type == "App\\Models\\Client" ? false : true
-        console.log(message);
+        // console.log(message);
         return (
             <View style={[styles.container, sender && { alignSelf: "flex-end", backgroundColor: colors.grey }]}>
                 {message.type == "image" ? (

@@ -22,7 +22,7 @@ export const sendMessage = async (data) => {
 
         const request = await axios(options)
             .then((response) => response.data)
-            .catch((error) => console.log(error));
+            .catch((error) => console.log(error.response));
         // console.log(request)
         // return
         return request.id ? true : false;
