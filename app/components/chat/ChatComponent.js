@@ -17,7 +17,8 @@ export default class ChatComponent extends Component {
             messages: [],
             conversation: [],
             user: {},
-            loading: false
+            loading: false,
+            typing: false
         };
         this.echo = new Echo({
             broadcaster: 'pusher',
@@ -75,6 +76,23 @@ export default class ChatComponent extends Component {
         })
     }
 
+    submitFile = async (file, type) => {
+        const fromData = new FormData()
+
+        fromData.append("message", file)
+        // fromData.append("sender_id", this.state.user.id)
+        fromData.append("type", type)
+        fromData.append("conversation_id", this.state.conversation.id)
+
+        const messageSent = await sendMessage(fromData)
+        if (messageSent) {
+            console.log("message sent successfully")
+            this.setState({ message: "", loading: false })
+            return
+        }
+        console.log("message not sent")
+    }
+
 
     submitMessage = async () => {
         const { message, loading } = this.state
@@ -108,8 +126,11 @@ export default class ChatComponent extends Component {
                 />
                 <MessageList user={this.props.user} messages={this.state.messages} />
                 <TextInputRender
+                    submitAudio={this.submitFile}
+                    submitImage={this.submitFile}
                     loading={this.state.loading}
                     message={this.state.message}
+                    typing={this.state.typing}
                     textChange={this.writeMessage}
                     submitMessage={this.submitMessage}
                 />
