@@ -48,7 +48,10 @@ export const getStatisticsLatest = async () => {
 
         const request = await axios(options)
             .then((response) => response.data)
-            .catch((error) => console.log(error));
+            .catch((error) => {
+                console.log(error)
+                return []
+            });
         // console.log(request)
         // return
         return request.data ? request.data : [];
