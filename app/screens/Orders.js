@@ -96,6 +96,7 @@ export default class Orders extends Component {
                     closeSearching={() => console.log("closing")}
                     searching={false}
                     onChangeText={(text) => console.log(text)}
+                    navigation={this.props.navigation}
                 />
                 <CatList selected={this.state.status} changeSelected={this.filterOrders} data={statusCodes} />
                 <OrdersList onPress={this.onOrderPressed} orders={this.state.orders.orders} navigation={this.props.navigation} />

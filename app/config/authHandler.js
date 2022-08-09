@@ -3,9 +3,9 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 var UserClass = (() => {
   var user = [];
   var getUser = async () => {
-    const data = await AsyncStorage.getItem("user");
+    const data = await AsyncStorage.getItem("elna3eria_store_user");
     if (data != null) {
-      console.log(JSON.parse(data))
+      // console.log(JSON.parse(data))
       return JSON.parse(data);
     }
     return user;
@@ -13,11 +13,11 @@ var UserClass = (() => {
 
   var setUser = (userData) => {
     user = userData;
-    AsyncStorage.setItem("user", JSON.stringify(userData));
+    AsyncStorage.setItem("elna3eria_store_user", JSON.stringify(userData));
   };
 
   var isAuthenticated = async () => {
-    const data = await AsyncStorage.getItem("user");
+    const data = await AsyncStorage.getItem("elna3eria_store_user");
     if (data != null) {
       return true;
     }
@@ -25,7 +25,7 @@ var UserClass = (() => {
   };
 
   var logout = function () {
-    AsyncStorage.removeItem("user");
+    AsyncStorage.removeItem("elna3eria_store_user");
     user = [];
   };
 

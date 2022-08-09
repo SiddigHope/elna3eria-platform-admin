@@ -96,7 +96,7 @@ function Tabs({ navigation }) {
           },
         }}
       >
-        <Tab.Screen
+        {/* <Tab.Screen
           name="Profile"
           component={Profile}
           options={{
@@ -117,7 +117,7 @@ function Tabs({ navigation }) {
               />
             ),
           }}
-        />
+        /> */}
 
         <Tab.Screen
           name="ProductManagement"

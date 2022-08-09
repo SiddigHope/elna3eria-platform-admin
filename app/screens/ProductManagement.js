@@ -69,6 +69,7 @@ export default class ProductManagement extends Component {
           closeSearching={() => console.log("closing")}
           searching={false}
           onChangeText={(text) => console.log(text)}
+          navigation={this.props.navigation}
         />
         <CatList selected={this.state.selected} changeSelected={this.filterProducts} data={this.state.categories} />
         {this.state.loading ? (

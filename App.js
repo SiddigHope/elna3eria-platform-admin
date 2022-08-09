@@ -7,23 +7,18 @@ import { createStackNavigator, CardStyleInterpolators } from "@react-navigation/
 import SplashScreen from "./app/screens/SplashScreen";
 import AppLoading from "expo-app-loading";
 import * as Font from "expo-font";
-import Signin from "./app/screens/Signin";
-import Signup from "./app/screens/Signup";
-import Verification from "./app/screens/Verification";
-import ProductManagement from './app/screens/ProductManagement';
-import Products from './app/components/products/products/Products';
-import ProductScreen from './app/components/products/productScreen/ProductScreen';
-import OrderDetails from './app/screens/OrderDetails';
-import Delivery from './app/screens/Delivery';
-import DeliveryBoy from './app/components/Delivery/addDelevryBoy/DeliveryBoy';
-import EditProfile from './app/screens/EditProfile';
-import Home from "./app/screens/Home";
-import Chats from './app/screens/Chats';
-import Chat from './app/screens/Chat';
+import { NativeBaseProvider } from "native-base";
+import moment from "moment";
+import DrawerStack from './app/config/navigation/DrawerStack';
+import Constants from 'expo-constants';
+import * as Notifications from 'expo-notifications';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 LogBox.ignoreLogs([
   "Non-serializable values were found in the navigation state",
 ]);
+
+moment.locale("AR")
 
 console.disableYellowBox = true
 
@@ -35,121 +30,67 @@ const loadFonts = () => {
   });
 };
 
-const Stack = createStackNavigator();
-
-function Stacks() {
-  return (
-    <Stack.Navigator
-      // initialRouteName="Tabs"
-      screenOptions={{
-        cardStyleInterpolator: CardStyleInterpolators.forRevealFromBottomAndroid,
-      }}
-    >
-      <Stack.Screen
-        name="Signin"
-        component={Signin}
-        options={{
-          headerShown: false,
-        }}
-      />
-      <Stack.Screen
-        name="Home"
-        component={Home}
-        options={{
-          headerShown: false,
-        }}
-      />
-      <Stack.Screen
-        name="Tabs"
-        component={Tabs}
-        options={{
-          headerShown: false,
-        }}
-      />
-      <Stack.Screen
-        name="Signup"
-        component={Signup}
-        options={{
-          headerShown: false,
-        }}
-      />
-      <Stack.Screen
-        name="Verification"
-        component={Verification}
-        options={{
-          headerShown: false,
-        }}
-      />
-      <Stack.Screen
-        name="Chats"
-        component={Chats}
-        options={{
-          headerShown: false,
-        }}
-      />
-      <Stack.Screen
-        name="Chat"
-        component={Chat}
-        options={{
-          headerShown: false,
-        }}
-      />
-      <Stack.Screen
-        name="ProductManagement"
-        component={ProductManagement}
-        options={{
-          headerShown: false,
-        }}
-      />
-      <Stack.Screen
-        name="ProductList"
-        component={Products}
-        options={{
-          headerShown: false,
-        }}
-      />
-      <Stack.Screen
-        name="ProductScreen"
-        component={ProductScreen}
-        options={{
-          headerShown: false,
-        }}
-      />
-      <Stack.Screen
-        name="OrderDetails"
-        component={OrderDetails}
-        options={{
-          headerShown: false,
-        }}
-      />
-      <Stack.Screen
-        name="Delivery"
-        component={Delivery}
-        options={{
-          headerShown: false,
-        }}
-      />
-      <Stack.Screen
-        name="DeliveryBoy"
-        component={DeliveryBoy}
-        options={{
-          headerShown: false,
-        }}
-      />
-      <Stack.Screen
-        name="EditProfile"
-        component={EditProfile}
-        options={{
-          headerShown: false,
-        }}
-      />
-
-    </Stack.Navigator>
-  );
-}
-
 function MainScreen() {
   const [fontsLoaded, setFontsLoaded] = useState(false);
+
+  const [notification, setNotification] = useState(false);
+  const notificationListener = useRef();
+  const responseListener = useRef();
+
+  useEffect(() => {
+    registerForPushNotificationsAsync()
+
+    // This listener is fired whenever a notification is received while the app is foregrounded
+    notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
+      setNotification(notification);
+    });
+
+    // This listener is fired whenever a user taps on or interacts with a notification (works when app is foregrounded, backgrounded, or killed)
+    responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
+      console.log(response);
+    });
+
+    return () => {
+      Notifications.removeNotificationSubscription(notificationListener.current);
+      Notifications.removeNotificationSubscription(responseListener.current);
+    };
+  }, []);
+
+
+  const registerForPushNotificationsAsync = async () => {
+    let token;
+    if (Constants.isDevice) {
+      const { status: existingStatus } = await Notifications.getPermissionsAsync();
+      let finalStatus = existingStatus;
+      if (existingStatus !== 'granted') {
+        const { status } = await Notifications.requestPermissionsAsync();
+        finalStatus = status;
+      }
+      if (finalStatus !== 'granted') {
+        alert('Failed to get push token for push notification!');
+        return;
+      }
+      token = (await Notifications.getExpoPushTokenAsync()).data;
+      console.log(`this the token for ${Constants.deviceName} ::: ${token}`);
+    } else {
+      alert('Must use physical device for Push Notifications');
+    }
+
+    if (Platform.OS === 'android') {
+      Notifications.setNotificationChannelAsync('store', {
+        name: 'store',
+        importance: Notifications.AndroidImportance.MAX,
+        vibrationPattern: [0, 250, 250, 250],
+        lightColor: '#FF231F7C',
+      });
+    }
+
+    try {
+      await AsyncStorage.setItem('elna3eriaClientToken', token)
+    } catch (e) {
+      console.log(e)
+    }
+  }
 
   if (!fontsLoaded) {
     return (
@@ -163,8 +104,10 @@ function MainScreen() {
 
   return (
     <NavigationContainer>
-      <Stacks />
-      {/* <Signin/> */}
+      <NativeBaseProvider>
+        {/* <AppStack /> */}
+        <DrawerStack />
+      </NativeBaseProvider>
     </NavigationContainer>
   );
 }

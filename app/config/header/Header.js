@@ -5,7 +5,7 @@ import Avatar from "./Avatar";
 import Input from "./Input";
 import { elevations } from '../elevations';
 import UserClass from '../authHandler';
-import { goToScreen } from '../functions';
+import { goToScreen, openDrawer } from '../functions';
 
 export default class Header extends Component {
   constructor(props) {
@@ -29,6 +29,10 @@ export default class Header extends Component {
     goToScreen("Chats", this.props.navigation)
   }
 
+  openDrawer = () => {
+    openDrawer(this.props.navigation)
+  }
+
   render() {
     return (
       <View style={[styles.container, this.props.searching ? { height: 50 } : {}]}>
@@ -39,7 +43,7 @@ export default class Header extends Component {
           ) : (
             <Text style={styles.title}> {this.props.title} </Text>
           )}
-          <Pressable onPress={this.goToChats} style={styles.barsContainer}>
+          <Pressable onPress={this.openDrawer} style={styles.barsContainer}>
             <View style={[styles.bars, elevations[5]]}></View>
             <View style={[styles.bars, elevations[5], { width: "70%" }]}></View>
             <View style={[styles.bars, elevations[5]]}></View>

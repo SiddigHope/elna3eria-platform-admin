@@ -32,12 +32,12 @@ export default class Delivery extends Component {
             boys: await getDeliveryBoys()
         })
     }
-    
+
     render() {
         return (
             <View style={styles.container}>
                 <StatusBar translucent={false} backgroundColor={colors.whiteF7} />
-                <MiniHeader title={"دلفري بوي"} />
+                <MiniHeader right={"kk"} title={"دلفري بوي"} navigation={this.props.navigation} />
                 <DeliveryBoys getData={this.getData} boys={this.state.boys} navigation={this.props.navigation} />
             </View>
         );
