@@ -49,7 +49,7 @@ export default class OrdersList extends Component {
 
 
     render() {
-        console.log(this.state.orders)
+        // console.log(this.state.orders)
         return (
             <View style={styles.container}>
                 <FlatList

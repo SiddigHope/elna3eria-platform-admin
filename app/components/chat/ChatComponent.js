@@ -5,7 +5,7 @@ import ChatHeader from './ChatHeader';
 import MessageList from './MessageList';
 import TextInputRender from './TextInputRender';
 import Echo from 'laravel-echo';
-import { sendMessage } from '../../config/apis/chats/posts';
+import { sendMessage, sendSupportMessage } from '../../config/apis/chats/posts';
 
 const { width, height } = Dimensions.get("window")
 
@@ -85,7 +85,13 @@ export default class ChatComponent extends Component {
         fromData.append("type", type)
         fromData.append("conversation_id", this.state.conversation.id)
 
-        const messageSent = await sendMessage(fromData)
+        let messageSent = false
+
+        if (this.props.type == "support") {
+            messageSent = await sendSupportMessage(fromData)
+        } else {
+            messageSent = await sendMessage(fromData)
+        }
         if (messageSent) {
             console.log("message sent successfully")
             this.setState({ message: "", loading: false })
@@ -104,7 +110,14 @@ export default class ChatComponent extends Component {
                 conversation_id: this.state.conversation.id,
                 message: message,
             }
-            const messageSent = await sendMessage(data)
+
+            let messageSent = false
+
+            if (this.props.type == "support") {
+                messageSent = await sendSupportMessage(data)
+            } else {
+                messageSent = await sendMessage(data)
+            }
             if (messageSent) {
                 console.log("message sent successfully")
                 this.setState({ message: "", loading: false })

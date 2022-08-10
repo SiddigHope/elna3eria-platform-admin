@@ -31,3 +31,29 @@ export const sendMessage = async (data) => {
         return false;
     }
 }
+
+export const sendSupportMessage = async (data) => {
+    const user = await getUser()
+    try {
+        const options = {
+            method: "POST",
+            url: mainDomain + "store/support/message",
+            headers: {
+                "Content-Type": "application/json",
+                Accept: "application/json",
+                Authorization: "Bearer " + user.token,
+            },
+            data
+        };
+
+        const request = await axios(options)
+            .then((response) => response.data)
+            .catch((error) => console.log(error.response));
+        // console.log(request)
+        // return
+        return request.id ? true : false;
+    } catch (error) {
+        console.log(error);
+        return false;
+    }
+}

@@ -11,7 +11,7 @@ import {
 } from "react-native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { colors, fonts } from '../../../config/vars';
-import { goToScreen } from '../../../config/functions';
+import { goToScreen, cacheImage } from '../../../config/functions';
 import { deleteProduct } from "../../../config/apis/products/posts";
 import { elevations } from '../../../config/elevations';
 
@@ -21,7 +21,13 @@ const { width, height } = Dimensions.get("window");
 export default class ProductComponent extends Component {
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = {
+            image: { uri: this.props.item.item.image },
+        };
+    }
+
+    componentWillReceiveProps(nextProps) {
+        this._loadImage(nextProps.item.item.image)
     }
 
     deleteItem = async (item) => {
@@ -50,6 +56,12 @@ export default class ProductComponent extends Component {
         console.log("item not deleted")
     }
 
+    _loadImage = async (uri) => {
+        const image = await cacheImage({ uri, })
+        this.setState({ image, })
+        // return image
+    }
+
     render() {
         let margin = 0;
         if (this.props.item.index % 2 == 0) {
@@ -66,7 +78,7 @@ export default class ProductComponent extends Component {
                         <Icon name="trash-can-outline" size={20} color={colors.danger} />
                     </View>
                 </TouchableOpacity>
-                <Image source={{ uri: item.image }} style={styles.image} />
+                <Image source={this.state.image} style={styles.image} />
                 <Pressable onPress={() => this.props._productScreen("edit", { item: item })} style={styles.contentContainer}>
                     <View style={styles.nameContainer}>
                         <View style={styles.miniRow}>

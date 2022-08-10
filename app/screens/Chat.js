@@ -4,7 +4,7 @@ import { View, Text, StyleSheet, Dimensions, ActivityIndicator } from 'react-nat
 import ChatComponent from '../components/chat/ChatComponent';
 import { colors } from '../config/vars';
 import UserClass from '../config/authHandler';
-import { getConversation } from '../config/apis/chats/gets';
+import { getConversation, getSupportConversation } from '../config/apis/chats/gets';
 
 export default class Chat extends Component {
     constructor(props) {
@@ -21,13 +21,26 @@ export default class Chat extends Component {
     }
 
     getConversation = async () => {
-        const conversation = this.props.route.params.conversation
-        const messages = await getConversation(conversation.id)
+        let conversation = this.props.route.params.conversation
+        let messages = []
+        if (this.props.route.params.type == "support") {
+            conversation = await getSupportConversation()
+            if (conversation) {
+                this.setState({
+                    conversation,
+                    user: await UserClass.getUser(),
+                })
+            }
+        } else {
+            messages = await getConversation(conversation.id)
+        }
         if (messages) {
-            this.setState({
-                conversation: { ...conversation, messages },
-                user: await UserClass.getUser(),
-            })
+            if (this.props.route.params.type != "support") {
+                this.setState({
+                    conversation: { ...conversation, messages },
+                    user: await UserClass.getUser(),
+                })
+            }
             setTimeout(() => {
                 this.setState({
                     loading: false
@@ -46,10 +59,10 @@ export default class Chat extends Component {
                 {/* {!this.state.loading ? ( */}
                 <ChatComponent
                     type={this.props.route.params.type}
-                    receiver={this.props.route.params.conversation.client}
+                    receiver={this.props.route.params.type == "support" ? this.props.route.params.receiver : this.props.route.params.conversation.client}
                     navigation={this.props.navigation}
                     conversation={this.state.conversation}
-                    user={this.state.user.client}
+                    user={this.state.user.employee}
                 />
                 {/* ) : (
                     <View style={[styles.container, { justifyContent: 'center' }]}>

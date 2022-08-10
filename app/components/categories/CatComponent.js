@@ -9,18 +9,21 @@ import {
 } from "react-native";
 import elevations from "../../config/elevations";
 import { colors, font } from "./../../config/vars";
+import { cacheImage } from "./../../config/functions";
 
 export default class CatComponent extends Component {
     constructor(props) {
         super(props);
         this.state = {
             itemSelected: false,
+            image: { uri: this.props.item.item.image }
             // selected: this.props.item.index
         };
     }
 
     componentDidMount() {
         this.checkSelected();
+        this._loadImage()
     }
 
     componentWillReceiveProps(nextProps) {
@@ -30,6 +33,16 @@ export default class CatComponent extends Component {
                 itemSelected: false,
             });
         }
+        this._loadImage({ uri: nextProps.item.item.image })
+    }
+
+    _loadImage = async (uri) => {
+        let image = await cacheImage({ uri: this.props.item.item.image })
+        if (uri) {
+            image = await cacheImage(uri)
+        }
+        this.setState({ image, })
+        // return image
     }
 
     checkSelected = () => {
@@ -43,8 +56,8 @@ export default class CatComponent extends Component {
     };
 
     _setSelected = () => {
-        console.log("this.props.item")
-        console.log(this.props.item)
+        // console.log("this.props.item")
+        // console.log(this.props.item)
         this.props.changeSelected(this.props.item.index);
         this.setState({
             itemSelected: true,
@@ -72,7 +85,7 @@ export default class CatComponent extends Component {
                         {item.icon ? item.icon : (
                             <Image
                                 borderRadius={10}
-                                source={{ uri: item.image }}
+                                source={this.state.image}
                                 style={styles.image}
                             />
                         )}

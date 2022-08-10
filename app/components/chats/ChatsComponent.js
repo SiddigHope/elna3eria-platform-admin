@@ -20,7 +20,8 @@ export default class ChatsComponent extends Component {
 
     render() {
         const { item } = this.props
-        // console.log(item.last_message)
+        // console.log("item.client")
+        // console.log(item.client)
         return (
             <TouchableHighlight underlayColor={mainColorWithOpacity(0.4)} onPress={this.goToChat} style={styles.container}>
                 <>

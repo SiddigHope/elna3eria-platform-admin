@@ -125,6 +125,15 @@ export default class ProfileComponent extends Component {
         goToScreen(item, this.props.navigation)
     }
 
+    openChat = () => {
+        const receiver = {
+            id: 1,
+            name: "الدعم الفني",
+            image: 'https://thumbs.dreamstime.com/b/technical-support-29097029.jpg'
+        }
+        goToScreen("Chat", this.props.navigation, { receiver, type: "support" })
+    }
+
     _itemSeparator = () => (
         <View style={[styles.hr, elevations[1]]} />
     )

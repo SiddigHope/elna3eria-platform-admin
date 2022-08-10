@@ -4,14 +4,13 @@ import { colors, fonts } from "../vars";
 import Avatar from "./Avatar";
 import Input from "./Input";
 import { elevations } from '../elevations';
-import UserClass from '../authHandler';
 import { goToScreen, openDrawer } from '../functions';
+import UserClass from '../authHandler';
 
 export default class Header extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      user: []
     };
   }
 
@@ -34,10 +33,12 @@ export default class Header extends Component {
   }
 
   render() {
+    // console.log("this.state.user.employee")
+    // console.log(this.state.user);
     return (
       <View style={[styles.container, this.props.searching ? { height: 50 } : {}]}>
         <View style={styles.headerContainer}>
-          <Avatar user={this.state.user.employee} />
+          <Avatar user={this.state.user} />
           {this.props.screen == "home" ? (
             <Input closeSearching={this.props.closeSearching} onChangeText={this.props.onChangeText} searching={this.props.searching} />
           ) : (

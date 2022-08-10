@@ -24,8 +24,8 @@ export default class HomeComponent extends Component {
     getData = async () => {
         const totals = await getStatisticsTotals()
         const latest = await getStatisticsLatest()
-        console.log("latest.orders")
-        console.log(latest.orders)
+        // console.log("latest.orders")
+        // console.log(latest.orders)
         this.setState({
             totals,
             latest: latest.orders,

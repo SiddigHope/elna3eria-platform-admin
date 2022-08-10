@@ -2,12 +2,34 @@ import React, { Component } from "react";
 import { View, Text, StyleSheet, Image } from "react-native";
 import { elevations } from '../elevations';
 import { colors } from '../../../.expo-shared/app/config/vars';
+import { cacheImage } from "./../functions";
 
 export default class Avatar extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      image: { uri: this.props.user ? this.props.user.employee.image : "" }
+    };
   }
+
+  componentDidMount() {
+    this._loadImage()
+  }
+
+  componentWillReceiveProps(nextProps) {
+    // You don't have to do this check first, but it can help prevent an unneeded render
+    this._loadImage({ uri: nextProps.user.employee.image })
+  }
+
+  _loadImage = async (uri) => {
+    let image = await cacheImage({ uri: this.props.user.employee.image })
+    if (uri) {
+      image = await cacheImage(uri)
+    }
+    this.setState({ image, })
+    // return image
+  }
+
 
   render() {
     const { user } = this.props
@@ -15,7 +37,7 @@ export default class Avatar extends Component {
     // console.log(user)
     return (
       <View style={[styles.container, elevations[5]]}>
-        <Image style={styles.image} source={user ? { uri: user.image } : require('../../../assets/images/avatar.png')} />
+        <Image style={styles.image} source={this.state.image} />
       </View>
     );
   }

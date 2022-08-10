@@ -74,7 +74,7 @@ export default class Orders extends Component {
     }
 
     filterOrders = async (status) => {
-        console.log("filtering")
+        // console.log("filtering")
         this.setState({
             orders: { orders: this.state.ordersCopy.orders.filter((order) => order.status.code == status + 1) },
             status,

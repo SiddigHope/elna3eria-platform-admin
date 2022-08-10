@@ -3,7 +3,7 @@ import { View, Text, Dimensions, StyleSheet, Image, Pressable, TouchableOpacity,
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { colors, fonts } from '../../config/vars';
 import { elevations } from '../../config/elevations';
-
+import { cacheImage } from "../../config/functions";
 
 const { width, height } = Dimensions.get("window")
 
@@ -11,7 +11,26 @@ export default class LatestComponent extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            image: { uri: this.props.item.details[0].product.image }
         };
+    }
+
+    componentDidMount() {
+        this._loadImage()
+    }
+
+    componentWillReceiveProps(nextProps) {
+        // You don't have to do this check first, but it can help prevent an unneeded render
+        this._loadImage({ uri: nextProps.item.details[0].product.image })
+    }
+
+    _loadImage = async (uri) => {
+        let image = await cacheImage({ uri: this.props.item.details[0].product.image })
+        if (uri) {
+            image = await cacheImage(uri)
+        }
+        this.setState({ image, })
+        // return image
     }
 
     renderTextColor = (code) => {
@@ -52,7 +71,7 @@ export default class LatestComponent extends Component {
         return (
             <Pressable onPress={() => this.props.onPress(item)} style={[styles.container, elevations[10]]}>
                 <View style={[styles.imageContainer, elevations[5]]}>
-                    <Image style={styles.image} source={{ uri: item.details[0].product.image }} />
+                    <Image style={styles.image} source={this.state.image} />
                 </View>
                 <View style={styles.infoContainer}>
                     <View style={styles.rowContainer}>
