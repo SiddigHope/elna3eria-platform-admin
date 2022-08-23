@@ -59,7 +59,7 @@ export default class ProfileComponent extends Component {
             {
                 id: 1,
                 title: "عن التطبيق",
-                onPress: "about",
+                onPress: "About",
                 icon: <Icon1 name="ios-information-circle-sharp" size={25} color={colors.mainColor} />,
             },
             {
@@ -71,7 +71,7 @@ export default class ProfileComponent extends Component {
             {
                 id: 3,
                 title: "السياسات و اللوائح",
-                onPress: "PrivacyPolicy",
+                onPress: "Policy",
                 icon: <Icon4 name="policy" size={25} color={colors.mainColor} />,
             },
             {
@@ -119,7 +119,13 @@ export default class ProfileComponent extends Component {
             return
         }
 
-        if (item == "about") {
+        if (item == "About") {
+            goToScreen(item, this.props.navigation, { type: "about" })
+            return
+        }
+
+        if (item == "Policy") {
+            goToScreen("About", this.props.navigation, { type: "policy" })
             return
         }
         goToScreen(item, this.props.navigation)

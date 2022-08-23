@@ -14,6 +14,7 @@ import EditProfile from '../../screens/EditProfile';
 import Home from "../../screens/Home";
 import Chats from '../../screens/Chats';
 import Chat from '../../screens/Chat';
+import About from '../../screens/About';
 
 const Stack = createStackNavigator();
 
@@ -119,6 +120,13 @@ function AppStack() {
             <Stack.Screen
                 name="EditProfile"
                 component={EditProfile}
+                options={{
+                    headerShown: false,
+                }}
+            />
+            <Stack.Screen
+                name="About"
+                component={About}
                 options={{
                     headerShown: false,
                 }}

@@ -21,7 +21,7 @@ export default class ChatsComponent extends Component {
     render() {
         const { item } = this.props
         // console.log("item.client")
-        // console.log(item.client)
+        // console.log(item.last_message)
         return (
             <TouchableHighlight underlayColor={mainColorWithOpacity(0.4)} onPress={this.goToChat} style={styles.container}>
                 <>
@@ -30,7 +30,7 @@ export default class ChatsComponent extends Component {
                     </View>
                     <View style={styles.textContainer}>
                         <Text style={styles.name}> {item.client.name} </Text>
-                        <Text numberOfLines={1} style={styles.message}> {item.last_message[0].message} </Text>
+                        <Text numberOfLines={1} style={styles.message}> {item.last_message[0].message_type} </Text>
                     </View>
                     <Text style={styles.time}> {item.last_message[0].time} </Text>
                 </>

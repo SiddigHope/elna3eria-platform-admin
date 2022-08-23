@@ -25,7 +25,7 @@ export default class MessageList extends Component {
 
 
     _listHeader = () => (
-        <View style={{ height: 5 }} />
+        <View style={{ height: 10 }} />
     )
 
     _listFooter = () => (
@@ -63,7 +63,7 @@ export default class MessageList extends Component {
 const styles = StyleSheet.create({
     container: {
         // flex: 1,
-        maxHeight: height - 130,
+        maxHeight: height - 170,
         alignItems: 'center',
         // backgroundColor: colors.blueLight,
     }

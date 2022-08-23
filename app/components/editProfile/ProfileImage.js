@@ -9,7 +9,7 @@ export default class ProfileImage extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            image: {uri: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1024px-No_image_available.svg.png"}
+            image: { uri: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1024px-No_image_available.svg.png" }
         };
     }
 
@@ -22,14 +22,14 @@ export default class ProfileImage extends Component {
     componentWillReceiveProps(nextProps) {
         if (nextProps.image != this.state.image) {
             this.setState({
-                image: {uri: nextProps.image},
+                image: nextProps.image,
             })
         }
     }
 
     getData = () => {
         this.setState({
-            image: { uri: this.props.image }
+            image: this.props.image
         })
     }
 
@@ -69,7 +69,7 @@ export default class ProfileImage extends Component {
         console.log(this.state.image)
         return (
             <View style={[styles.container, elevations[5]]}>
-                <Image source={{uri : this.state.image.uri}} style={styles.image} />
+                <Image source={{ uri: this.state.image.uri }} style={styles.image} />
                 <TouchableOpacity onPress={this._imagePicker} style={[styles.btn, elevations[5]]} >
                     <Icon name='image-plus' size={25} color={colors.mainColor} />
                 </TouchableOpacity>

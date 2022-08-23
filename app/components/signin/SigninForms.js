@@ -77,39 +77,41 @@ export default class SigninForms extends Component {
 
   render() {
     return (
-        <View style={styles.container}>
-          <TextInputRender
-            ref={(email) => (this.emailInput = email)}
-            refFunction={this.emailInput}
-            placeholder={this.state.emailPlaceholder}
-            onChangeText={(email) => this.setState({ email })}
-          />
-          <TextInputRender
-            ref={(password) => (this.passwordInput = password)}
-            refFunction={this.passwordInput}
-            placeholder={this.state.passwordPlaceholder}
-            secureTextEntry={this.state.passwordToggler}
-            onChangeText={(password) => this.setState({ password })}
-          />
-          <Pressable onPress={this.login}>
-            <LinearGradient
-              colors={["#F4C343", colors.mainColor]}
-              style={[styles.btn, elevations[5]]}
-            >
-              {this.state.loading ? (
-                <ActivityIndicator color={colors.white} size="large" />
-              ) : (
-                <Text style={styles.btnText}> {"تسجيل الدخول"} </Text>
-              )}
-            </LinearGradient>
-          </Pressable>
-          <ShowSnackbar
-            backgroundColor={this.state.snackbarBackgroundColor}
-            text={this.state.snackbarText}
-            show={this.state.showSnackbar}
-            closeSnackbar={() => this.setState({ showSnackbar: false })}
-          />
-        </View>
+      <View style={styles.container}>
+        <TextInputRender
+          type="email"
+          ref={(email) => (this.emailInput = email)}
+          refFunction={this.emailInput}
+          placeholder={this.state.emailPlaceholder}
+          onChangeText={(email) => this.setState({ email })}
+        />
+        <TextInputRender
+          type="password"
+          ref={(password) => (this.passwordInput = password)}
+          refFunction={this.passwordInput}
+          placeholder={this.state.passwordPlaceholder}
+          secureTextEntry={this.state.passwordToggler}
+          onChangeText={(password) => this.setState({ password })}
+        />
+        <Pressable onPress={this.login}>
+          <LinearGradient
+            colors={["#F4C343", colors.mainColor]}
+            style={[styles.btn, elevations[5]]}
+          >
+            {this.state.loading ? (
+              <ActivityIndicator color={colors.white} size="large" />
+            ) : (
+              <Text style={styles.btnText}> {"تسجيل الدخول"} </Text>
+            )}
+          </LinearGradient>
+        </Pressable>
+        <ShowSnackbar
+          backgroundColor={this.state.snackbarBackgroundColor}
+          text={this.state.snackbarText}
+          show={this.state.showSnackbar}
+          closeSnackbar={() => this.setState({ showSnackbar: false })}
+        />
+      </View>
     );
   }
 }

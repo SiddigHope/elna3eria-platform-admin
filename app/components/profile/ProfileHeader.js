@@ -48,7 +48,7 @@ export default class ProfileHeader extends Component {
                         source={require("../../../assets/images/5804273.jpg")}
                     />
                 </View>
-                <View style={[styles.profileContainer, elevations[5]]}>
+                <View style={[styles.profileContainer]}>
                     <View style={[styles.imageContainer, elevations[5]]}>
                         <Image style={styles.image} source={user.store ? { uri: user.store.image } : require("../../../assets/images/avatar.png")} />
                     </View>
@@ -151,6 +151,7 @@ const styles = StyleSheet.create({
         fontFamily: fonts.tajawalB,
         fontSize: 16,
         color: colors.ebony,
+        // backgroundColor: "red"
     },
     email: {
         flex: 1,

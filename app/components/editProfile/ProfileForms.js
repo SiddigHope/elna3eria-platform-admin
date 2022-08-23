@@ -24,7 +24,7 @@ export default class ProfileForms extends Component {
             phonePlaceholder: "رقم الهاتف الخاص بالموظف ",
             storePhonePlaceholder: "رقم واتساب الخاص بالمتحر ",
             image: {},
-            userImage: "",
+            userImage: {},
         };
     }
 
@@ -41,8 +41,8 @@ export default class ProfileForms extends Component {
                 deliveryFee: nextProps.user.store.delivery_fees,
                 address: nextProps.user.store.address,
                 phone: nextProps.user.phone,
-                image: nextProps.user.store.image,
-                userImage: nextProps.user.image,
+                image: { uri: nextProps.user.store.image },
+                userImage: { uri: nextProps.user.image },
                 storeName: nextProps.user.store.name,
                 user: nextProps.user,
             })
@@ -59,8 +59,8 @@ export default class ProfileForms extends Component {
             storeName: user.store && user.store.name,
             email: user.email,
             phone: user.phone,
-            userImage: user.store && user.image,
-            image: user.store && user.store.image,
+            userImage: { uri: user.store && user.image },
+            image: { uri: user.store && user.store.image },
             desc: user.store && user.store.description,
             storePhone: user.store && user.store.phone,
             deliveryFee: user.store && user.store.delivery_fees,
@@ -114,8 +114,8 @@ export default class ProfileForms extends Component {
 
     render() {
         // console.log(this.state.deliveryFee)
-        if(!this.state.user){
-            return(
+        if (!this.state.user) {
+            return (
                 <ActivityIndicator size={50} color={colors.mainColor} />
             )
         }
@@ -216,13 +216,6 @@ export default class ProfileForms extends Component {
                         )}
                     </TouchableOpacity>
                 </View>
-
-
-
-
-
-
-
             </View>
         );
     }

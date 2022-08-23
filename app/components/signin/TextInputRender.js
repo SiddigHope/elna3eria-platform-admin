@@ -14,10 +14,9 @@ export default class TextInputRender extends Component {
       <View style={[styles.textInputContainer, elevations[5]]}>
         <TextInput
           style={styles.textInput}
+          keyboardType={this.props.type == "email" ? "email-address" : "default"}
           secureTextEntry={
-            this.props.placeholder == "كلمة المرور"
-              ? this.props.secureTextEntry
-              : false
+            this.props.type == "password" && true
           }
           placeholder={this.props.placeholder}
           // onSubmitEditing={() => this.props.refFunction.focus()}

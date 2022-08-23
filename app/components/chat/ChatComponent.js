@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Dimensions, ImageBackground } from 'react-native';
+import { View, Text, StyleSheet, Dimensions, ImageBackground, Pressable, Image, Linking } from 'react-native';
 import { colors } from '../../config/vars';
 import ChatHeader from './ChatHeader';
 import MessageList from './MessageList';
 import TextInputRender from './TextInputRender';
 import Echo from 'laravel-echo';
 import { sendMessage, sendSupportMessage } from '../../config/apis/chats/posts';
+import { elevations } from '../../config/elevations';
 
 const { width, height } = Dimensions.get("window")
 
@@ -130,6 +131,23 @@ export default class ChatComponent extends Component {
         console.log("the message is empty")
     }
 
+    whatsapp = () => {
+        const link = "https://wa.me/" + "966595995566"
+        Linking
+            .canOpenURL(link)
+            .then(supported => {
+                if (!supported) {
+                    Alert.alert(
+                        'قم بتنزيل تطبيق الواتساب للمراسلة الفورية او بامكانك استحدام حاصية الاتصال المباشر'
+                    );
+                } else {
+                    return Linking.openURL(link);
+                }
+            })
+            .catch(err => console.error('An error occurred', err));
+    }
+
+
     render() {
         // console.log(this.state.messages && this.state.messages.length)
         return (
@@ -139,6 +157,11 @@ export default class ChatComponent extends Component {
                     navigation={this.props.navigation}
                 />
                 <MessageList user={this.props.user} messages={this.state.messages} />
+                {this.props.type == "support" && (
+                    <Pressable onPress={this.whatsapp} style={[styles.iconContainer, elevations[5], { marginLeft: 10 }]}>
+                        <Image style={{ width: 30, height: 30 }} source={require("../../../assets/icons/headset.png")} />
+                    </Pressable>
+                )}
                 <TextInputRender
                     submitAudio={this.submitFile}
                     submitImage={this.submitFile}
@@ -159,5 +182,18 @@ const styles = StyleSheet.create({
         // width,
         // height,
         backgroundColor: colors.whiteF7
-    }
+    },
+    iconContainer: {
+        position: 'absolute',
+        bottom: 100,
+        right: 20,
+        backgroundColor: colors.mainColor,
+        elevation: 5,
+        justifyContent: 'center',
+        alignItems: 'center',
+        // padding: 10,
+        width: 50,
+        height: 50,
+        borderRadius: 50
+    },
 })

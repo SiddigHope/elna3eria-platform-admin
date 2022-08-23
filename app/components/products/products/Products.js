@@ -14,7 +14,7 @@ export default class Products extends Component {
     }
 
     _listFooter = () => (
-        <View style={{ height: 20 }} />
+        <View style={{ height: 70 }} />
     )
 
     _listHeader = () => (
@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         borderRadius: 30,
         position: 'absolute',
-        bottom: 50,
+        bottom: 70,
         right: 20
     }
 })

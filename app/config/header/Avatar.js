@@ -18,11 +18,13 @@ export default class Avatar extends Component {
 
   componentWillReceiveProps(nextProps) {
     // You don't have to do this check first, but it can help prevent an unneeded render
-    this._loadImage({ uri: nextProps.user.employee.image })
+    if(nextProps.user){
+      this._loadImage({ uri: nextProps.user.employee.image })
+    }
   }
 
   _loadImage = async (uri) => {
-    let image = await cacheImage({ uri: this.props.user.employee.image })
+    let image = await cacheImage({ uri: this.props.user && this.props.user.employee.image })
     if (uri) {
       image = await cacheImage(uri)
     }

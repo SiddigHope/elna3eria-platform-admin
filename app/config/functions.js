@@ -131,3 +131,16 @@ export const openDrawer = (navigation) => {
 export const wait = (timeout) => {
   return new Promise(resolve => setTimeout(resolve, timeout));
 }
+
+export const saveAppInfo = async (data) => {
+  AsyncStorage.setItem("elna3eriaStoreAppInfo", JSON.stringify(data))
+}
+
+export const getAppInfo = async () => {
+  const data = await AsyncStorage.getItem("elna3eriaStoreAppInfo")
+  if (data != null) {
+    return JSON.parse(data)
+  }
+
+  return []
+}
