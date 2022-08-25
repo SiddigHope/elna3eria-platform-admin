@@ -65,8 +65,8 @@ export default class ProfileImage extends Component {
     }
 
     render() {
-        console.log("this.state.image")
-        console.log(this.state.image)
+        // console.log("this.state.image")
+        // console.log(this.state.image)
         return (
             <View style={[styles.container, elevations[5]]}>
                 <Image source={{ uri: this.state.image.uri }} style={styles.image} />

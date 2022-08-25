@@ -50,8 +50,10 @@ export default class EditProfileComponent extends Component {
         formData.append("address", data.address)
         formData.append("phone", data.phone)
         formData.append("delivery_fees", data.deliveryFee)
+        formData.append("lat", data.lat)
+        formData.append("long", data.long)
 
-        if (data.image.uri) {
+        if (data.image.type) {
             formData.append("image", data.image)
         }
 
@@ -63,6 +65,8 @@ export default class EditProfileComponent extends Component {
             })
             this.props.navigation.navigate("Tabs")
         } else {
+            console.log("store info not edited")
+            console.log(stored)
             this.setState({
                 storeLoading: false
             })
@@ -87,7 +91,7 @@ export default class EditProfileComponent extends Component {
         formData.append("name", data.name)
         formData.append("phone", data.phone)
 
-        if (data.image.uri) {
+        if (data.image.type) {
             formData.append("image", data.image)
         }
 

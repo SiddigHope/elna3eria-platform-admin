@@ -11,7 +11,7 @@ import { colors, fonts } from "../../config/vars";
 import { LinearGradient } from "expo-linear-gradient";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import TextInputRender from "./TextInputRender";
-import { goToScreen, ShowSnackbar } from "../../config/functions";
+import { getDeviceToken, goToScreen, ShowSnackbar } from "../../config/functions";
 import { login } from "../../config/apis/authentication";
 import UserClass from "../../config/authHandler";
 import elevations from "../../config/elevations";
@@ -36,6 +36,7 @@ export default class SigninForms extends Component {
 
   login = async () => {
     const { email, password } = this.state;
+    const device_token = await getDeviceToken()
     if (email && password) {
       this.setState({
         loading: true,
@@ -44,6 +45,7 @@ export default class SigninForms extends Component {
       const data = {
         email,
         password,
+        device_token
       };
       const stored = await login(data);
       if (stored) {

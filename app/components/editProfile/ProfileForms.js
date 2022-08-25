@@ -1,9 +1,13 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ActivityIndicator } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, ActivityIndicator, Dimensions } from 'react-native';
 import { colors, fonts } from '../../config/vars';
 import TextInputRender from './TextInputRender';
 import ProfileImage from './ProfileImage';
+import Maps from '../../screens/Maps';
+import { getUserCurrentLocation } from '../../config/functions';
 
+
+const { width, height } = Dimensions.get('window')
 export default class ProfileForms extends Component {
     constructor(props) {
         super(props);
@@ -25,14 +29,34 @@ export default class ProfileForms extends Component {
             storePhonePlaceholder: "رقم واتساب الخاص بالمتحر ",
             image: {},
             userImage: {},
+            location: false,
+            lat: 0,
+            long: 0,
+            editLocation: false
         };
     }
 
     componentDidMount() {
+        this.getCurrentLocation()
         this.getUser()
     }
 
-    componentWillReceiveProps(nextProps) {
+    getCurrentLocation = async () => {
+        // console.log("watching user current location");
+        // console.log(await Location.watchPositionAsync());
+        try {
+            let location = await getUserCurrentLocation();
+            // console.log("location")
+            // console.log(location)
+            this.setState({
+                location,
+            })
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    UNSAFE_componentWillReceiveProps(nextProps) {
         if (nextProps.user.name != this.state.name) {
             this.setState({
                 name: nextProps.user.name,
@@ -40,20 +64,31 @@ export default class ProfileForms extends Component {
                 storePhone: nextProps.user.store.phone,
                 deliveryFee: nextProps.user.store.delivery_fees,
                 address: nextProps.user.store.address,
+                lat: nextProps.user.store.lat,
+                long: nextProps.user.store.long,
                 phone: nextProps.user.phone,
                 image: { uri: nextProps.user.store.image },
                 userImage: { uri: nextProps.user.image },
                 storeName: nextProps.user.store.name,
                 user: nextProps.user,
             })
+
+            if (nextProps.user.store.long && !this.state.editLocation) {
+                const { location } = this.state
+                location.latitude = nextProps.user.store.lat
+                location.longitude = nextProps.user.store.long
+                this.setState({
+                    location,
+                })
+            }
         }
     }
 
     getUser = () => {
         const { user } = this.props
-        console.log("user*************")
-        console.log(user)
-        console.log("user*************")
+        // console.log("user*************")
+        // console.log(user)
+        // console.log("user*************")
         this.setState({
             name: user.name,
             storeName: user.store && user.store.name,
@@ -70,7 +105,7 @@ export default class ProfileForms extends Component {
     }
 
     submitStoreForm = () => {
-        const { storeName, desc, address, deliveryFee, image, storePhone } = this.state
+        const { storeName, desc, address, deliveryFee, image, storePhone, location } = this.state
 
         if (storeName) {
             const data = {
@@ -79,7 +114,9 @@ export default class ProfileForms extends Component {
                 image,
                 desc,
                 deliveryFee,
-                phone: storePhone
+                phone: storePhone,
+                long: String(location.longitude),
+                lat: String(location.latitude)
             }
             this.props.submitStoreForm(data)
         } else {
@@ -208,6 +245,21 @@ export default class ProfileForms extends Component {
                         onChange={(deliveryFee) => this.setState({ deliveryFee })}
                     />
 
+
+                    {this.state.location && (
+                        <View style={styles.mapContainer}>
+                            <Maps
+                                navigation={this.props.navigation}
+                                location={this.state.location}
+                                editLocation={this.state.editLocation}
+                                setEditLocation={() => this.setState({ editLocation: true })}
+                                setLocation={(location) => this.setState({ location })}
+                                closeModal={() => this.setState({ showMap: false })}
+                            />
+                        </View>
+                    )}
+
+
                     <TouchableOpacity onPress={this.submitStoreForm} style={styles.btn}>
                         {this.props.storeLoading ? (
                             <ActivityIndicator color={colors.white} size="small" />
@@ -222,6 +274,10 @@ export default class ProfileForms extends Component {
 }
 
 const styles = StyleSheet.create({
+    mapContainer: {
+        width: "100%",
+        height: (height * 70) / 100,
+    },
     paddingView: {
         width: "100%",
         padding: 10,

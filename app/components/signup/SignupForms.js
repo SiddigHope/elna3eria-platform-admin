@@ -13,7 +13,7 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 import TextInputRender from "./TextInputRender";
 import RNPickerSelect from "react-native-picker-select";
 import { Snackbar } from "react-native-paper";
-import { goToScreen, ShowSnackbar } from "../../config/functions";
+import { getDeviceToken, goToScreen, ShowSnackbar } from "../../config/functions";
 import { newStore } from "../../config/apis/authentication";
 import elevations from "../../config/elevations";
 
@@ -71,7 +71,7 @@ export default class SignupForms extends Component {
 
   storeData = async () => {
     const { storeName, department, owner, email, password } = this.state;
-
+    const device_token = await getDeviceToken()
     if (storeName && owner && email && password) {
       this.setState({
         loading: true,
@@ -83,6 +83,7 @@ export default class SignupForms extends Component {
         owner_name: owner,
         email: email,
         password: password,
+        device_token
       };
       const stored = await newStore(data);
       if (stored) {

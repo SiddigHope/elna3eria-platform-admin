@@ -86,7 +86,7 @@ function MainScreen() {
     }
 
     try {
-      await AsyncStorage.setItem('elna3eriaClientToken', token)
+      await AsyncStorage.setItem('elna3eriaStoreToken', token)
     } catch (e) {
       console.log(e)
     }

@@ -169,7 +169,7 @@ export const updateStoreProfile = async (data) => {
       url: mainDomain + "store/setting",
       headers: {
         "Content-Type": "application/json",
-        Accept: "*/*",
+        Accept: "application/json",
         Authorization: "Bearer " + user.token,
       },
       data,
@@ -177,17 +177,18 @@ export const updateStoreProfile = async (data) => {
 
     const request = await axios(options)
       .then((response) => response.data)
-      .catch((error) => console.log(error));
+      .catch((error) => console.log(error.response));
 
-    if (request.success) {
+      console.log("request")
+      console.log(request)
+      if (request.success) {
       user.employee.store = request.data
-      // console.log("request")
-      // console.log(request.data)
+      // console.log(request)
       UserClass.setUser(user)
     }
     return request.success ? true : false;
   } catch (error) {
-    console.log(error);
+    console.log(error.response);
     return false;
   }
 };

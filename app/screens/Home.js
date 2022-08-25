@@ -1,11 +1,19 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { Component } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Dimensions } from 'react-native';
 import HomeComponent from '../components/home/HomeComponent';
 import Header from '../config/header/Header';
 import { colors } from '../config/vars';
 import UserClass from '../config/authHandler';
-import { goToScreen } from '../config/functions';
+import { goToScreen, setUserCurrentLocation } from '../config/functions';
+import * as Location from 'expo-location';
+
+
+const { width, height } = Dimensions.get('window')
+const ASPECT_RATIO = ((width * 90) / 100) / ((height * 40) / 100);
+const LATITUDE_DELTA = 0.02;
+const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
+
 
 export default class Home extends Component {
     constructor(props) {
@@ -16,7 +24,32 @@ export default class Home extends Component {
     }
 
     componentDidMount() {
+        this.getCurrentLocation()
         this.getUser()
+    }
+
+    getCurrentLocation = async () => {
+        // console.log("watching user current location");
+        // console.log(await Location.watchPositionAsync());
+        try {
+            let { status } = await Location.requestForegroundPermissionsAsync();
+            if (status !== 'granted') {
+                return;
+            }
+            let location = await Location.getCurrentPositionAsync({});
+            console.log("location.coords");
+            console.log(location.coords);
+            const loc = {
+                latitude: location.coords.latitude,
+                longitude: location.coords.longitude,
+                latitudeDelta: LATITUDE_DELTA,
+                longitudeDelta: LONGITUDE_DELTA
+            }
+            setUserCurrentLocation(loc)
+
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     getUser = async () => {

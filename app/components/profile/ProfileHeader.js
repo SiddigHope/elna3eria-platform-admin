@@ -53,9 +53,11 @@ export default class ProfileHeader extends Component {
                         <Image style={styles.image} source={user.store ? { uri: user.store.image } : require("../../../assets/images/avatar.png")} />
                     </View>
                     <View style={styles.infoContainer}>
-                        <Text style={styles.name}>
-                            {user.store.name}
-                        </Text>
+                        <View style={{ flex: 1, justifyContent: 'center' }}>
+                            <Text style={styles.name}>
+                                {user.store.name}
+                            </Text>
+                        </View>
                         <Text style={styles.email}>
                             {user.name}
                         </Text>
@@ -145,7 +147,7 @@ const styles = StyleSheet.create({
         marginHorizontal: 10,
     },
     name: {
-        flex: 1,
+        // flex: 1,
         textAlign: "right",
         textAlignVertical: 'center',
         fontFamily: fonts.tajawalB,

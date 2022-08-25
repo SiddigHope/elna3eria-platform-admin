@@ -15,7 +15,7 @@ export const goToScreen = (screen, navigation, props) => {
 };
 
 export const getDeviceToken = async () => {
-  const token = await AsyncStorage.getItem('elna3eriaClientToken')
+  const token = await AsyncStorage.getItem('elna3eriaStoreToken')
   return token ? token : ''
 }
 
@@ -140,6 +140,19 @@ export const getAppInfo = async () => {
   const data = await AsyncStorage.getItem("elna3eriaStoreAppInfo")
   if (data != null) {
     return JSON.parse(data)
+  }
+
+  return []
+}
+
+export const setUserCurrentLocation = async (location) => {
+  AsyncStorage.setItem("elna3eriaStoreCurrentLocation", JSON.stringify(location))
+}
+
+export const getUserCurrentLocation = async () => {
+  const location = await AsyncStorage.getItem("elna3eriaStoreCurrentLocation")
+  if (location != null) {
+    return JSON.parse(location)
   }
 
   return []
