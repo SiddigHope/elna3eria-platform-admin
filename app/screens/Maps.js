@@ -93,6 +93,9 @@ export default function Maps({ navigation, location, setLocation, closeModal, ed
             <MapView
                 ref={mapRef}
                 style={styles.map}
+                zoomControlEnabled={true}
+                showsUserLocation
+                showsMyLocationButton={editLocation}
                 onPress={(e) => {
                     const position = {
                         latitude: e.nativeEvent.coordinate.latitude,

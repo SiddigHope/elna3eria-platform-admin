@@ -65,8 +65,8 @@ export default class EditProfileComponent extends Component {
             })
             this.props.navigation.navigate("Tabs")
         } else {
-            console.log("store info not edited")
-            console.log(stored)
+            // console.log("store info not edited")
+            // console.log(stored)
             this.setState({
                 storeLoading: false
             })

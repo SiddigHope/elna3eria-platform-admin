@@ -7,6 +7,7 @@ import TextInputRender from './TextInputRender';
 import Echo from 'laravel-echo';
 import { sendMessage, sendSupportMessage } from '../../config/apis/chats/posts';
 import { elevations } from '../../config/elevations';
+import { PUSHER_KEY } from '../../../keys';
 
 const { width, height } = Dimensions.get("window")
 
@@ -25,7 +26,7 @@ export default class ChatComponent extends Component {
             broadcaster: 'pusher',
             // host: 'http://na3eria.sudahex.com',
             client: undefined,
-            key: "7e3f6fc1daa17a226792",
+            key: PUSHER_KEY,
             cluster: "eu",
             // encrypted: true,
             forceTLS: true,

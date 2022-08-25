@@ -23,8 +23,8 @@ export default function Profile(props) {
 
     const getUser = async () => {
         const user = await UserClass.getUser()
-        console.log("user setTimeOut")
-        console.log(user)
+        // console.log("user setTimeOut")
+        // console.log(user)
 
         if (user == []) {
             console.log("the user array is empty")

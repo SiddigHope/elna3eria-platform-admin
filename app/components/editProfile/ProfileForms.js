@@ -8,6 +8,12 @@ import { getUserCurrentLocation } from '../../config/functions';
 
 
 const { width, height } = Dimensions.get('window')
+
+
+const ASPECT_RATIO = width / height;
+const LATITUDE_DELTA = 0.02;
+const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
+
 export default class ProfileForms extends Component {
     constructor(props) {
         super(props);
@@ -57,6 +63,7 @@ export default class ProfileForms extends Component {
     }
 
     UNSAFE_componentWillReceiveProps(nextProps) {
+        console.log("inside nextProps")
         if (nextProps.user.name != this.state.name) {
             this.setState({
                 name: nextProps.user.name,
@@ -72,13 +79,17 @@ export default class ProfileForms extends Component {
                 storeName: nextProps.user.store.name,
                 user: nextProps.user,
             })
-
+            console.log("user from props")
+            console.log(nextProps.user.store.long)
             if (nextProps.user.store.long && !this.state.editLocation) {
-                const { location } = this.state
-                location.latitude = nextProps.user.store.lat
-                location.longitude = nextProps.user.store.long
+
                 this.setState({
-                    location,
+                    location: {
+                        latitude: nextProps.user.store.lat,
+                        longitude: nextProps.user.store.long,
+                        latitudeDelta: LATITUDE_DELTA,
+                        longitudeDelta: LONGITUDE_DELTA
+                    },
                 })
             }
         }
@@ -86,6 +97,8 @@ export default class ProfileForms extends Component {
 
     getUser = () => {
         const { user } = this.props
+        console.log("user from props")
+        console.log(user.store.long)
         // console.log("user*************")
         // console.log(user)
         // console.log("user*************")
@@ -102,6 +115,16 @@ export default class ProfileForms extends Component {
             address: user.store && user.store.address,
             user,
         })
+        if (user.store.long && !this.state.editLocation) {
+            this.setState({
+                location: {
+                    latitude: user.store.lat,
+                    longitude: user.store.long,
+                    latitudeDelta: LATITUDE_DELTA,
+                    longitudeDelta: LONGITUDE_DELTA
+                },
+            })
+        }
     }
 
     submitStoreForm = () => {

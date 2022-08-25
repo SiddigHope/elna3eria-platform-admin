@@ -44,7 +44,7 @@ export const login = async (data) => {
 
     const request = await axios(options)
       .then((response) => response.data)
-      .catch((error) => console.log(error));
+      .catch((error) => console.log(error.response));
 
     return request.success ? request.data : false;
   } catch (error) {
