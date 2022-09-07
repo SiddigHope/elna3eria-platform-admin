@@ -93,7 +93,7 @@ const styles = StyleSheet.create({
         zIndex: 111,
         elevation: 10,
         left: 10,
-        top: 10
+        top: 30
     },
     imageBannerContainer: {
         height: 150,

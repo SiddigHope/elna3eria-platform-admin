@@ -56,3 +56,4 @@ export const getProducts = async () => {
     return false;
   }
 };
+// http://na3eria.sudahex.com/images/default/categories/all.png

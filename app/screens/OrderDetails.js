@@ -1,11 +1,15 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, RefreshControl, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, RefreshControl, ScrollView, Image } from 'react-native';
 import MiniHeader from '../components/MiniHeader';
 import OrderDetailsComponent from '../components/orderDetails/OrderDetailsComponent';
 import { getOrder } from '../config/apis/orders/gets';
 import { updateOrder } from '../config/apis/orders/posts';
 import { colors } from '../config/vars';
+import { TouchableOpacity } from 'react-native';
+import Icon from 'react-native-vector-icons/Ionicons';
+import elevations from '../config/elevations';
+import { goToScreen } from '../config/functions';
 
 export default class OrderDetails extends Component {
     constructor(props) {
@@ -14,6 +18,11 @@ export default class OrderDetails extends Component {
             refreshing: false,
             order: this.props.route.params.order
         };
+    }
+
+
+    componentDidMount() {
+        console.log(this.props.route.params.order);
     }
 
     changeStatus = async (code) => {
@@ -38,6 +47,10 @@ export default class OrderDetails extends Component {
         }, 2000)
     }
 
+    onPress = () => {
+        goToScreen("Chat", this.props.navigation, { receiver: this.state.order.client, type: "order" })
+    }
+
     render() {
         return (
             <View style={styles.container}>
@@ -53,8 +66,15 @@ export default class OrderDetails extends Component {
                         />
                     }
                     showsVerticalScrollIndicator={false}>
-                    <OrderDetailsComponent refresh={this._onRefresh} changeStatus={this.changeStatus} order={this.state.order} />
+                    <OrderDetailsComponent
+                        refresh={this._onRefresh}
+                        changeStatus={this.changeStatus}
+                        order={this.state.order}
+                    />
                 </ScrollView>
+                <TouchableOpacity style={[styles.chatBtn, elevations[10]]} onPress={this.onPress} >
+                    <Icon name="chatbox-ellipses-outline" color={colors.white} size={30} />
+                </TouchableOpacity>
             </View>
         );
     }
@@ -64,5 +84,17 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: colors.mainColor
+    },
+    chatBtn: {
+        backgroundColor: colors.success,
+        width: 60,
+        height: 60,
+        borderRadius: 50,
+        alignItems: 'center',
+        justifyContent: 'center',
+        elevation: 10,
+        position: 'absolute',
+        bottom: 20,
+        left: 20
     }
 })

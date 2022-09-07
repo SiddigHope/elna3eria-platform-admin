@@ -5,6 +5,7 @@ import ChatComponent from '../components/chat/ChatComponent';
 import { colors } from '../config/vars';
 import UserClass from '../config/authHandler';
 import { getConversation, getSupportConversation } from '../config/apis/chats/gets';
+import { sendMessage } from '../config/apis/chats/posts';
 
 export default class Chat extends Component {
     constructor(props) {
@@ -21,24 +22,41 @@ export default class Chat extends Component {
     }
 
     getConversation = async () => {
+        const { type, receiver } = this.props.route.params
         let conversation = this.props.route.params.conversation
+        const user = await UserClass.getUser();
         let messages = []
-        if (this.props.route.params.type == "support") {
+
+        if (type == "support") {
             conversation = await getSupportConversation()
             if (conversation) {
                 this.setState({
                     conversation,
-                    user: await UserClass.getUser(),
+                    user,
+                })
+            }
+        } if (type == "order") {
+            const data = {
+                client_id: receiver.id
+            }
+            conversation = await sendMessage(data, "openConversationWithClient")
+            console.log("conversation")
+            // console.log(conversation.messages)
+            if (conversation) {
+                this.setState({
+                    conversation,
+                    user,
                 })
             }
         } else {
             messages = await getConversation(conversation.id)
         }
         if (messages) {
-            if (this.props.route.params.type != "support") {
+            console.log("inside messages condition");
+            if (type != "support" && type != "order") {
                 this.setState({
                     conversation: { ...conversation, messages },
-                    user: await UserClass.getUser(),
+                    user,
                 })
             }
             setTimeout(() => {
@@ -51,15 +69,17 @@ export default class Chat extends Component {
 
 
     render() {
-        console.log("this.state.conversation")
-        console.log(this.state.conversation)
+        const { type, receiver, conversation } = this.props.route.params
+        const client = type == "support" || type == "order" ? receiver : conversation.client
+        // console.log("this.state.conversation")
+        // console.log(this.state.user)
         return (
             <View style={styles.container} >
                 <StatusBar translucent={false} backgroundColor={colors.whiteF7} />
                 {/* {!this.state.loading ? ( */}
                 <ChatComponent
-                    type={this.props.route.params.type}
-                    receiver={this.props.route.params.type == "support" ? this.props.route.params.receiver : this.props.route.params.conversation.client}
+                    type={type}
+                    receiver={client}
                     navigation={this.props.navigation}
                     conversation={this.state.conversation}
                     user={this.state.user.employee}

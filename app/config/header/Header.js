@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, Text, StyleSheet, Image, Pressable } from "react-native";
+import { View, Text, StyleSheet, Image, Pressable, Platform } from "react-native";
 import { colors, fonts } from "../vars";
 import Avatar from "./Avatar";
 import Input from "./Input";
@@ -37,7 +37,7 @@ export default class Header extends Component {
     // console.log("this.state.user.employee")
     // console.log(this.state.user);
     return (
-      <View style={[styles.container, this.props.searching ? { height: 50 } : {}]}>
+      <View style={[styles.container, this.props.searching ? { height: 50 } : Platform.OS == "ios" ? { marginTop: 40 } : {}]}>
         <View style={styles.headerContainer}>
           <Avatar user={this.state.user} />
           {this.props.screen == "home" ? (

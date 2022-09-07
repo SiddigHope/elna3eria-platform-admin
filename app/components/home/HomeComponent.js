@@ -84,7 +84,7 @@ export default class HomeComponent extends Component {
     )
 
     _listFooter = () => (
-        <View style={{ height: 160 }} />
+        <View style={{ height: 180 }} />
     )
 
     _renderItem = (item, index) => (
@@ -124,6 +124,7 @@ const styles = StyleSheet.create({
         fontSize: 16,
         color: colors.ebony,
         // marginVertical: 10,
+        textAlign:"right",
         marginTop: 20,
         marginHorizontal: 20
     }

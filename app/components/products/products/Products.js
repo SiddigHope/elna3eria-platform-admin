@@ -42,8 +42,8 @@ export default class Products extends Component {
                     showsVerticalScrollIndicator={false}
                     renderItem={this._renderItems}
                     numColumns={2}
-                    style={{width:"90%"}}
-                    contentContainerStyle={{alignItems: 'flex-end'}}
+                    // style={{width:"100%", backgroundColor: "blue"}}
+                    contentContainerStyle={{alignItems: 'flex-end', marginHorizontal: 20}}
                     ListHeaderComponent={this._listHeader}
                     ListFooterComponent={this._listFooter}
                     ItemSeparatorComponent={this._itemSeparator}

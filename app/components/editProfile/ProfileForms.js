@@ -274,6 +274,7 @@ export default class ProfileForms extends Component {
                             <Maps
                                 navigation={this.props.navigation}
                                 location={this.state.location}
+                                store={this.state.user.store}
                                 editLocation={this.state.editLocation}
                                 setEditLocation={() => this.setState({ editLocation: true })}
                                 setLocation={(location) => this.setState({ location })}

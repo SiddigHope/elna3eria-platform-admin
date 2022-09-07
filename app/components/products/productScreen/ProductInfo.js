@@ -6,6 +6,8 @@ import {
   Dimensions,
   TextInput,
   ScrollView,
+  KeyboardAvoidingView,
+  Platform
 } from "react-native";
 import { colors } from "../../../config/vars";
 import OrderButton from "./OrderButton";
@@ -28,17 +30,18 @@ export default class ProductInfo extends Component {
   render() {
     return (
       <View style={[styles.container, elevations[10]]}>
-        <View style={styles.infoContainer}>
-          <ProductForms
-            item={this.props.item}
-            navigation={this.props.navigation}
-            categories={this.props.categories}
-            screen={this.props.screen}
-            makeEditable={this.props.makeEditable}
-            editable={this.props.editable}
-            submitForm={(data) => this.props.submitForm(data)}
-          />
-        </View>
+        
+          <View style={styles.infoContainer}>
+            <ProductForms
+              item={this.props.item}
+              navigation={this.props.navigation}
+              categories={this.props.categories}
+              screen={this.props.screen}
+              makeEditable={this.props.makeEditable}
+              editable={this.props.editable}
+              submitForm={(data) => this.props.submitForm(data)}
+            />
+          </View>
       </View>
     );
   }

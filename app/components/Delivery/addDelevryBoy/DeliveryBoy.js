@@ -1,6 +1,6 @@
 import { StatusBar } from "expo-status-bar";
 import React, { Component } from "react";
-import { View, Text, StyleSheet, ScrollView } from "react-native";
+import { View, Text, StyleSheet, ScrollView, KeyboardAvoidingView, Platform } from "react-native";
 import { getCategories } from "../../../config/apis/products/gets";
 import { colors } from "../../../config/vars";
 import ImageComponent from "./ImageComponent";
@@ -8,6 +8,7 @@ import DeliveryInfo from "./DeliveryInfo";
 import { goToScreen } from '../../../config/functions';
 import { addDeliveryBoy, updateDeliveryBoy } from "../../../config/apis/delivery/posts";
 import MiniHeader from "../../MiniHeader";
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 export default class DeliveryBoy extends Component {
   constructor(props) {
@@ -18,7 +19,8 @@ export default class DeliveryBoy extends Component {
       item: this.props.route.params.screen == "edit" ? this.props.route.params.item : [],
       screen: this.props.route.params.screen,
       editable: this.props.route.params.screen == "edit" ? false : true,
-      title: this.props.route.params.screen == "edit" ? "بيانات الموظف" : "اضافة موظف توصيل"
+      title: this.props.route.params.screen == "edit" ? "بيانات الموظف" : "اضافة موظف توصيل",
+      loading: false
     };
   }
 
@@ -33,10 +35,17 @@ export default class DeliveryBoy extends Component {
   };
 
   submitForm = async (data) => {
+    this.setState({
+      loading: true
+    })
     const formData = new FormData()
 
     if (!this.state.image) {
       // show error note
+      this.setState({
+        loading: false
+      })
+      console.log("there's no image with this request");
       return
     }
     // console.log(this.state.image.uri)
@@ -58,10 +67,13 @@ export default class DeliveryBoy extends Component {
     } else {
       stored = await addDeliveryBoy(formData)
     }
-
+    this.setState({
+      loading: false
+    })
     if (stored) {
       goToScreen("Delivery", this.props.navigation)
     }
+
   }
 
   render() {
@@ -69,25 +81,28 @@ export default class DeliveryBoy extends Component {
       <View contentContainerStyle={{ justifyContent: "center", alignItems: "center" }} style={styles.container}>
         {/* <StatusBar translucent={false} style="dark" /> */}
         <MiniHeader title={this.state.title} navigation={this.props.navigation} />
-        <ScrollView contentContainerStyle={{ justifyContent: "center", alignItems: "center" }}>
-          <ImageComponent
-            screen={this.state.screen}
-            editable={this.state.editable}
-            item={this.state.item}
-            onChange={(image) => this.setState({ image })}
-          />
-          <DeliveryInfo
-            categories={this.state.categories.map((item) => ({
-              value: item.id,
-              label: item.name,
-            }))}
-            makeEditable={() => this.setState({ editable: true })}
-            editable={this.state.editable}
-            item={this.state.item}
-            screen={this.state.screen}
-            submitForm={(data) => this.submitForm(data)}
-          />
-        </ScrollView>
+        <KeyboardAwareScrollView>
+          <ScrollView contentContainerStyle={{ justifyContent: "center", alignItems: "center" }}>
+            <ImageComponent
+              screen={this.state.screen}
+              editable={this.state.editable}
+              item={this.state.item}
+              onChange={(image) => this.setState({ image })}
+            />
+            <DeliveryInfo
+              categories={this.state.categories.map((item) => ({
+                value: item.id,
+                label: item.name,
+              }))}
+              loading={this.state.loading}
+              makeEditable={() => this.setState({ editable: true })}
+              editable={this.state.editable}
+              item={this.state.item}
+              screen={this.state.screen}
+              submitForm={(data) => this.submitForm(data)}
+            />
+          </ScrollView>
+        </KeyboardAwareScrollView>
       </View>
     );
   }

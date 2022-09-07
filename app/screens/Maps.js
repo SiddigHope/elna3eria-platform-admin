@@ -47,9 +47,21 @@ function InputAutocomplete({ label, placeholder, onPlaceSelected }) {
     )
 }
 
-export default function Maps({ navigation, location, setLocation, closeModal, editLocation, setEditLocation }) {
+export default function Maps({
+    navigation,
+    location,
+    clientLocation,
+    setLocation,
+    closeModal,
+    editLocation,
+    setEditLocation,
+    showUserLocation,
+    screen,
+    store,
+    client
+}) {
     const [origin, setOrigin] = React.useState(location)
-    const [destination, setDestination] = React.useState(null)
+    const [destination, setDestination] = React.useState(clientLocation)
 
     const [latitude, setLatitude] = React.useState(0)
     const [longitude, setLongitude] = React.useState(0)
@@ -95,8 +107,10 @@ export default function Maps({ navigation, location, setLocation, closeModal, ed
                 style={styles.map}
                 zoomControlEnabled={true}
                 showsUserLocation
+                // showsUserLocation={showUserLocation}
                 showsMyLocationButton={editLocation}
                 onPress={(e) => {
+                    if (screen == "order") return
                     const position = {
                         latitude: e.nativeEvent.coordinate.latitude,
                         longitude: e.nativeEvent.coordinate.longitude,
@@ -110,10 +124,11 @@ export default function Maps({ navigation, location, setLocation, closeModal, ed
                 provider={PROVIDER_GOOGLE}
                 initialRegion={currentLocation}
             >
-                {origin &&
+                {origin && screen != "order" ? (
                     <Marker
                         coordinate={origin}
-                        draggable
+                        title={`${store.name} :متجر`}
+                        draggable={screen != "order"}
                         onDragEnd={(e) => {
                             const position = {
                                 latitude: e.nativeEvent.coordinate.latitude,
@@ -125,9 +140,26 @@ export default function Maps({ navigation, location, setLocation, closeModal, ed
                             onRegionChange(position)
                         }}
                     />
-                }
+                ) : null}
+                {destination && screen == "order" ? (
+                    <Marker
+                        coordinate={destination}
+                        title={`${client.name} :العميل`}
+                        draggable={screen != "order"}
+                        onDragEnd={(e) => {
+                            const position = {
+                                latitude: e.nativeEvent.coordinate.latitude,
+                                longitude: e.nativeEvent.coordinate.longitude,
+                                latitudeDelta: INITIAL_POSITION.latitudeDelta,
+                                longitudeDelta: INITIAL_POSITION.longitudeDelta
+                            }
+                            console.log(position)
+                            onRegionChange(position)
+                        }}
+                    />
+                ) : null}
             </MapView>
-            {editLocation ? (
+            {screen == "order" ? null : editLocation ? (
                 <View style={[styles.searchContainer, elevations[4]]}>
                     <InputAutocomplete
                         placeholder={"ابحث هنا..."}

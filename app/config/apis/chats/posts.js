@@ -6,11 +6,12 @@ export const getUser = async () => {
     return UserClass.getUser();
 };
 
-export const sendMessage = async (data) => {
+export const sendMessage = async (data, type) => {
     const user = await getUser()
+    const method = type ? "PUT" : "POST"
     try {
         const options = {
-            method: "POST",
+            method,
             url: mainDomain + "store/conversations",
             headers: {
                 "Content-Type": "application/json",
@@ -23,9 +24,9 @@ export const sendMessage = async (data) => {
         const request = await axios(options)
             .then((response) => response.data)
             .catch((error) => console.log(error.response));
-        // console.log(request)
+  
         // return
-        return request.id ? true : false;
+        return type ? request.data : request.id ? true : false;
     } catch (error) {
         console.log(error);
         return false;

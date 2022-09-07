@@ -78,7 +78,7 @@ export const deleteDeliveryBoy = async (id) => {
 
         const request = await axios(options)
             .then((response) => response.data)
-            .catch((error) => console.log(error));
+            .catch((error) => console.log(error.response));
         // console.log(user)
         // return
         return request.success ? true : false;

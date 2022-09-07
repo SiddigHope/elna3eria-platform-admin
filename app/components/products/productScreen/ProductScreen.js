@@ -1,6 +1,16 @@
 import { StatusBar } from "expo-status-bar";
 import React, { Component } from "react";
-import { View, Text, StyleSheet, ScrollView, Modal, Dimensions, TouchableOpacity, KeyboardAvoidingView } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  ScrollView,
+  Modal,
+  Dimensions,
+  TouchableOpacity,
+  KeyboardAvoidingView,
+  Platform
+} from "react-native";
 import { getCategories } from "../../../config/apis/products/gets";
 import { addDiscount, storeProduct, updateProduct } from "../../../config/apis/products/posts";
 import { colors, fonts } from "../../../config/vars";
@@ -92,6 +102,7 @@ export default class ProductScreen extends Component {
     // console.log(this.state.item)
     return (
       <ScrollView style={styles.container}>
+
         <Modal
           transparent={true}
           onBackdropPress={() => this.setState({ discountModal: false })}
@@ -123,17 +134,23 @@ export default class ProductScreen extends Component {
           addDiscount={() => this.setState({ discountModal: true })}
           onChange={(image) => this.setState({ image })}
         />
-        <ProductInfo
-          categories={this.state.categories.map((item) => ({
-            value: item.id,
-            label: item.name,
-          }))}
-          makeEditable={() => this.setState({ editable: true })}
-          editable={this.state.editable}
-          item={this.state.item}
-          screen={this.state.screen}
-          submitForm={(data) => this.submitForm(data)}
-        />
+        <KeyboardAvoidingView
+          behavior={(Platform.OS === 'ios') ? "position" : null}
+          // style={{ width, height }}
+          keyboardVerticalOffset={Platform.select({ ios: 0, android: 500 })}
+        >
+          <ProductInfo
+            categories={this.state.categories.map((item) => ({
+              value: item.id,
+              label: item.name,
+            }))}
+            makeEditable={() => this.setState({ editable: true })}
+            editable={this.state.editable}
+            item={this.state.item}
+            screen={this.state.screen}
+            submitForm={(data) => this.submitForm(data)}
+          />
+        </KeyboardAvoidingView>
       </ScrollView>
     );
   }

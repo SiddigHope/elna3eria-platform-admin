@@ -30,6 +30,7 @@ export default class DeliveryInfo extends Component {
         <View style={styles.infoContainer}>
           <DeliveryForms
             item={this.props.item}
+            loading={this.props.loading}
             navigation={this.props.navigation}
             categories={this.props.categories}
             screen={this.props.screen}

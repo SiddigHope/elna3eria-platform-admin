@@ -1,13 +1,23 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Image, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, Image, ScrollView, Dimensions } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { colors, fonts } from '../../config/vars';
 import OrderFollowUp from './OrderFollowUp';
 import { elevations } from '../../config/elevations';
+import Maps from '../../screens/Maps';
+import UserClass from '../../config/authHandler';
 
 export const Hr = ({ props }) => (
     <View style={[styles.hr, props, elevations[1]]} />
 )
+
+
+const { width, height } = Dimensions.get('window')
+
+const ASPECT_RATIO = width / height;
+const LATITUDE_DELTA = 0.02;
+const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
+
 
 const PAYMENT = {
     CASH: {
@@ -26,12 +36,52 @@ export default class OrderDetailsComponent extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            storeLocation: {},
+            clientLocation: {
+                latitude: this.props.order.lat,
+                longitude: this.props.order.long,
+                latitudeDelta: LATITUDE_DELTA,
+                longitudeDelta: LONGITUDE_DELTA
+            },
+            store: false,
+            updated: false
         };
+    }
+
+    componentDidMount() {
+        this.getStoreLocation()
+    }
+
+    getStoreLocation = async () => {
+        const { order } = this.props
+        const store = await UserClass.getUser()
+        // console.log("store");
+        // console.log(store);
+        this.setState({
+            store: store.employee.store,
+            storeLocation: {
+                latitude: store.employee.store.lat,
+                longitude: store.employee.store.long,
+                latitudeDelta: LATITUDE_DELTA,
+                longitudeDelta: LONGITUDE_DELTA
+            },
+        })
+
+        if (!order.pickup) {
+            this.setState({
+                clientLocation: {
+                    latitude: order.lat,
+                    longitude: order.long,
+                    latitudeDelta: LATITUDE_DELTA,
+                    longitudeDelta: LONGITUDE_DELTA
+                },
+                updated: true
+            })
+        }
     }
 
     render() {
         const payment = PAYMENT[this.props.order.payment_method]
-        console.log(this.props.order)
         return (
             <View style={styles.container}>
                 <View style={styles.storeInfo}>
@@ -45,19 +95,6 @@ export default class OrderDetailsComponent extends Component {
                     <View style={styles.rowContainer}>
                         <Text style={styles.orderId}> {this.props.order.id} </Text>
                         <Text style={styles.orderId}> {this.props.order.time} {"الوقت"} </Text>
-                    </View>
-
-                    <Hr props={{ marginTop: 5, marginBottom: 30 }} />
-
-                    <Text style={styles.label}> {"موقع التسليم"} </Text>
-                    <View style={styles.rowContainer}>
-                        <View>
-                            {/* <Text style={styles.address}> {"امدرمان - امبدة حارة  14"} </Text> */}
-                            <Text style={styles.orderId}> {this.props.order.address} </Text>
-                        </View>
-                        <View style={styles.iconContainer} >
-                            <Icon name="map-marker-radius" color={colors.blueLight} size={20} />
-                        </View>
                     </View>
 
                     <Hr props={{ marginTop: 5, marginBottom: 30 }} />
@@ -92,6 +129,37 @@ export default class OrderDetailsComponent extends Component {
                     ))}
 
                     <Hr props={{ marginTop: 5, marginBottom: 30 }} />
+                    <Text style={styles.label}> {"موقع التسليم"} </Text>
+                    <View style={styles.rowContainer}>
+                        <View>
+                            {/* <Text style={styles.address}> {"امدرمان - امبدة حارة  14"} </Text> */}
+                            {!this.props.order.pickup && this.state.updated ? (
+                                <View style={styles.mapContainer}>
+                                    <Maps
+                                        navigation={this.props.navigation}
+                                        location={this.state.storeLocation}
+                                        clientLocation={this.state.clientLocation}
+                                        editLocation={false}
+                                        screen={"order"}
+                                        store={this.state.store}
+                                        client={this.props.order.client}
+                                        showUserLocation={false}
+                                        setEditLocation={() => this.setState({ editLocation: true })}
+                                        setLocation={(location) => this.setState({ location })}
+                                        closeModal={() => this.setState({ showMap: false })}
+                                    />
+                                </View>
+                            ) : (
+                                <Text style={styles.orderId}> {"استلام من الموقع"} </Text>
+                            )}
+                        </View>
+                        {/* <View style={styles.iconContainer} >
+                            <Icon name="map-marker-radius" color={colors.blueLight} size={20} />
+                        </View> */}
+                    </View>
+
+                    <Hr props={{ marginTop: 5, marginBottom: 30 }} />
+
 
                     <OrderFollowUp refresh={this.props.refresh} changeStatus={this.props.changeStatus} order={this.props.order} />
                 </View>
@@ -106,6 +174,10 @@ const styles = StyleSheet.create({
         width: "100%",
         backgroundColor: "#DFEAED",
         elevation: 1
+    },
+    mapContainer: {
+        width: width - 40,
+        height: (height * 70) / 100,
     },
     container: {
         flex: 1,

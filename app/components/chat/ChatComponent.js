@@ -43,7 +43,7 @@ export default class ChatComponent extends Component {
         })
     }
 
-    componentWillReceiveProps(nextProps) {
+    UNSAFE_componentWillReceiveProps(nextProps) {
         // You don't have to do this check first, but it can help prevent an unneeded render
         // if (nextProps.conversation.messages.length != this.state.messages.length) {
         this.setState({

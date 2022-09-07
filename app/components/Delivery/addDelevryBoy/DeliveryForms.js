@@ -13,6 +13,7 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 import TextInputRender from "./TextInputRender";
 import { goToScreen, ShowSnackbar } from "../../../config/functions";
 import RNPickerSelect from "react-native-picker-select";
+import elevations from "../../../config/elevations";
 
 const { width, height } = Dimensions.get("window");
 
@@ -36,7 +37,7 @@ export default class ProductForms extends Component {
       snackbarBackgroundColor: "",
       item: [],
       address: "",
-      addressPlaceholder:"عنوان الموظف"
+      addressPlaceholder: "عنوان الموظف"
     };
   }
 
@@ -58,11 +59,11 @@ export default class ProductForms extends Component {
   }
 
   submitForm = async () => {
-    const { name, national_id, email, phone, whatsapp } = this.state;
+    const { name, national_id, email, phone, whatsapp, address } = this.state;
     if (name && national_id && email && phone) {
-      // this.setState({
-      //   loading: true
-      // })
+      this.setState({
+        loading: true
+      })
       const data = {
         name,
         phone,
@@ -131,9 +132,9 @@ export default class ProductForms extends Component {
         <Pressable onPress={this.props.editable ? this.submitForm : this.props.makeEditable}>
           <LinearGradient
             colors={[colors.mainColor, colors.mainColor, "#F4C343"]}
-            style={styles.btn}
+            style={[styles.btn, elevations[5]]}
           >
-            {this.state.loading ? (
+            {this.props.loading ? (
               <ActivityIndicator color={colors.white} size="large" />
             ) : this.props.editable ? (
               <Text style={styles.btnText}> {"اضافة الموظف"} </Text>

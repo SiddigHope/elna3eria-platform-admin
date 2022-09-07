@@ -29,8 +29,8 @@ export default class DeliveryBoysComponent extends Component {
     deleteItem = async (item) => {
 
         Alert.alert(
-            'حذف المنتج',
-            'هل انت متاكد بنأنك تريد حذف هذا المنتج؟',
+            'تأكيد الحذف',
+            'هل انت متاكد ',
             [
                 {
                     text: 'لا',
@@ -43,8 +43,8 @@ export default class DeliveryBoysComponent extends Component {
         );
     }
 
-    deleteItemConfirm(id) {
-        const deleted = deleteDeliveryBoy(id)
+    async deleteItemConfirm(id) {
+        const deleted = await deleteDeliveryBoy(id)
         if (deleted) {
             this.props.updateData()
             return
