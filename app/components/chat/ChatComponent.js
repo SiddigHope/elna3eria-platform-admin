@@ -57,14 +57,14 @@ export default class ChatComponent extends Component {
     }
 
     listenToChannel = async (conversation) => {
-        // console.log("conversation should start listening")
-        // console.log(conversation.id)
+        console.log("conversation should start listening")
+        console.log(conversation.id)
 
         this.echo.channel('conversation.' + conversation.id)
             .listen('MessageSent', event => {
                 const { messages } = this.state
-                // console.log("event")
-                // console.log(event)
+                console.log("event")
+                console.log(event)
                 // console.log("messages")
                 // console.log(messages)
                 messages.unshift(event.message)

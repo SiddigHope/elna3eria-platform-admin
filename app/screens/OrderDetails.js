@@ -20,11 +20,6 @@ export default class OrderDetails extends Component {
         };
     }
 
-
-    componentDidMount() {
-        console.log(this.props.route.params.order);
-    }
-
     changeStatus = async (code) => {
         const data = {
             status: code

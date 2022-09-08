@@ -85,7 +85,7 @@ function Tabs({ navigation }) {
           tabBarShowLabel: false,
           tabBarStyle: {
             backgroundColor: colors.white,
-            height: 65,
+            height: 70,
             position: "absolute",
             left: 0,
             bottom: 0,

@@ -113,8 +113,8 @@ export default class OrderDetailsComponent extends Component {
 
                     <Hr props={{ marginTop: 5, marginBottom: 10 }} />
 
-                    {this.props.order.details.map(product => (
-                        <>
+                    {this.props.order.details.map((product, index) => (
+                        <View key={index+1}>
                             <Text style={styles.label}> {product.product.name} </Text>
                             <View style={[styles.rowContainer, { justifyContent: "flex-start" }]}>
                                 <View style={styles.productContainer}>
@@ -125,7 +125,7 @@ export default class OrderDetailsComponent extends Component {
                                     <Image source={{ uri: product.product.image }} style={styles.productImage} />
                                 </View>
                             </View>
-                        </>
+                        </View>
                     ))}
 
                     <Hr props={{ marginTop: 5, marginBottom: 30 }} />
