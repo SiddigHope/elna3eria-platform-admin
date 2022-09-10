@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, FlatList, Dimensions } from 'react-native';
+import { View, Text, StyleSheet, FlatList, Dimensions, Animated, Platform } from 'react-native';
 import { colors } from '../../config/vars';
 import MessageComponent from './MessageComponent';
 
@@ -9,7 +9,8 @@ export default class MessageList extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            messages: []
+            messages: [],
+            paddingAnimation: new Animated.Value(0)
         };
     }
 
@@ -20,9 +21,15 @@ export default class MessageList extends Component {
             messages: nextProps.messages,
         });
 
+        this.animateToValue(nextProps.paddingBottom)
+
         // }
     }
 
+    animateToValue = (value) => {
+        const paddingValue = Platform.select({ ios: value, android: value && value + 40 })
+        Animated.timing(this.state.paddingAnimation, { toValue: paddingValue, duration: 300 }).start();
+    }
 
     _listHeader = () => (
         <View style={{ height: 10 }} />
@@ -41,7 +48,7 @@ export default class MessageList extends Component {
     )
     render() {
         return (
-            <View style={styles.container}>
+            <Animated.View style={[styles.container, { paddingBottom: this.state.paddingAnimation }]}>
                 <FlatList
                     data={this.props.messages}
                     keyExtractor={(item, index) => index.toString()}
@@ -54,7 +61,7 @@ export default class MessageList extends Component {
                     ListHeaderComponent={this._listHeader}
                     renderItem={this._renderItem}
                 />
-            </View>
+            </Animated.View>
         );
     }
 }
@@ -63,7 +70,7 @@ export default class MessageList extends Component {
 const styles = StyleSheet.create({
     container: {
         // flex: 1,
-        maxHeight: height - 170,
+        maxHeight: height - Platform.select({ ios: 170, android: 120 }),
         alignItems: 'center',
         // backgroundColor: colors.blueLight,
     }

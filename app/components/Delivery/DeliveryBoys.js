@@ -4,6 +4,7 @@ import DeliveryBoysComponent from './DeliveryBoysComponent';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { colors } from '../../config/vars';
 import { goToScreen } from '../../config/functions';
+import elevations from '../../config/elevations';
 
 export default class DeliveryBoys extends Component {
     constructor(props) {
@@ -45,7 +46,7 @@ export default class DeliveryBoys extends Component {
                     ListFooterComponent={this._listFooter}
                     ItemSeparatorComponent={this._itemSeparator}
                 />
-                <Pressable onPress={() => this._boysScreen("new")} style={styles.btnContainer}>
+                <Pressable onPress={() => this._boysScreen("new")} style={[styles.btnContainer, elevations[5]]}>
                     <Icon name="plus" size={30} color={colors.mainColor} />
                 </Pressable>
             </View>

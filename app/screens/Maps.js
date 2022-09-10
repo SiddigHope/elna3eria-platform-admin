@@ -60,7 +60,9 @@ export default function Maps({
     store,
     client
 }) {
-    const [origin, setOrigin] = React.useState(location)
+    const [origin, setOrigin] = React.useState(clientLocation)
+    console.log("clientLocation")
+    console.log(clientLocation)
     const [destination, setDestination] = React.useState(clientLocation)
 
     const [latitude, setLatitude] = React.useState(0)
@@ -96,6 +98,10 @@ export default function Maps({
         moveTo(position)
     }
 
+    const moveCamera = () => {
+        moveTo(origin)
+    }
+
     const onPress = async () => {
         setEditLocation()
     }
@@ -107,6 +113,7 @@ export default function Maps({
                 style={styles.map}
                 zoomControlEnabled={true}
                 showsUserLocation
+                onMapLoaded={moveCamera}
                 // showsUserLocation={showUserLocation}
                 showsMyLocationButton={editLocation}
                 onPress={(e) => {
@@ -124,10 +131,11 @@ export default function Maps({
                 provider={PROVIDER_GOOGLE}
                 initialRegion={currentLocation}
             >
-                {origin && screen != "order" ? (
+                {origin && screen == "order" ? (
                     <Marker
                         coordinate={origin}
-                        title={`${store.name} :متجر`}
+                        // title={`${store.name} :متجر`}
+                        title={`${client.name} :العميل`}
                         draggable={screen != "order"}
                         onDragEnd={(e) => {
                             const position = {
@@ -141,7 +149,7 @@ export default function Maps({
                         }}
                     />
                 ) : null}
-                {destination && screen == "order" ? (
+                {/* {destination && screen == "order" ? (
                     <Marker
                         coordinate={destination}
                         title={`${client.name} :العميل`}
@@ -157,7 +165,7 @@ export default function Maps({
                             onRegionChange(position)
                         }}
                     />
-                ) : null}
+                ) : null} */}
             </MapView>
             {screen == "order" ? null : editLocation ? (
                 <View style={[styles.searchContainer, elevations[4]]}>

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Dimensions, ImageBackground, Pressable, Image, Linking } from 'react-native';
+import { View, Text, StyleSheet, Dimensions, Keyboard, ImageBackground, Pressable, Image, Linking } from 'react-native';
 import { colors } from '../../config/vars';
 import ChatHeader from './ChatHeader';
 import MessageList from './MessageList';
@@ -8,6 +8,7 @@ import Echo from 'laravel-echo';
 import { sendMessage, sendSupportMessage } from '../../config/apis/chats/posts';
 import { elevations } from '../../config/elevations';
 import { PUSHER_KEY } from '../../../keys';
+import { Platform } from 'react-native';
 
 const { width, height } = Dimensions.get("window")
 
@@ -20,7 +21,8 @@ export default class ChatComponent extends Component {
             conversation: [],
             user: {},
             loading: false,
-            typing: false
+            typing: false,
+            keyboardHeight: 0,
         };
         this.echo = new Echo({
             broadcaster: 'pusher',
@@ -32,6 +34,8 @@ export default class ChatComponent extends Component {
             forceTLS: true,
             disableStats: true
         });
+        this._keyboardDidShow = this._keyboardDidShow.bind(this)
+        this._keyboardDidHide = this._keyboardDidHide.bind(this)
     }
 
     componentDidMount() {
@@ -40,6 +44,30 @@ export default class ChatComponent extends Component {
             conversation,
             messages: conversation.messages,
             user,
+        })
+        this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', this._keyboardDidShow);
+        this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', this._keyboardDidHide);
+    }
+
+    componentWillUnmount() {
+        Keyboard.removeListener('keyboardDidShow', this._keyboardDidShow)
+        Keyboard.removeListener('keyboardDidHide', this._keyboardDidHide)
+    }
+
+    _keyboardDidShow(e) {
+        console.log("e.endCoordinates.height")
+        console.log(e.endCoordinates.height)
+        this.setState({
+            keyboardHeight: e.endCoordinates.height
+        })
+    }
+
+    _keyboardDidHide(e) {
+        console.log("keyboard id hiding")
+        this.setState({
+            keyboardHeight: 0,
+            // keyboardHeight: 0,
+            focused: false
         })
     }
 
@@ -63,12 +91,15 @@ export default class ChatComponent extends Component {
         this.echo.channel('conversation.' + conversation.id)
             .listen('MessageSent', event => {
                 const { messages } = this.state
-                console.log("event")
-                console.log(event)
-                // console.log("messages")
-                // console.log(messages)
-                messages.unshift(event.message)
-                this.setState({ messages })
+                // console.log("event")
+                // console.log(event)
+                console.log("messages")
+                const messageCheck = messages.filter(message => message.id === event.message.id)
+                console.log(messageCheck);
+                if (messageCheck.length == 0) {
+                    messages.unshift(event.message)
+                    this.setState({ messages })
+                }
             })
     }
 
@@ -157,7 +188,13 @@ export default class ChatComponent extends Component {
                     client={this.props.receiver}
                     navigation={this.props.navigation}
                 />
-                <MessageList user={this.props.user} messages={this.state.messages} />
+                <View style={{ height: height - Platform.select({ ios: 160, android: 120 }), width }}>
+                    <MessageList
+                        paddingBottom={this.state.keyboardHeight}
+                        user={this.props.user}
+                        messages={this.state.messages}
+                    />
+                </View>
                 {this.props.type == "support" && (
                     <Pressable onPress={this.whatsapp} style={[styles.iconContainer, elevations[5], { marginLeft: 10 }]}>
                         <Image style={{ width: 30, height: 30 }} source={require("../../../assets/icons/headset.png")} />

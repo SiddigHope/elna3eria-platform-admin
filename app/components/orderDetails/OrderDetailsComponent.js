@@ -14,8 +14,8 @@ export const Hr = ({ props }) => (
 
 const { width, height } = Dimensions.get('window')
 
-const ASPECT_RATIO = width / height;
-const LATITUDE_DELTA = 0.02;
+const ASPECT_RATIO = (width - 40) / ((height * 70) / 100);
+const LATITUDE_DELTA = 0.005;
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 
 
@@ -114,7 +114,7 @@ export default class OrderDetailsComponent extends Component {
                     <Hr props={{ marginTop: 5, marginBottom: 10 }} />
 
                     {this.props.order.details.map((product, index) => (
-                        <View key={index+1}>
+                        <View key={index + 1}>
                             <Text style={styles.label}> {product.product.name} </Text>
                             <View style={[styles.rowContainer, { justifyContent: "flex-start" }]}>
                                 <View style={styles.productContainer}>
