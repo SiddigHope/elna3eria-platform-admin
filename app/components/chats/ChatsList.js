@@ -16,6 +16,8 @@ export default class ChatsList extends Component {
         <ChatsComponent
             item={item.item}
             navigation={this.props.navigation}
+            deleteConversation={this.props.deleteConversation}
+            deleting={this.props.deleting}
         />
     );
 
