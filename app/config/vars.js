@@ -33,3 +33,4 @@ export const setItemSelected = (index) => {
 };
 
 export const mainDomain = "http://na3eria.sudahex.com/api/v1/";
+export const domain = "http://na3eria.sudahex.com/api/";

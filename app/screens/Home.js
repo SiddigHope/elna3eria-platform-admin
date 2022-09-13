@@ -5,8 +5,9 @@ import HomeComponent from '../components/home/HomeComponent';
 import Header from '../config/header/Header';
 import { colors } from '../config/vars';
 import UserClass from '../config/authHandler';
-import { goToScreen, setUserCurrentLocation } from '../config/functions';
+import { getDeviceToken, goToScreen, setUserCurrentLocation } from '../config/functions';
 import * as Location from 'expo-location';
+import { userDeviceTokenSubscription } from '../config/apis/authentication';
 
 
 const { width, height } = Dimensions.get('window')
@@ -26,6 +27,26 @@ export default class Home extends Component {
     componentDidMount() {
         this.getCurrentLocation()
         this.getUser()
+        this.userSubscription()
+    }
+
+    userSubscription = async () => {
+        const device_token = await getDeviceToken()
+
+        if (device_token) {
+            const data = {
+                expo_token: device_token
+            }
+
+            userDeviceTokenSubscription(data, "unsubscribe")
+
+            setTimeout(() => {
+                userDeviceTokenSubscription(data, "subscribe")
+            }, 10000)
+            return
+        }
+        console.log("no device token registered");
+
     }
 
     getCurrentLocation = async () => {

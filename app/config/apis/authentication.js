@@ -1,5 +1,5 @@
 import axios from "axios";
-import { mainDomain } from "./../vars";
+import { domain, mainDomain } from "./../vars";
 import UserClass from "../authHandler";
 
 export const getUser = async () => {
@@ -179,9 +179,9 @@ export const updateStoreProfile = async (data) => {
       .then((response) => response.data)
       .catch((error) => console.log(error.response));
 
-      console.log("request")
-      console.log(request)
-      if (request.success) {
+    console.log("request")
+    console.log(request)
+    if (request.success) {
       user.employee.store = request.data
       // console.log(request)
       UserClass.setUser(user)
@@ -214,6 +214,35 @@ export const getUserProfile = async () => {
     // UserClass.setUser(request.data)
     // }
     return request.success ? request.data : false;
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
+};
+
+export const userDeviceTokenSubscription = async (data, type) => {
+  const user = await getUser();
+  try {
+    const options = {
+      method: "POST",
+      url: domain + "exponent/devices/" + type,
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        Authorization: "Bearer " + user.token,
+      },
+      data
+    };
+
+    const request = await axios(options)
+      .then((response) => response.data)
+      .catch((error) => console.log(error.response));
+    console.log(type + " request")
+    console.log(request)
+    // console.log(request)
+    // UserClass.setUser(request.data)
+    // }
+    return request.status == "succeeded" ? true : false;
   } catch (error) {
     console.log(error);
     return false;
