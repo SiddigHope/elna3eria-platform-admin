@@ -60,8 +60,8 @@ export default class OrderDetailsComponent extends Component {
         this.setState({
             store: store.employee.store,
             storeLocation: {
-                latitude: store.employee.store.lat,
-                longitude: store.employee.store.long,
+                latitude: Number(store.employee.store.lat),
+                longitude: Number(store.employee.store.long),
                 latitudeDelta: LATITUDE_DELTA,
                 longitudeDelta: LONGITUDE_DELTA
             },
@@ -70,8 +70,8 @@ export default class OrderDetailsComponent extends Component {
         if (!order.pickup) {
             this.setState({
                 clientLocation: {
-                    latitude: order.lat,
-                    longitude: order.long,
+                    latitude: Number(order.lat),
+                    longitude: Number(order.long),
                     latitudeDelta: LATITUDE_DELTA,
                     longitudeDelta: LONGITUDE_DELTA
                 },

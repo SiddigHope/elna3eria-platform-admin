@@ -10,6 +10,7 @@ import elevations from './../config/elevations';
 import { colors, fonts } from '../config/vars';
 import Constants from 'expo-constants';
 import * as Location from 'expo-location';
+import { ActivityIndicator } from 'react-native-paper';
 
 const { width, height } = Dimensions.get('window')
 
@@ -62,7 +63,7 @@ export default function Maps({
 }) {
     const [origin, setOrigin] = React.useState(clientLocation)
     console.log("clientLocation")
-    console.log(clientLocation)
+    console.log(location)
     const [destination, setDestination] = React.useState(clientLocation)
 
     const [latitude, setLatitude] = React.useState(0)
@@ -106,6 +107,12 @@ export default function Maps({
         setEditLocation()
     }
 
+    if (!location || !clientLocation) {
+        return (
+            <ActivityIndicator color={colors.mainColor} size="large" />
+        )
+    }
+    // dir_action=navigate
     return (
         <View style={styles.container}>
             <MapView
