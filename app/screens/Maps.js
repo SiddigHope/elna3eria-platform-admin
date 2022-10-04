@@ -1,6 +1,6 @@
 import * as React from 'react';
 import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
-import { StyleSheet, Text, View, Dimensions, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, Dimensions, TouchableOpacity, Platform, Linking } from 'react-native';
 import { GOOGLE_API_KEY } from '../../keys';
 import {
     GooglePlacesAutocomplete,
@@ -112,6 +112,23 @@ export default function Maps({
             <ActivityIndicator color={colors.mainColor} size="large" />
         )
     }
+    // not implemented yet
+    const onDirectionButton = () => {
+        // if (Platform.OS == "android") return
+        const lat = origin.latitude;
+        const lng = origin.longitude;
+        const scheme = Platform.select({ ios: 'maps:0,0?q=', android: 'geo:0,0?q=' });
+        const latLng = `${lat},${lng}`;
+        const label = 'Custom Label';
+        // const url = Platform.select({
+        //     ios: `${scheme}${label}@${latLng}&dir_action=navigate`,
+        //     android: `${scheme}${latLng}(${label})&dir_action=navigate`
+        // });
+        var url = "https://www.google.com/maps/dir/?api=1&travelmode=driving&dir_action=navigate&destination=" + latLng;
+
+        Linking.openURL(url)
+    }
+
     // dir_action=navigate
     return (
         <View style={styles.container}>
@@ -142,6 +159,7 @@ export default function Maps({
                     <Marker
                         coordinate={origin}
                         // title={`${store.name} :متجر`}
+                        onPress={onDirectionButton}
                         title={`${client.name} :العميل`}
                         draggable={screen != "order"}
                         onDragEnd={(e) => {
