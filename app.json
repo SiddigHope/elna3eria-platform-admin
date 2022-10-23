@@ -1,14 +1,14 @@
 {
   "expo": {
-    "name": "elna3eria-platform-admin",
+    "name": "متجر - النعيرية",
     "slug": "elna3eria-platform-admin",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/logo/rsz_fin.png",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/logo/fin2.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#141D39"
     },
     "updates": {
       "fallbackToCacheTimeout": 0

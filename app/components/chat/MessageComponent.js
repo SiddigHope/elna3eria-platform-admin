@@ -18,7 +18,7 @@ export default class MessageComponent extends Component {
         let sender = message.sender_type == "App\\Models\\Client" ? false : true
         // console.log(message);
         return (
-            <View style={[styles.container, sender && { alignSelf: "flex-end", backgroundColor: colors.grey }]}>
+            <View style={[styles.container, sender && { alignSelf: "flex-end", backgroundColor: colors.whiteF7 }]}>
                 {message.type == "image" ? (
                     <Image
                         PlaceholderContent={<ActivityIndicator color={colors.mainColor} size="small" />}
@@ -39,7 +39,7 @@ export default class MessageComponent extends Component {
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: colors.ebony,
+        backgroundColor: colors.white,
         // minHeight: 40,
         padding: 10,
         maxWidth: "70%",
@@ -51,13 +51,13 @@ const styles = StyleSheet.create({
     messageText: {
         fontFamily: fonts.tajawalR,
         fontSize: 16,
-        color: colors.white,
+        color: colors.softBlack,
         lineHeight: 20
     },
     messageTime: {
         fontFamily: fonts.tajawalR,
         fontSize: 10,
-        color: colors.softWhite,
+        color: colors.grey,
         // backgroundColor: "red",
         textAlign: "right"
     },
