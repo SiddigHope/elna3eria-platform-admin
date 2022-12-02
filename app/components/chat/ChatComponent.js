@@ -10,6 +10,7 @@ import { elevations } from '../../config/elevations';
 import { PUSHER_KEY } from '../../../keys';
 import { Platform } from 'react-native';
 
+const Pusher = require('pusher-js') 
 const { width, height } = Dimensions.get("window")
 
 export default class ChatComponent extends Component {
@@ -27,7 +28,7 @@ export default class ChatComponent extends Component {
         this.echo = new Echo({
             broadcaster: 'pusher',
             // host: 'http://na3eria.sudahex.com',
-            client: undefined,
+            client: Pusher,
             key: PUSHER_KEY,
             cluster: "eu",
             // encrypted: true,
