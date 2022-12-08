@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Text, View, StyleSheet, Dimensions, Platform } from "react-native";
+import { Text, View, StyleSheet, Dimensions, Platform, BackHandler, Alert } from "react-native";
 // import { Snackbar } from "react-native-paper";
 import { colors, fonts } from "./vars";
 import SnackBar from "react-native-snackbar-component";

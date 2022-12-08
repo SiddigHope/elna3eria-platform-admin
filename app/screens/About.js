@@ -5,6 +5,7 @@ import MiniHeader from '../components/MiniHeader';
 import { WebView } from 'react-native-webview';
 import { getAppInfo } from '../config/apis/gets';
 import { saveAppInfo, getAppInfo as getLocalAppInfo } from '../config/functions';
+import { StatusBar } from 'expo-status-bar';
 
 
 
@@ -38,7 +39,7 @@ export default class About extends Component {
             terms: "",
             privacy: "",
             about: "",
-            script: "<script src=http://na3eria.sudahex.com/js/app.js></script>"
+            script: "<script src=https://nairyah.com/js/app.js></script>"
         };
     }
 
@@ -54,7 +55,7 @@ export default class About extends Component {
         if (data) {
             this.setState({
                 terms: data.data.terms,
-                policy: data.data.privacy,
+                privacy: data.data.privacy,
                 about: data.data.about
             })
         }
@@ -65,7 +66,7 @@ export default class About extends Component {
         if (data.data) {
             this.setState({
                 terms: data.data.terms,
-                policy: data.data.privacy,
+                privacy: data.data.privacy,
                 about: data.data.about
             })
             saveAppInfo(data.data)
@@ -76,13 +77,15 @@ export default class About extends Component {
     render() {
         const { start, about, terms, privacy, script, end } = this.state
         const { type } = this.props.route.params
-        const html = type == "about" ? about : terms + privacy
+        const html = type == "about" ? about : type == "privacy" ? privacy : terms
+
         return (
             <View style={styles.container}>
+            <StatusBar translucent={false} backgroundColor={colors.whiteF7} />
                 <MiniHeader
                     right={"djk"}
                     navigation={this.props.navigation}
-                    title={type == "about" ? "عن التطبيق" : "السياسات و اللوائح"}
+                    title={type == "about" ? "عن التطبيق" : type == "privacy" ? "سياسة الخصوصية" : "الشروط و الأحكام"}
                 />
                 <WebView
                     originWhitelist={['*']}

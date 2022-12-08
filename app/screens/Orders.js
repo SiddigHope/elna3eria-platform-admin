@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, BackHandler, Alert } from 'react-native';
 import OrdersList from '../components/orders/OrdersList';
 import { getOrders } from '../config/apis/orders/gets';
 import Header from '../config/header/Header';
@@ -58,12 +58,34 @@ export default class Orders extends Component {
                 this.getData()
             }
         })
+        BackHandler.addEventListener('hardwareBackPress', this.handleBackPress);
     }
 
     componentWillUnmount() {
         const navigation = this.props.navigation
         navigation.removeListener("focus")
+        BackHandler.removeEventListener('hardwareBackPress', this.handleBackPress);
     }
+
+    handleBackPress = () => {
+        if (this.props.navigation.isFocused()) {
+            Alert.alert(
+                '',
+                'هل حقاً تريد قفل التطبيق',
+                [
+                    {
+                        text: 'لا',
+                        onPress: () => console.log('Cancel Pressed'),
+                        style: 'cancel',
+                    },
+                    { text: 'نعم', onPress: () => BackHandler.exitApp() },
+                ],
+                { cancelable: false },
+            );
+            return true;
+        }
+        // return true;  // Do nothing when back button is pressed
+    };
 
     getData = async () => {
         const orders = await getOrders()

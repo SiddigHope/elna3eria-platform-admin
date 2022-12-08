@@ -70,7 +70,7 @@ export default class ProfileComponent extends Component {
             },
             {
                 id: 3,
-                title: "السياسات و اللوائح",
+                title: "الشروط و الأحكام",
                 onPress: "Policy",
                 icon: <Icon4 name="policy" size={25} color={colors.mainColor} />,
             },

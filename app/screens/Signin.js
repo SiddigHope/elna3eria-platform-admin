@@ -26,8 +26,8 @@ export default class Signin extends Component {
   handleBackPress = () => {
     if (this.props.navigation.isFocused()) {
       Alert.alert(
-        'إنهاء التطبيق',
-        'هل حقاً تريد إنهاء التطبيق',
+        '',
+        'هل حقاً تريد قفل التطبيق',
         [
           {
             text: 'لا',

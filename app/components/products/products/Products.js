@@ -42,8 +42,8 @@ export default class Products extends Component {
                     showsVerticalScrollIndicator={false}
                     renderItem={this._renderItems}
                     numColumns={2}
-                    // style={{width:"100%", backgroundColor: "blue"}}
-                    contentContainerStyle={{alignItems: 'flex-end', marginHorizontal: 20}}
+                    style={{width:"100%"}}
+                    contentContainerStyle={{alignItems: 'flex-end', paddingHorizontal: 20}}
                     ListHeaderComponent={this._listHeader}
                     ListFooterComponent={this._listFooter}
                     ItemSeparatorComponent={this._itemSeparator}
@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         borderRadius: 30,
         position: 'absolute',
-        bottom: 70,
+        bottom: 75,
         right: 20
     }
 })

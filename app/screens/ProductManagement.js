@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, Text, StyleSheet, ActivityIndicator } from "react-native";
+import { View, Text, StyleSheet, ActivityIndicator, Alert, BackHandler } from "react-native";
 import Products from "../components/products/products/Products";
 import { getCategories, getProducts } from '../config/apis/products/gets';
 import { colors } from '../config/vars';
@@ -29,12 +29,34 @@ export default class ProductManagement extends Component {
         this.getData()
       }
     })
+    BackHandler.addEventListener('hardwareBackPress', this.handleBackPress);
   }
 
   componentWillUnmount() {
     const navigation = this.props.navigation
     navigation.removeListener("focus")
+    BackHandler.removeEventListener('hardwareBackPress', this.handleBackPress);
   }
+
+  handleBackPress = () => {
+    if (this.props.navigation.isFocused()) {
+      Alert.alert(
+        '',
+        'هل حقاً تريد قفل التطبيق',
+        [
+          {
+            text: 'لا',
+            onPress: () => console.log('Cancel Pressed'),
+            style: 'cancel',
+          },
+          { text: 'نعم', onPress: () => BackHandler.exitApp() },
+        ],
+        { cancelable: false },
+      );
+      return true;
+    }
+    // return true;  // Do nothing when back button is pressed
+  };
 
   getData = async () => {
     setTimeout(() => {

@@ -22,8 +22,8 @@ export default class SigninComponent extends Component {
     this.state = {};
   }
 
-  _goToScreen = () => {
-    goToScreen("Signup", this.props.navigation);
+  _goToScreen = (screen) => {
+    goToScreen(screen, this.props.navigation);
   };
 
   render() {
@@ -52,12 +52,18 @@ export default class SigninComponent extends Component {
                   </Text>
 
                   <Pressable
-                    onPress={this._goToScreen}
+                    onPress={() => this._goToScreen("Signup")}
                     style={styles.signupBtn}
                   >
                     <Text style={styles.signupBtnText}> {"سجل الأن"} </Text>
                   </Pressable>
                 </View>
+                <Text style={[styles.forgotPassword, { marginTop: 20 }]}>
+                  {"نسيت كلمة المرور؟"}
+                  <Text onPress={() => this._goToScreen("PasswordReset")} style={styles.forgotLink}>
+                    {" إعادة تعيين"}
+                  </Text>
+                </Text>
               </View>
             </View>
           </ImageBackground>
@@ -139,5 +145,16 @@ const styles = StyleSheet.create({
     fontFamily: fonts.tajawalB,
     fontSize: 18,
     color: colors.ebony,
+  },
+  forgotPassword: {
+    fontFamily: fonts.tajawalR,
+    fontSize: 14,
+    color: colors.grey,
+  },
+  forgotLink: {
+    fontFamily: fonts.tajawalB,
+    fontSize: 14,
+    color: colors.mainColor,
+    textDecorationLine: 'underline'
   },
 });

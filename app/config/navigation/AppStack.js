@@ -15,6 +15,7 @@ import Home from "../../screens/Home";
 import Chats from '../../screens/Chats';
 import Chat from '../../screens/Chat';
 import About from '../../screens/About';
+import PasswordReset from '../../screens/PasswordReset';
 
 const Stack = createStackNavigator();
 
@@ -127,6 +128,13 @@ function AppStack() {
             <Stack.Screen
                 name="About"
                 component={About}
+                options={{
+                    headerShown: false,
+                }}
+            />
+            <Stack.Screen
+                name="PasswordReset"
+                component={PasswordReset}
                 options={{
                     headerShown: false,
                 }}

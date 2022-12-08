@@ -39,7 +39,7 @@ export default class Header extends Component {
     return (
       <View style={[styles.container, this.props.searching ? { height: 50 } : Platform.OS == "ios" ? { marginTop: 40 } : {}]}>
         <View style={styles.headerContainer}>
-          <Avatar user={this.state.user} />
+          <Avatar user={this.state.user} navigation={this.props.navigation} />
           {this.props.screen == "home" ? (
             <Input closeSearching={this.props.closeSearching} onChangeText={this.props.onChangeText} searching={this.props.searching} />
           ) : (

@@ -107,6 +107,20 @@ export default class SigninForms extends Component {
             )}
           </LinearGradient>
         </Pressable>
+
+        <View style={styles.nestedText}>
+          <Text style={styles.parentText}>
+            {" بالضغط على تسجبل الدخول أوكد انني قرات ووافقت على"}
+            <Text onPress={() => goToScreen("About", this.props.navigation, { type: "terms" })} style={styles.childText}>
+              {" الشروط و الاحكام"}
+            </Text>
+            {" بالاضافة الى"}
+            <Text onPress={() => goToScreen("About", this.props.navigation, { type: "privacy" })} style={styles.childText}>
+              {" سياسة الخصوصية"}
+            </Text>
+          </Text>
+        </View>
+
         <ShowSnackbar
           backgroundColor={this.state.snackbarBackgroundColor}
           text={this.state.snackbarText}
@@ -141,6 +155,26 @@ const styles = StyleSheet.create({
     fontFamily: fonts.tajawalR,
     fontSize: 16,
   },
+  nestedText: {
+    marginTop: 20,
+    marginBottom: 10,
+    marginHorizontal: 10
+  },
+  parentText: {
+    fontFamily: fonts.tajawalR,
+    fontSize: 12,
+    color: colors.grey,
+    lineHeight: 30,
+    textAlign: "right"
+    // backgroundColor: "red"
+  },
+  childText: {
+    fontFamily: fonts.tajawalB,
+    fontSize: 12,
+    color: colors.softBlack,
+    textDecorationLine: 'underline'
+  },
+
 });
 
 //#FF1D3D

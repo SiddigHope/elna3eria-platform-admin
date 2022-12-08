@@ -129,6 +129,34 @@ export const resendCode = async () => {
   }
 };
 
+export const resetPassword = async (data) => {
+  try {
+    const options = {
+      method: "POST",
+      url: mainDomain + "store/auth/forgot-password",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      data,
+    };
+
+    const request = await axios(options)
+      .then((response) => response.data)
+      .catch((error) => {
+        if (error.response.status == 422 || error.response.status == 401)
+          return error.response.data
+        console.log(error.response)
+        return false
+
+      });
+    // console.log(request)
+    return request;
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
+};
 
 export const updateUserProfile = async (data) => {
   const user = await getUser();

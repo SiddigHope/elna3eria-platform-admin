@@ -1,6 +1,6 @@
 import { StatusBar } from "expo-status-bar";
 import React, { useEffect, useState, useRef } from "react";
-import { StyleSheet, Text, View, LogBox } from "react-native";
+import { StyleSheet, Text, View, LogBox, I18nManager, Platform } from "react-native";
 import Tabs from "./app/config/Tabs";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator, CardStyleInterpolators } from "@react-navigation/stack";
@@ -13,6 +13,7 @@ import DrawerStack from './app/config/navigation/DrawerStack';
 import Constants from 'expo-constants';
 import * as Notifications from 'expo-notifications';
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import * as Updates from "expo-updates";
 
 LogBox.ignoreLogs([
   "Non-serializable values were found in the navigation state",
@@ -38,6 +39,14 @@ function MainScreen() {
   const responseListener = useRef();
 
   useEffect(() => {
+
+    const isRTLAndroid = I18nManager.isRTL;
+    if (isRTLAndroid) {
+      I18nManager.forceRTL(false);
+      I18nManager.allowRTL(false);
+      Updates.reloadAsync();
+    }
+
     registerForPushNotificationsAsync()
 
     // This listener is fired whenever a notification is received while the app is foregrounded

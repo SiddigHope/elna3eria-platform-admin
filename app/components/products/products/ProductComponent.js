@@ -33,8 +33,8 @@ export default class ProductComponent extends Component {
     deleteItem = async (item) => {
 
         Alert.alert(
-            'حذف المنتج',
-            'هل انت متاكد بنأنك تريد حذف هذا المنتج؟',
+            '',
+            'هل انت متاكد بأنك تريد حذف هذا المنتج؟',
             [
                 {
                     text: 'لا',

@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Dimensions } from 'react-native';
+import { View, Text, StyleSheet, Dimensions, BackHandler, Alert } from 'react-native';
 import HomeComponent from '../components/home/HomeComponent';
 import Header from '../config/header/Header';
 import { colors } from '../config/vars';
@@ -28,7 +28,32 @@ export default class Home extends Component {
         this.getCurrentLocation()
         this.getUser()
         this.userSubscription()
+        BackHandler.addEventListener('hardwareBackPress', this.handleBackPress);
     }
+
+    componentWillUnmount() {
+        BackHandler.removeEventListener('hardwareBackPress', this.handleBackPress);
+    }
+
+    handleBackPress = () => {
+        if (this.props.navigation.isFocused()) {
+            Alert.alert(
+                '',
+                'هل حقاً تريد قفل التطبيق',
+                [
+                    {
+                        text: 'لا',
+                        onPress: () => console.log('Cancel Pressed'),
+                        style: 'cancel',
+                    },
+                    { text: 'نعم', onPress: () => BackHandler.exitApp() },
+                ],
+                { cancelable: false },
+            );
+            return true;
+        }
+        // return true;  // Do nothing when back button is pressed
+    };
 
     userSubscription = async () => {
         const device_token = await getDeviceToken()
@@ -46,7 +71,6 @@ export default class Home extends Component {
             return
         }
         console.log("no device token registered");
-
     }
 
     getCurrentLocation = async () => {
@@ -67,7 +91,6 @@ export default class Home extends Component {
                 longitudeDelta: LONGITUDE_DELTA
             }
             setUserCurrentLocation(loc)
-
         } catch (error) {
             console.log(error);
         }
