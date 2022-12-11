@@ -18,7 +18,7 @@ export default class MiniHeader extends Component {
                         <Icon onPress={() => this.props.navigation.goBack()} name="arrow-back-outline" size={30} color={colors.ebony} />
                     </View>
                 ) : (
-                    <Icon onPress={() => this.props.navigation.goBack()} style={{ flex: 0.3, zIndex: 1111 }} name="arrow-back-outline" size={30} color={colors.ebony} />
+                    <Icon onPress={() => this.props.navigation.goBack()} style={{ flex: 0.3, zIndex: 1111,textAlign:"left" }} name="arrow-back-outline" size={30} color={colors.ebony} />
                 )}
                 {/* <Icon onPress={() => this.props.navigation.goBack()} style={{ flex: 0.3 }} name="arrow-back-outline" size={30} color={colors.ebony} /> */}
                 <Text style={[styles.title, this.props.right && !this.props.icon ? { textAlign: 'right' } : {}]}> {this.props.title} </Text>

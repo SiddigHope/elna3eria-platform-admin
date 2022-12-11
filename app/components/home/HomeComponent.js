@@ -19,6 +19,16 @@ export default class HomeComponent extends Component {
 
     componentDidMount() {
         this.getData()
+
+        const navigation = this.props.navigation
+        navigation.addListener("focus", () => {
+            this.getData()
+        })
+    }
+
+    componentWillUnmount() {
+        const navigation = this.props.navigation
+        navigation.removeListener("focus")
     }
 
     getData = async () => {
@@ -44,37 +54,49 @@ export default class HomeComponent extends Component {
                 <CardComponent
                     figure={this.state.totals.orders_count}
                     title={"اجمالي الطلبات"}
+                    id={0}
+                    navigation={this.props.navigation}
                     color1={colors.borderColor}
                     color2={colors.mainColor}
                 />
                 <CardComponent
+                    navigation={this.props.navigation}
                     color1={colors.white}
                     color2={"#e0cc1a"}
                     figure={this.state.totals.new_orders_count}
+                    id={1}
                     title={"طلب جديد"} />
             </View>
             <View style={styles.rowContainer}>
                 <CardComponent
+                    navigation={this.props.navigation}
                     color1={"#00D4FF"}
                     color2={"#1adde0"}
                     figure={this.state.totals.preparing_orders_count}
+                    id={2}
                     title={"جار التجهيز"} />
                 <CardComponent
                     color1={"#41e01a"}
                     color2={"#b2e01a"}
+                    id={3}
+                    navigation={this.props.navigation}
                     figure={this.state.totals.on_road_orders_count}
                     title={"في الطريق"} />
             </View>
             <View style={styles.rowContainer}>
                 <CardComponent
                     color1={colors.whiteF7}
+                    navigation={this.props.navigation}
                     color2={colors.softGreen}
+                    id={4}
                     figure={this.state.totals.completed_orders}
                     title={"طلب مكتمل"} />
                 <CardComponent
                     color1={colors.whiteF7}
                     color2={colors.danger}
+                    navigation={this.props.navigation}
                     figure={this.state.totals.canceled_orders_count}
+                    id={5}
                     title={"طلب ملغي"} />
             </View>
             {this.state.latest.length != 0 && (
@@ -124,7 +146,7 @@ const styles = StyleSheet.create({
         fontSize: 16,
         color: colors.ebony,
         // marginVertical: 10,
-        textAlign:"right",
+        textAlign: "right",
         marginTop: 20,
         marginHorizontal: 20
     }

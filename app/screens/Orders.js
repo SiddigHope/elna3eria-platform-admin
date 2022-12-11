@@ -54,6 +54,9 @@ export default class Orders extends Component {
         navigation.addListener("focus", () => {
             if (this.state.status != -1) {
                 this.filterOrders(this.state.status)
+            } if (this.props.route.params) {
+                if (this.props.route.params.type == 0) this.getData()
+                this.filterOrders(this.props.route.params.type - 1)
             } else {
                 this.getData()
             }
@@ -133,3 +136,4 @@ const styles = StyleSheet.create({
         backgroundColor: colors.whiteF7,
     }
 })
+
