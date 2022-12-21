@@ -110,6 +110,7 @@ function Tabs({ navigation }) {
         backgroundColor={colors.whiteF7}
         style="dark"
       />
+
       <Tab.Navigator
         initialRouteName="Home"
         screenOptions={{
@@ -129,6 +130,7 @@ function Tabs({ navigation }) {
           },
         }}
       >
+
         <Tab.Screen
           name="ProductManagement"
           component={ProductManagement}
@@ -137,6 +139,7 @@ function Tabs({ navigation }) {
             tabBarIcon: ({ focused, color }) => (
               <TabButton
                 focused={focused}
+                newMessage={newMessage}
                 color={color}
                 icon={
                   <Icon1
@@ -160,6 +163,7 @@ function Tabs({ navigation }) {
             tabBarIcon: ({ focused, color }) => (
               <TabButton
                 focused={focused}
+                newMessage={newMessage}
                 color={color}
                 icon={
                   <>
@@ -185,6 +189,7 @@ function Tabs({ navigation }) {
             tabBarIcon: ({ focused, color }) => (
               <TabButton
                 focused={focused}
+                newMessage={newMessage}
                 color={color}
                 icon={
                   <Icon3
@@ -207,6 +212,7 @@ function Tabs({ navigation }) {
             tabBarIcon: ({ focused, color }) => (
               <TabButton
                 focused={focused}
+                newMessage={newMessage}
                 color={color}
                 icon={
                   <Icon2
