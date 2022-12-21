@@ -16,14 +16,15 @@ import Delivery from '../screens/Delivery';
 import Home from "../screens/Home";
 import Chats from "../screens/Chats";
 import { hasNewMessage } from './apis/gets';
+import { useFocusEffect } from "@react-navigation/native";
+
 
 const { width, height } = Dimensions.get("window");
 
 const Tab = createBottomTabNavigator();
 
 function TabButton(props) {
-  const { focused, icon, title, color } = props;
-  const [newMessage, setNewMessage] = React.useState(false)
+  const { focused, icon, title, color, newMessage } = props;
   const viewRef = useRef(null);
   const textViewRef = useRef(null);
 
@@ -35,13 +36,8 @@ function TabButton(props) {
       viewRef.current.animate({ 0: { scale: 1 }, 1: { scale: 0 } });
       textViewRef.current.animate({ 0: { scale: 1 }, 1: { scale: 0 } });
     }
-    checkNewMessages()
   }, [focused]);
 
-  const checkNewMessages = async () => {
-    console.log("checking for new messages")
-    setNewMessage(await hasNewMessage())
-  }
 
 
   return (
@@ -88,6 +84,25 @@ function TabButton(props) {
 }
 
 function Tabs({ navigation }) {
+
+  const [newMessage, setNewMessage] = React.useState(false)
+
+  useEffect(() => {
+    checkNewMessages()
+  }, [newMessage])
+
+  useFocusEffect(
+    React.useCallback(() => {
+      const unsubscribe = checkNewMessages()
+
+      return unsubscribe
+    })
+  );
+
+  const checkNewMessages = async () => {
+    setNewMessage(await hasNewMessage())
+  }
+
   return (
     <>
       <StatusBar
