@@ -14,6 +14,8 @@ import Orders from '../screens/Orders';
 import Profile from '../screens/Profile';
 import Delivery from '../screens/Delivery';
 import Home from "../screens/Home";
+import Chats from "../screens/Chats";
+import { hasNewMessage } from './apis/gets';
 
 const { width, height } = Dimensions.get("window");
 
@@ -21,6 +23,7 @@ const Tab = createBottomTabNavigator();
 
 function TabButton(props) {
   const { focused, icon, title, color } = props;
+  const [newMessage, setNewMessage] = React.useState(false)
   const viewRef = useRef(null);
   const textViewRef = useRef(null);
 
@@ -32,7 +35,14 @@ function TabButton(props) {
       viewRef.current.animate({ 0: { scale: 1 }, 1: { scale: 0 } });
       textViewRef.current.animate({ 0: { scale: 1 }, 1: { scale: 0 } });
     }
+    checkNewMessages()
   }, [focused]);
+
+  const checkNewMessages = async () => {
+    console.log("checking for new messages")
+    setNewMessage(await hasNewMessage())
+  }
+
 
   return (
     <View style={[styles.tabContainer, focused ? styles.focusedTab : {}]}>
@@ -46,7 +56,15 @@ function TabButton(props) {
       <View
         style={focused ? styles.iconContainerFocused : styles.iconContainer}
       >
-        {icon}
+        {title != "المحادثات" ?
+          (
+            icon
+          ) : (
+            <>
+              {newMessage && <View style={[styles.badge, focused && { display: 'none' }]} />}
+              {icon}
+            </>
+          )}
       </View>
       <Animatable.View
         ref={textViewRef}
@@ -96,29 +114,6 @@ function Tabs({ navigation }) {
           },
         }}
       >
-        {/* <Tab.Screen
-          name="Profile"
-          component={Profile}
-          options={{
-            headerShown: false,
-            tabBarIcon: ({ focused, color, }) => (
-              <TabButton
-                focused={focused}
-                color={color}
-                icon={
-                  <Icon1
-                    style={styles.tabIcon}
-                    name="person-outline"
-                    size={20}
-                    color={color}
-                  />
-                }
-                title={"حسابي"}
-              />
-            ),
-          }}
-        /> */}
-
         <Tab.Screen
           name="ProductManagement"
           component={ProductManagement}
@@ -141,6 +136,32 @@ function Tabs({ navigation }) {
             ),
           }}
         />
+
+        <Tab.Screen
+          name="Chats"
+          component={Chats}
+          options={{
+            headerShown: false,
+            tabBarIcon: ({ focused, color }) => (
+              <TabButton
+                focused={focused}
+                color={color}
+                icon={
+                  <>
+                    <Icon1
+                      style={styles.tabIcon}
+                      name="md-chatbubble-ellipses-outline"
+                      size={20}
+                      color={color}
+                    />
+                  </>
+                }
+                title={"المحادثات"}
+              />
+            ),
+          }}
+        />
+
         <Tab.Screen
           name="Orders"
           component={Orders}
@@ -235,4 +256,13 @@ const styles = StyleSheet.create({
     marginLeft: 5,
     // backgroundColor: 'red'
   },
+  badge: {
+    width: 10,
+    height: 10,
+    borderRadius: 10,
+    top: -10,
+    backgroundColor: colors.red,
+    position: 'absolute',
+    alignSelf: 'flex-end'
+  }
 });

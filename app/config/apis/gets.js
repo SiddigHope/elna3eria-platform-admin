@@ -32,3 +32,29 @@ export const getAppInfo = async () => {
         return false;
     }
 }
+
+export const hasNewMessage = async () => {
+    const user = await getUser()
+    try {
+        const options = {
+            method: "GET",
+            url: mainDomain + "store/conversations/check-new-message",
+            headers: {
+                "Content-Type": "application/json",
+                Accept: "application/json",
+                Authorization: "Bearer " + user.token,
+            },
+        };
+
+        const request = await axios(options)
+            .then((response) => response.data)
+            .catch((error) => console.log(error));
+        console.log("request new message check")
+        console.log(request)
+        // return
+        return request.success ? request.data : false;
+    } catch (error) {
+        console.log(error);
+        return false;
+    }
+}

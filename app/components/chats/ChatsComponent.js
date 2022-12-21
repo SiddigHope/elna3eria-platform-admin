@@ -55,7 +55,8 @@ export default class ChatsComponent extends Component {
     render() {
         const { item } = this.props
         console.log("item.to be printted")
-        // console.log(item.l_message)
+        console.log(item.new_ms_count)
+        // item.new_ms_count = 5
         return (
             <SwipeItem
                 ref={(swipe) => (this.swipe = swipe)}
@@ -74,7 +75,12 @@ export default class ChatsComponent extends Component {
                         <Text style={styles.name}> {item.client.name} </Text>
                         <Text numberOfLines={1} style={styles.message}> {item.l_message && item.l_message.message_type} </Text>
                     </View>
-                    <Text style={styles.time}> {item.l_message && item.l_message.time} </Text>
+                    <View>
+                        <Text style={styles.time}> {item.l_message && item.l_message.time} </Text>
+                        {item.new_ms_count ? (
+                            <Text style={[styles.badge]}> {item.new_ms_count} </Text>
+                        ) : null}
+                    </View>
                 </Pressable>
             </SwipeItem>
         );
@@ -132,4 +138,15 @@ const styles = StyleSheet.create({
         // backgroundColor: "red",
         textAlign: "center",
     },
+    badge: {
+        backgroundColor: colors.mainColor,
+        height: 20,
+        width: 20,
+        borderRadius: 20,
+        elevation: 5,
+        textAlign: 'center',
+        textAlignVertical: 'center',
+        color: colors.whiteF7,
+        fontSize: 10
+    }
 })

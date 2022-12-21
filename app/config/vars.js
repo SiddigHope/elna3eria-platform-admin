@@ -14,7 +14,8 @@ export const colors = {
   blackTransparent: "rgba(0,0,0,0.1)",
   blueLight: '#42a5f5',
   softBlue:"#8ECaE6",
-  borderColor: "#DFEAED"
+  borderColor: "#DFEAED",
+  red: '#FF0011'
 };
 
 export const mainColorWithOpacity = (opacity) => {

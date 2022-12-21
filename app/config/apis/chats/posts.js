@@ -83,3 +83,26 @@ export const deleteConversation = async (id) => {
         return false;
     }
 }
+
+export const setMessageAsRead = async (id) => {
+    try {
+        const options = {
+            method: "PUT",
+            url: mainDomain + "message/set-as-read/" + id,
+            headers: {
+                "Content-Type": "application/json",
+                Accept: "application/json",
+            }
+        };
+
+        const request = await axios(options)
+            .then((response) => response.data)
+            .catch((error) => console.log(error.response));
+        console.log("request")
+        console.log(request)
+        return request.success ? true : false;
+    } catch (error) {
+        console.log(error);
+        return false;
+    }
+}

@@ -58,12 +58,14 @@ export default class SigninComponent extends Component {
                     <Text style={styles.signupBtnText}> {"سجل الأن"} </Text>
                   </Pressable>
                 </View>
-                <Text style={[styles.forgotPassword, { marginTop: 20 }]}>
+                <View style={{flex: 1, justifyContent: 'flex-end'}}>
+                <Text style={[styles.forgotPassword, { alignSelf:'flex-end', marginBottom: 20, }]}>
                   {"نسيت كلمة المرور؟"}
                   <Text onPress={() => this._goToScreen("PasswordReset")} style={styles.forgotLink}>
                     {" إعادة تعيين"}
                   </Text>
                 </Text>
+                </View>
               </View>
             </View>
           </ImageBackground>

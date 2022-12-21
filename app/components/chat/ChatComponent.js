@@ -5,12 +5,12 @@ import ChatHeader from './ChatHeader';
 import MessageList from './MessageList';
 import TextInputRender from './TextInputRender';
 import Echo from 'laravel-echo';
-import { sendMessage, sendSupportMessage } from '../../config/apis/chats/posts';
+import { sendMessage, sendSupportMessage, setMessageAsRead } from '../../config/apis/chats/posts';
 import { elevations } from '../../config/elevations';
 import { PUSHER_KEY } from '../../../keys';
 import { Platform } from 'react-native';
 
-const Pusher = require('pusher-js') 
+const Pusher = require('pusher-js')
 const { width, height } = Dimensions.get("window")
 
 export default class ChatComponent extends Component {
@@ -28,7 +28,7 @@ export default class ChatComponent extends Component {
         this.echo = new Echo({
             broadcaster: 'pusher',
             // host: 'http://na3eria.sudahex.com',
-            client: Pusher,
+            client: undefined,
             key: PUSHER_KEY,
             cluster: "eu",
             // encrypted: true,
@@ -100,6 +100,9 @@ export default class ChatComponent extends Component {
                 if (messageCheck.length == 0) {
                     messages.unshift(event.message)
                     this.setState({ messages })
+                    // if (event.message.sender_type != "App\\Models\\Store" && !event.message.is_read) {
+                    //     setMessageAsRead(event.message.id)
+                    // }
                 }
             })
     }
