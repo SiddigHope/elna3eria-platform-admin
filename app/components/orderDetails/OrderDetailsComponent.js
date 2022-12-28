@@ -142,7 +142,7 @@ export default class OrderDetailsComponent extends Component {
                                         editLocation={false}
                                         screen={"order"}
                                         store={this.state.store}
-                                        client={this.props.order.client}
+                                        order={this.props.order}
                                         showUserLocation={false}
                                         setEditLocation={() => this.setState({ editLocation: true })}
                                         setLocation={(location) => this.setState({ location })}

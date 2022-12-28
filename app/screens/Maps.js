@@ -59,7 +59,7 @@ export default function Maps({
     showUserLocation,
     screen,
     store,
-    client
+    order
 }) {
     const [origin, setOrigin] = React.useState(clientLocation)
     console.log("clientLocation")
@@ -132,6 +132,7 @@ export default function Maps({
     // dir_action=navigate
     return (
         <View style={styles.container}>
+        <Text> {`${order.address}`} </Text>
             <MapView
                 ref={mapRef}
                 style={styles.map}
@@ -160,7 +161,7 @@ export default function Maps({
                         coordinate={origin}
                         // title={`${store.name} :متجر`}
                         onPress={onDirectionButton}
-                        title={`${client.name} :العميل`}
+                        title={`${order.client.name} :العميل`}
                         draggable={screen != "order"}
                         onDragEnd={(e) => {
                             const position = {
@@ -177,7 +178,7 @@ export default function Maps({
                 {/* {destination && screen == "order" ? (
                     <Marker
                         coordinate={destination}
-                        title={`${client.name} :العميل`}
+                        title={`${order.client.name} :العميل`}
                         draggable={screen != "order"}
                         onDragEnd={(e) => {
                             const position = {
