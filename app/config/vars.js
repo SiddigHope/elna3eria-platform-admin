@@ -33,5 +33,8 @@ export const setItemSelected = (index) => {
   itemSelected = index;
 };
 
-export const mainDomain = "https://nairyah.com/api/v1/";
-export const domain = "https://nairyah.com/api/";
+export const mainDomain = "https://pharmacy.nairyah.com/api/v1/";
+export const domain = "https://pharmacy.nairyah.com/api/";
+
+// export const mainDomain = "https://nairyah.com/api/v1/";
+// export const domain = "https://nairyah.com/api/";
